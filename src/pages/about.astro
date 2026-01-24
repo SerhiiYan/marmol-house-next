@@ -1,0 +1,191 @@
+---
+// src/pages/about.astro
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+// Данные для SEO (Organization вместо Person)
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "Marmol House",
+    "foundingDate": "2010",
+    "description": "Проектирование и строительство эстетичных домов из блоков и каркаса в Гродно. Специализация на клинкерных фасадах.",
+    "areaServed": "Belarus"
+  }
+};
+---
+
+<Layout title="О компании Marmol House | Эстетика и Технологии">
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
+
+  <Header />
+
+  <main class="bg-white">
+    
+    <!-- 1. HERO: ТИПОГРАФИКА + АТМОСФЕРА -->
+    <section class="pt-40 pb-20 md:pt-52 md:pb-32 px-4 max-w-7xl mx-auto">
+        <div class="max-w-4xl">
+            <p class="text-marmol-gold font-bold uppercase tracking-[0.2em] text-xs md:text-sm mb-6 animate-fade-in">
+                Философия Marmol House
+            </p>
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-sans font-bold text-marmol-navy leading-tight mb-8 animate-fade-in-up">
+                Мы строим дома, <br/>
+                <span class="text-gray-400">которые не стареют.</span>
+            </h1>
+            <div class="h-1 w-24 bg-marmol-gold mb-10"></div>
+            <p class="text-lg md:text-xl text-gray-600 font-light leading-relaxed max-w-2xl">
+                Строительство — это баланс между инженерной точностью и архитектурной эстетикой. 
+                Мы объединяем надежность каменных стен с красотой премиальных фасадов.
+            </p>
+        </div>
+    </section>
+
+    <!-- 2. БОЛЬШОЕ ФОТО (ВИЗУАЛ) -->
+    <!-- Здесь нужно красивое фото готового дома или текстуры стены -->
+    <section class="w-full h-[500px] md:h-[700px] relative overflow-hidden group">
+        <img 
+            src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2000&auto=format&fit=crop" 
+            alt="Эстетика архитектуры Marmol House" 
+            class="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 ease-in-out"
+        />
+        <!-- Тонкая сетка поверх фото для стиля -->
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
+    </section>
+
+    <!-- 3. НАШ ПОДХОД (СЕТКА) -->
+    <section class="py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+                
+                <!-- Левая колонка: Текст про технологии -->
+                <div>
+                    <h2 class="text-3xl font-sans font-bold text-marmol-navy mb-8">
+                        Технологии, <br/> в которых мы уверены
+                    </h2>
+                    
+                    <div class="space-y-10">
+                        <!-- Блок 1: Блочные дома -->
+                        <div class="pl-6 border-l-2 border-marmol-gold">
+                            <h3 class="text-xl font-bold text-marmol-navy mb-3">Каменная надежность</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">
+                                Мы сторонники капитального строительства. Газосиликатные блоки — это теплый, "дышащий" и вечный материал. 
+                                Правильное армирование и монолитные пояса делают такой дом крепостью.
+                            </p>
+                        </div>
+
+                        <!-- Блок 2: Каркасники -->
+                        <div class="pl-6 border-l-2 border-gray-300 hover:border-marmol-gold transition-colors">
+                            <h3 class="text-xl font-bold text-marmol-navy mb-3">Современный каркас</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">
+                                Для любителей стиля Barnhouse и панорамного остекления мы используем каркасную технологию с перекрестным утеплением. 
+                                Это энергоэффективно и быстро.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Правая колонка: КЛИНКЕР (Акцент) -->
+                <div class="relative bg-marmol-navy text-white p-8 md:p-12 rounded-2xl shadow-2xl overflow-hidden">
+                    <!-- Фон кирпича -->
+                    <div class="absolute top-0 right-0 w-full h-full opacity-10">
+                         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <pattern id="brick" width="40" height="20" patternUnits="userSpaceOnUse">
+                                    <rect width="38" height="18" fill="white"/>
+                                </pattern>
+                            </defs>
+                            <rect width="100%" height="100%" fill="url(#brick)" />
+                        </svg>
+                    </div>
+
+                    <div class="relative z-10">
+                        <div class="inline-block bg-marmol-gold text-marmol-navy text-[10px] font-bold uppercase tracking-widest px-3 py-1 mb-6 rounded-sm">
+                            Фирменный стиль
+                        </div>
+                        <h3 class="text-3xl font-bold mb-4">Клинкерный фасад</h3>
+                        <p class="text-gray-300 leading-relaxed mb-8">
+                            Пока другие предлагают обычную штукатурку ("корник"), которая требует ухода, мы делаем ставку на клинкерный кирпич.
+                        </p>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center text-sm">
+                                <svg class="w-4 h-4 text-marmol-gold mr-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                                Выглядит дорого и статусно
+                            </li>
+                            <li class="flex items-center text-sm">
+                                <svg class="w-4 h-4 text-marmol-gold mr-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                                Не выцветает и не трескается
+                            </li>
+                            <li class="flex items-center text-sm">
+                                <svg class="w-4 h-4 text-marmol-gold mr-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                                Отличная цена в нашей смете
+                            </li>
+                        </ul>
+                        
+                        <a href="/projects" class="text-marmol-gold border-b border-marmol-gold pb-1 hover:text-white hover:border-white transition-colors text-sm uppercase tracking-wide font-bold">
+                            Смотреть проекты с клинкером →
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. ЭСТЕТИКА И ОПЫТ (СТРОКИ) -->
+    <section class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            
+            <h2 class="text-3xl font-sans font-bold text-marmol-navy mb-12">Почему Marmol House?</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- 1 -->
+                <div class="group p-6 rounded-xl hover:bg-gray-50 transition-colors duration-300">
+                    <div class="text-5xl font-bold text-gray-200 group-hover:text-marmol-gold transition-colors mb-4">10+</div>
+                    <h3 class="text-lg font-bold text-marmol-navy mb-2">Лет опыта</h3>
+                    <p class="text-sm text-gray-500">
+                        Богатый опыт в строительстве сложных объектов. Мы знаем, как сделать дом надежным на десятилетия.
+                    </p>
+                </div>
+                
+                <!-- 2 -->
+                <div class="group p-6 rounded-xl hover:bg-gray-50 transition-colors duration-300">
+                    <div class="text-5xl font-bold text-gray-200 group-hover:text-marmol-gold transition-colors mb-4">100%</div>
+                    <h3 class="text-lg font-bold text-marmol-navy mb-2">Эстетика</h3>
+                    <p class="text-sm text-gray-500">
+                        Дом должен радовать глаз. Мы уделяем особое внимание пропорциям, цвету фасада и чистоте линий.
+                    </p>
+                </div>
+
+                <!-- 3 -->
+                <div class="group p-6 rounded-xl hover:bg-gray-50 transition-colors duration-300">
+                    <div class="text-5xl font-bold text-gray-200 group-hover:text-marmol-gold transition-colors mb-4">FIX</div>
+                    <h3 class="text-lg font-bold text-marmol-navy mb-2">Честная смета</h3>
+                    <p class="text-sm text-gray-500">
+                        Никаких скрытых платежей. Мы сторонники прозрачных отношений с заказчиком.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 5. CTA (Финальный блок) -->
+    <section class="relative py-20 bg-marmol-navy">
+        <div class="max-w-4xl mx-auto px-4 text-center text-white">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Готовы построить красивый дом?</h2>
+            <p class="text-gray-300 mb-8 max-w-xl mx-auto">
+                Запишитесь на консультацию. Мы покажем наши текущие объекты, чтобы вы убедились в качестве кладки и фасадов своими глазами.
+            </p>
+            <a href="/contact" class="inline-block bg-white text-marmol-navy font-bold uppercase tracking-widest py-4 px-10 hover:bg-marmol-gold transition-all duration-300 shadow-xl rounded-sm">
+                Связаться с нами
+            </a>
+        </div>
+    </section>
+
+  </main>
+  
+</Layout>

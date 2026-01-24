@@ -1,0 +1,55 @@
+{
+  "title": "A-Frame Eco Hotel",
+  "order": 5,
+  "hit": true,
+  
+  "category": "a-frame",
+  "purpose": "business",
+  "style": "Треугольный дом",
+  
+  "availableTech": ["frame", "block"], 
+  "priceCategory": "economy", 
+  
+  "area": 64,
+  "livingArea": 52,
+  "dims": "6x9 м + Терраса",
+  
+  "specs": {
+    "floors": 2,
+    "rooms": 2,
+    "bedrooms": 1,
+    "bathrooms": 1
+  },
+
+  "mainImage": "https://images.unsplash.com/photo-1525113990976-399835c43804?q=80&w=2000",
+  
+  "gallery": [
+    "https://images.unsplash.com/photo-1525113990976-399835c43804?q=80&w=2000",
+    "https://images.unsplash.com/photo-1510798831971-661eb04b3739?q=80&w=2000",
+    "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=2000"
+  ],
+  
+  "plans": [
+    "/projects/a-frame/plan-1.jpg",
+    "/projects/a-frame/plan-2.jpg"
+  ],
+
+  "description": "Стильный A-frame дом, разработанный специально для арендного бизнеса или базы отдыха. Окупаемость проекта — от 2 сезонов.",
+  "fullDescription": "Проект 'Eco Hotel' создан с учетом требований Airbnb и Booking. Мы предусмотрели всё: износостойкие материалы, 'инстаграмные' зоны для фото, огромную террасу с чаном фурако. Второй свет увеличивает пространство, а панорамное остекление на главном фасаде объединяет интерьер с природой. Идеально подходит для глэмпинга.",
+
+  "features": [
+    "Второй свет",
+    "Панорамный фасад",
+    "Большая терраса",
+    "Идеально под сдачу",
+    "Монтаж за 45 дней"
+  ],
+
+  "layout": [
+    { "name": "Кухня-гостиная", "area": 24 },
+    { "name": "Санузел", "area": 4 },
+    { "name": "Спальня (Лофт)", "area": 12 },
+    { "name": "Терраса", "area": 18 },
+    { "name": "Прихожая", "area": 4 }
+  ]
+}

@@ -1,0 +1,109 @@
+---
+// src/components/FeaturedProjects.astro
+import { getCollection } from 'astro:content';
+import { globalPricing } from '../data/pricingConfig';
+
+// 1. ЗАПРОС К БАЗЕ
+const allProjects = await getCollection('projects');
+
+// 2. ФИЛЬТРАЦИЯ (Оставляем хиты)
+const featuredProjects = allProjects
+  .filter(project => project.data.hit === true)
+  // @ts-ignore
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<section class="py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Шапка -->
+    <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+      <div class="max-w-2xl">
+        <h2 class="text-4xl md:text-5xl font-sans font-bold text-marmol-navy mb-4">
+            Популярные проекты
+        </h2>
+        <p class="text-gray-500 font-light text-lg">
+            Функциональные планировки, которые выбирают 80% наших клиентов.
+        </p>
+      </div>
+      <a href="/projects" class="hidden md:inline-flex items-center text-marmol-navy font-bold uppercase tracking-widest hover:text-marmol-gold transition-colors group">
+          Весь каталог
+          <span class="w-8 h-[1px] bg-marmol-navy ml-3 group-hover:bg-marmol-gold group-hover:w-12 transition-all"></span>
+      </a>
+    </div>
+
+    <!-- Сетка проектов -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        {featuredProjects.map(project => {
+            const data = project.data;
+            
+            // --- ЛОГИКА ЦЕНЫ ---
+            // @ts-ignore
+            const categoryKey = data.priceCategory || 'economy';
+            const pricePerMeter = globalPricing.packages[categoryKey]?.basePricePerMeter || 0;
+            const totalPrice = data.area * pricePerMeter;
+
+            return (
+            <a href={`/projects/${project.id}`} class="group block relative">
+                
+                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100">
+                    
+                    <div class="relative h-[280px] overflow-hidden">
+                        {/* Бейджик Хит */}
+                        <div class="absolute top-4 left-4 z-10 bg-marmol-gold text-marmol-navy text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-sm shadow-md">
+                            Хит продаж
+                        </div>
+                        
+                        {/* ГЛАВНОЕ ИЗМЕНЕНИЕ: используем mainImage */}
+                        <img 
+                            src={data.mainImage} 
+                            alt={data.title} 
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                        <div class="absolute inset-0 bg-marmol-navy/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+
+                    <div class="p-8">
+                        {/* ГЛАВНОЕ ИЗМЕНЕНИЕ: используем style или category */}
+                        <div class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-2">
+                            {data.style || data.category}
+                        </div>
+                        
+                        <h3 class="text-2xl font-sans font-bold text-marmol-navy mb-4 group-hover:text-marmol-gold transition-colors">
+                            {data.title}
+                        </h3>
+
+                        <div class="flex items-center justify-between py-4 border-t border-b border-gray-200 mb-6">
+                            <div class="flex flex-col">
+                                <span class="text-gray-400 text-xs uppercase">Площадь</span>
+                                <span class="text-marmol-navy font-bold text-lg">{data.area} м²</span>
+                            </div>
+                            <div class="w-[1px] h-8 bg-gray-200"></div>
+                            <div class="flex flex-col text-right">
+                                <span class="text-gray-400 text-xs uppercase">Стоимость от</span>
+                                <span class="text-marmol-navy font-bold text-lg">
+                                    {totalPrice.toLocaleString('ru-RU')} {globalPricing.currency}
+                                </span>
+                            </div>
+                        </div>
+
+                        <span class="inline-block w-full text-center text-xs font-bold uppercase tracking-widest text-marmol-navy border border-marmol-navy py-3 rounded hover:bg-marmol-navy hover:text-white transition-all">
+                            Смотреть планировку
+                        </span>
+                    </div>
+
+                </div>
+            </a>
+            )
+        })}
+    </div>
+
+    <div class="mt-10 text-center md:hidden">
+        <a href="/projects" class="inline-block bg-marmol-navy text-white px-8 py-4 text-xs font-bold uppercase tracking-widest rounded shadow-lg">
+            Смотреть весь каталог
+        </a>
+    </div>
+
+  </div>
+</section>

@@ -1,16 +1,17 @@
 ---
-
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro'; // <--- Импортируем
+import WhyUsGrid from '../components/WhyUsGrid.astro';
+import FeaturedProjects from '../components/FeaturedProjects.astro';
+import GeneralPricing from '../components/GeneralPricing';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Строительство домов в Гродно и Минске под ключ | Marmol House">
+	<main>
+		<Hero /> <!-- <--- Вставляем -->
+        <FeaturedProjects />
+		<WhyUsGrid />
+        <GeneralPricing client:visible />
+        <!-- Остальной контент -->
+	</main>
+</Layout>

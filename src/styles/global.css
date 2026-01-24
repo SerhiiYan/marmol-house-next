@@ -1,0 +1,13 @@
+/* src/styles/global.css */
+@import "tailwindcss";
+
+@theme {
+  /* Твои фирменные цвета */
+  --color-marmol-navy: #0F172A;
+  --color-marmol-gold: #FBBF24;
+  --color-marmol-bg: #F8FAFC;
+
+  /* Шрифты (пока пропишем названия, подключим на след. шаге) */
+  --font-sans: "Montserrat", sans-serif;
+  --font-body: "Inter", sans-serif;
+}

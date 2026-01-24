@@ -1,0 +1,138 @@
+---
+// src/components/Footer.astro
+import Logo from './ui/Logo.astro';
+
+const currentYear = new Date().getFullYear();
+
+const navigation = {
+  company: [
+    { name: 'О компании', href: '/about' },
+    { name: 'Команда', href: '/team' },
+    { name: 'Блог', href: '/blog' }, // Уже заложили место под блог
+    { name: 'Вакансии', href: '/careers' },
+  ],
+  services: [
+    { name: 'Проектирование', href: '/services/design' },
+    { name: 'Каркасные дома', href: '/services/frame' },
+    { name: 'Дома из блоков', href: '/services/brick' },
+    { name: 'Геология участка', href: '/services/geo' },
+  ],
+  realEstate: [
+    { name: 'Дома в наличии', href: '/real-estate' },
+    { name: 'Строится сейчас', href: '/real-estate/in-progress' },
+    { name: 'Инвестиции', href: '/investment' },
+  ]
+};
+---
+
+<footer class="bg-marmol-navy text-white pt-16 pb-8 border-t border-white/10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Верхняя часть: Сетка ссылок -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
+      
+      <!-- Колонка 1: Бренд и Слоган (4 колонки ширины) -->
+      <div class="lg:col-span-4 space-y-6">
+        <div class="mb-6">
+            <!-- Логотип (Вариант Dark) -->
+            <Logo variant="dark" />
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed max-w-sm">
+          Строительная компания полного цикла. Проектируем и строим премиальные загородные дома в Гродно, Минске и области. Гарантия качества и фиксированная смета.
+        </p>
+        
+        <!-- Соцсети -->
+        <div class="flex space-x-4 pt-4">
+            
+            {/* Telegram */}
+            <a href="https://t.me/MarmolHouse" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-marmol-gold hover:text-marmol-navy transition-all duration-300 group" aria-label="Telegram">
+               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.693.004c.068.002.164.004.254.004h-.505l-.043-.002L11.944 0zm6.985 7.027l-2.67 12.87c-.201.884-.716 1.102-1.45.686l-3.992-2.946-1.925 1.855c-.213.213-.393.393-.805.393l.288-4.062 7.394-6.687c.322-.284-.07-.442-.499-.158l-9.135 5.756-3.945-1.233c-.859-.267-.874-.856.178-1.266l15.421-5.942c.715-.268 1.341.161 1.14 1.734z"/></svg>
+            </a>
+
+            {/* Instagram */}
+            <a href="https://www.instagram.com/marmol_house/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-marmol-gold hover:text-marmol-navy transition-all duration-300 group" aria-label="Instagram">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+            </a>
+
+            {/* Threads */}
+            <a href="https://www.threads.com/@marmol_house" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-marmol-gold hover:text-marmol-navy transition-all duration-300 group" aria-label="Threads">
+               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.186 24c-6.837 0-11.233-5.233-10.465-12.186.605-5.558 5.093-10.116 10.628-10.372C18.698 1.186 24.233 5.465 24 11.651c-.093 3-1.767 5.674-4.233 6.953-1.07.558-2.628.791-3.628.791-2.907 0-4.884-1.628-5.326-4.256h-.046c-.721 1.628-2.186 2.488-4.047 2.488-3.07 0-5.186-2.581-4.814-5.907.419-3.79 3.488-6.604 7.233-6.604 2.65 0 4.674 1.395 5.581 3.511.698 1.651.814 4.093.07 6.489-.791 2.511-2.86 4.744-5.954 4.744-1.953 0-3.325-1.116-3.72-2.558-.35-1.256-.024-2.861 1.186-3.954.907-.79 1.953-1.186 3.023-1.186 1.419 0 2.488.581 3.163 1.395.209.256.395.14.442-.093.302-1.302.302-3.14-.14-4.86-.674-2.582-2.953-4.28-5.744-4.14-4.512.21-8.116 3.907-8.581 8.35-.558 5.371 2.884 9.441 8.232 9.441 2.07 0 4.047-.628 5.489-1.535 1.07-.674 1.488-.534 1.837.233.163.348.093.813-.535 1.162-1.79.977-4.116 1.768-6.813 1.768zM10.884 10.767c-.605 0-1.21.233-1.744.721-.86.791-1.07 1.884-.791 2.814.232.884 1.14 1.651 2.209 1.651 1.489 0 2.698-1.023 2.977-2.767.14-.907-.163-1.651-.767-2.116-.489-.373-1.117-.303-1.884-.303z"/></svg>
+            </a>
+        </div>
+      </div>
+
+      <!-- Колонка 2: О компании -->
+      <div class="lg:col-span-2">
+        <h3 class="font-sans font-bold text-lg mb-6 text-white">Marmol House</h3>
+        <ul class="space-y-4 text-sm text-gray-400">
+            {navigation.company.map(item => (
+                <li>
+                    <a href={item.href} class="hover:text-marmol-gold transition-colors block">
+                        {item.name}
+                    </a>
+                </li>
+            ))}
+        </ul>
+      </div>
+
+      <!-- Колонка 3: Услуги -->
+      <div class="lg:col-span-3">
+        <h3 class="font-sans font-bold text-lg mb-6 text-white">Услуги</h3>
+        <ul class="space-y-4 text-sm text-gray-400">
+             {navigation.services.map(item => (
+                <li>
+                    <a href={item.href} class="hover:text-marmol-gold transition-colors block">
+                        {item.name}
+                    </a>
+                </li>
+            ))}
+            {/* Real Estate выделим отдельно */}
+             <li class="pt-2">
+                 <a href="/real-estate" class="text-marmol-gold font-bold uppercase tracking-wider text-xs hover:text-white transition-colors flex items-center">
+                    Недвижимость
+                    <svg class="w-3 h-3 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                 </a>
+             </li>
+        </ul>
+      </div>
+
+      <!-- Колонка 4: Контакты (адрес из твоего старого кода) -->
+      <div class="lg:col-span-3">
+        <h3 class="font-sans font-bold text-lg mb-6 text-white">Контакты</h3>
+        
+        <address class="not-italic space-y-4 text-sm text-gray-400">
+            <p>
+                <span class="block text-gray-500 text-xs mb-1">Наш офис:</span>
+                г. Гродно, ул. Лелевеля, 12A, к 6
+            </p>
+            <p>
+                <span class="block text-gray-500 text-xs mb-1">Телефон:</span>
+                <a href="tel:+375291845481" class="text-xl font-bold text-white hover:text-marmol-gold transition-colors font-body">
+                    +375 (29) 184-54-81
+                </a>
+            </p>
+            <p>
+                <span class="block text-gray-500 text-xs mb-1">Email:</span>
+                <a href="yurmarmol@gmail.com" class="hover:text-marmol-gold transition-colors">
+                    yurmarmol@gmail.com
+                </a>
+            </p>
+        </address>
+      </div>
+
+    </div>
+    
+    <!-- Нижняя полоска: Копирайт -->
+    <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+        <div class="mb-4 md:mb-0 text-center md:text-left">
+            <p>&copy; 2010–{currentYear} Marmol House. Все права защищены.</p>
+            <p class="mt-1">УНП 591536542</p>
+        </div>
+        
+        <div class="flex space-x-6">
+            <a href="/privacy" class="hover:text-white transition-colors">Политика конфиденциальности</a>
+            <a href="/sitemap-0.xml" class="hover:text-white transition-colors">Карта сайта</a>
+        </div>
+    </div>
+  </div>
+</footer>
