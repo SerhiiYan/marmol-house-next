@@ -36,31 +36,34 @@ const localBusinessSchema = {
 <Layout title="Контакты Marmol House | Гродно, Беларусь">
   <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} slot="head" />
 
-  <main class="bg-gray-50 min-h-screen pt-24 pb-20">
+  <main class="bg-gray-50 min-h-screen pt-32 pb-20">
     
-    <!-- 1. СКРЫТЫЙ H1 ДЛЯ SEO -->
-    <!-- Класс sr-only скрывает текст от глаз, но оставляет для Гугла -->
-    <h1 class="sr-only">Контакты строительной компании Marmol House в Гродно</h1>
-
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <!-- Основной контейнер с тенью -->
-      <div class="bg-white rounded-3xl overflow-hidden shadow-2xl flex flex-col lg:flex-row min-h-[600px]">
+      <div class="mb-10 md:mb-12 text-center md:text-left">
+        <h1 class="flex flex-col">
+          <span class="text-marmol-gold font-bold text-xs uppercase tracking-[0.2em] mb-3">
+            Строительная компания в Гродно
+          </span>
+          <span class="text-4xl md:text-5xl font-sans font-bold text-marmol-navy">
+            Контакты <span class="text-gray-400">Marmol House</span>
+          </span>
+        </h1>
+      </div>
+
+      <div class="bg-white rounded-3xl overflow-hidden shadow-2xl flex flex-col lg:flex-row min-h-[450px]">
         
-        <!-- ЛЕВАЯ ЧАСТЬ: Темная "Визитка" -->
-        <div class="lg:w-2/5 bg-marmol-navy text-white p-10 lg:p-14 flex flex-col justify-between relative overflow-hidden">
+        <div class="lg:w-2/5 bg-marmol-navy text-white p-8 lg:p-10 flex flex-col justify-between relative overflow-hidden">
             
-            <!-- Декор на фоне (полупрозрачный лого или круг) -->
             <div class="absolute top-0 right-0 w-64 h-64 bg-marmol-gold/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
-            <div>
+            <div class="relative z-10">
                 <p class="text-marmol-gold text-xs font-bold uppercase tracking-[0.2em] mb-6">Свяжитесь с нами</p>
                 <h2 class="text-3xl md:text-4xl font-sans font-bold leading-tight mb-8">
                     Обсудим ваш <br/> будущий проект?
                 </h2>
 
-                <div class="space-y-8">
-                    <!-- Телефон (Крупно) -->
+                <div class="space-y-5">
                     <div>
                         <p class="text-gray-400 text-xs uppercase mb-2">Телефон / Telegram</p>
                         <a href={`tel:${contactInfo.cleanPhone}`} class="text-2xl md:text-3xl font-bold hover:text-marmol-gold transition-colors block">
@@ -68,16 +71,14 @@ const localBusinessSchema = {
                         </a>
                     </div>
 
-                    <!-- Адрес -->
                     <div>
                          <p class="text-gray-400 text-xs uppercase mb-2">Офис</p>
                          <p class="text-lg leading-relaxed">{contactInfo.address}</p>
-                         <a href="https://yandex.by/maps/-/CDu~mK-~" target="_blank" class="text-marmol-gold text-xs font-bold uppercase tracking-wider mt-2 inline-flex items-center hover:text-white transition-colors">
+                         <a href="https://yandex.by/maps/-/CDu~mK-~" target="_blank" rel="noopener noreferrer" class="text-marmol-gold text-xs font-bold uppercase tracking-wider mt-2 inline-flex items-center hover:text-white transition-colors">
                             Построить маршрут →
                          </a>
                     </div>
                     
-                    <!-- Почта -->
                     <div>
                          <p class="text-gray-400 text-xs uppercase mb-2">Email</p>
                          <a href={`mailto:${contactInfo.email}`} class="text-lg hover:text-marmol-gold transition-colors">{contactInfo.email}</a>
@@ -85,39 +86,37 @@ const localBusinessSchema = {
                 </div>
             </div>
 
-            <!-- Соцсети внизу карточки -->
-            <div class="mt-12 pt-8 border-t border-white/10">
+            <div class="mt-8 pt-6 border-t border-white/10 relative z-10">
                 <p class="text-gray-400 text-xs mb-4">Следите за стройкой в соцсетях:</p>
                 <div class="flex space-x-4">
-                    <!-- Instagram -->
-                    <a href="https://instagram.com/marmol_house" target="_blank" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-marmol-navy transition-all duration-300">
+                    <a href="https://instagram.com/marmol_house" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-marmol-navy transition-all duration-300">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
                     </a>
-                    <!-- Telegram -->
-                    <a href="https://t.me/MarmolHouse" target="_blank" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-marmol-navy transition-all duration-300">
+                    <a href="https://t.me/MarmolHouse" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-marmol-navy transition-all duration-300">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.693.004c.068.002.164.004.254.004h-.505l-.043-.002L11.944 0zm6.985 7.027l-2.67 12.87c-.201.884-.716 1.102-1.45.686l-3.992-2.946-1.925 1.855c-.213.213-.393.393-.805.393l.288-4.062 7.394-6.687c.322-.284-.07-.442-.499-.158l-9.135 5.756-3.945-1.233c-.859-.267-.874-.856.178-1.266l15.421-5.942c.715-.268 1.341.161 1.14 1.734z"/></svg>
                     </a>
-                    <!-- Threads -->
-                    <a href="https://www.threads.com/@marmol_house" target="_blank" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-marmol-navy transition-all duration-300">
+                    <a href="https://www.threads.com/@marmol_house" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-marmol-navy transition-all duration-300">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.186 24c-6.837 0-11.233-5.233-10.465-12.186.605-5.558 5.093-10.116 10.628-10.372C18.698 1.186 24.233 5.465 24 11.651c-.093 3-1.767 5.674-4.233 6.953-1.07.558-2.628.791-3.628.791-2.907 0-4.884-1.628-5.326-4.256h-.046c-.721 1.628-2.186 2.488-4.047 2.488-3.07 0-5.186-2.581-4.814-5.907.419-3.79 3.488-6.604 7.233-6.604 2.65 0 4.674 1.395 5.581 3.511.698 1.651.814 4.093.07 6.489-.791 2.511-2.86 4.744-5.954 4.744-1.953 0-3.325-1.116-3.72-2.558-.35-1.256-.024-2.861 1.186-3.954.907-.79 1.953-1.186 3.023-1.186 1.419 0 2.488.581 3.163 1.395.209.256.395.14.442-.093.302-1.302.302-3.14-.14-4.86-.674-2.582-2.953-4.28-5.744-4.14-4.512.21-8.116 3.907-8.581 8.35-.558 5.371 2.884 9.441 8.232 9.441 2.07 0 4.047-.628 5.489-1.535 1.07-.674 1.488-.534 1.837.233.163.348.093.813-.535 1.162-1.79.977-4.116 1.768-6.813 1.768zM10.884 10.767c-.605 0-1.21.233-1.744.721-.86.791-1.07 1.884-.791 2.814.232.884 1.14 1.651 2.209 1.651 1.489 0 2.698-1.023 2.977-2.767.14-.907-.163-1.651-.767-2.116-.489-.373-1.117-.303-1.884-.303z"/></svg>
                     </a>
                 </div>
             </div>
         </div>
 
-        <!-- ПРАВАЯ ЧАСТЬ: Карта "В КРАЙ" -->
         <div class="lg:w-3/5 bg-gray-200 relative min-h-[400px] lg:min-h-auto">
              <iframe
-              title="Карта офиса Marmol House"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2364.047621362822!2d23.820859900000002!3d53.6639519!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46dfd7d2201bf22b%3A0xa9490ad61d0a97d5!2z0YPQuy4g0JvRjtC80LjRg9C70L7QstCwLCAxMiwg0JPQsNCz0L7RgNC-0LLQsCwg0JHRg9C70YzQstGB0LosINCf0L7Qu9C40YbQsA!5e0!3m2!1sru!2sby!4v1747305691832!5m2!1sru!2sby&gestureHandling=greedy"
-              width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-              class="absolute inset-0 w-full h-full grayscale hover:grayscale-0 transition-all duration-700"
-            />
+                title="Карта офиса Marmol House"
+                src="https://maps.google.com/maps?q=г.%20Гродно,%20ул.%20Лелевеля,%2012&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                width="100%" 
+                height="100%" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                class="absolute inset-0 w-full h-full grayscale hover:grayscale-0 transition-all duration-700"
+              />
         </div>
       </div>
 
-      <!-- НИЖНЯЯ ЧАСТЬ: Юридическая информация (Мелко) -->
       <div class="mt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
          <p>ООО "Мармоль Хаус" | УНП {contactInfo.unp}</p>
          <p>Работаем по всей Беларуси</p>

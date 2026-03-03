@@ -70,13 +70,8 @@ const links = [
                                 </a>
                             </li>
                             <li>
-                                <a href="/services/turnkey" class="block text-marmol-navy hover:text-marmol-gold transition-colors text-sm">
-                                    Дома под ключ
-                                </a>
-                            </li>
-                            <li>
                                 <a href="/services/business" class="block text-marmol-navy hover:text-marmol-gold transition-colors text-sm">
-                                    B2B решения
+                                    Для бизнеса
                                 </a>
                             </li>
                             <li>
@@ -89,22 +84,22 @@ const links = [
 
                     <!-- Колонка 2: ЭКОСИСТЕМА (Сервис) -->
                     <div class="col-span-3 border-r border-gray-100">
-                        <h3 class="text-marmol-gold font-bold uppercase tracking-widest text-xs mb-4">Экосистема</h3>
+                        <h3 class="text-marmol-gold font-bold uppercase tracking-widest text-xs mb-4">Подготовка</h3>
                         <ul class="space-y-3">
                             <li><a href="/services/design" class="block text-marmol-navy hover:text-marmol-gold transition-colors text-sm">Индивидуальное проектирование</a></li>
-                            <li><a href="/services/landscape" class="block text-marmol-navy hover:text-marmol-gold transition-colors text-sm">Ландшафтный дизайн</a></li>
-                            <li><a href="/services/land-selection" class="block text-marmol-navy hover:text-marmol-gold transition-colors text-sm">Подбор участка (Scouting)</a></li>
-                            <li><a href="/services/geo" class="block text-marmol-navy hover:text-marmol-gold transition-colors text-sm">Геология и Геодезия</a></li>
                         </ul>
                     </div>
 
                     <!-- Колонка 3: АКЦЕНТ / КАРТИНКА -->
                     <div class="col-span-6 pl-8 flex flex-col justify-center bg-marmol-bg/50 rounded-r-xl p-6">
                         <h4 class="font-sans font-bold text-marmol-navy text-lg mb-2">Не знаете с чего начать?</h4>
-                        <p class="text-gray-500 text-sm mb-4">Наш архитектор поможет сформулировать тех. задание и подберет лучшие решения под ваш бюджет.</p>
-                        <a href="#contact" class="text-marmol-gold font-bold uppercase tracking-wider text-xs border-b border-marmol-gold/30 hover:border-marmol-gold pb-1 w-fit transition-colors">
+                        <p class="text-gray-500 text-sm mb-4">Мы поможем сформулировать тех. задание и подберем лучшие решения под ваш бюджет.</p>
+                        <button 
+                            id="menu-meeting-btn"
+                            class="text-marmol-gold font-bold uppercase tracking-wider text-xs border-b border-marmol-gold/30 hover:border-marmol-gold pb-1 w-fit transition-colors text-left cursor-pointer"
+                        >
                             Записаться на встречу →
-                        </a>
+                        </button>
                     </div>
 
                 </div>
@@ -119,13 +114,20 @@ const links = [
       </nav>
 
       <!-- 3. Контакты и кнопка -->
-      <div class="hidden md:flex items-center space-x-4 lg:space-x-8">
-        <!-- Телефон -->
-        <a href="tel:+375291845481" class="font-body font-bold text-marmol-navy hover:text-marmol-gold transition-colors text-xs lg:text-sm whitespace-nowrap">
-          +375 (29) 184-54-81
-        </a>
+      <div class="hidden md:flex items-center space-x-6">
         
-        <!-- Кнопка "Обсудить проект" -->
+        <!-- Блок телефона и адреса (Вертикально) -->
+        <div class="flex flex-col items-end">
+            <a href="tel:+375291845481" class="font-body font-bold text-marmol-navy hover:text-marmol-gold transition-colors text-sm whitespace-nowrap leading-none">
+              +375 (29) 184-54-81
+            </a>
+            <!-- Адрес (Мелко) -->
+            <a href="/contact" class="text-[10px] text-gray-400 font-medium mt-1 hover:text-marmol-gold transition-colors">
+                г. Гродно, ул. Лелевеля, 12A
+            </a>
+        </div>
+        
+        <!-- Кнопка -->
         <button 
           id="header-discuss-btn"
           class="bg-marmol-navy text-white px-5 lg:px-7 py-3 text-[10px] lg:text-xs font-bold uppercase tracking-widest hover:bg-marmol-gold hover:text-marmol-navy transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 cursor-pointer whitespace-nowrap"
@@ -143,7 +145,6 @@ const links = [
     </div>
   </div>
 
-  <!-- 5. Мобильное меню (Простой список для телефона) -->
   <!-- 5. Мобильное меню -->
   <div id="mobile-menu" class="hidden md:hidden absolute top-24 left-0 w-full bg-white border-b border-gray-100 shadow-xl max-h-[calc(100vh-6rem)] overflow-y-auto pb-10">
     <div class="flex flex-col p-6 space-y-5">
@@ -173,20 +174,15 @@ const links = [
           <a href="/services/gas-silicate-houses" class="text-base text-gray-700 font-medium">
               Блочные дома
           </a>
-
-          <a href="/services/turnkey" class="text-base text-gray-700 font-medium">Дома под ключ</a>
-          <a href="/services/business" class="block text-marmol-navy hover:text-marmol-gold transition-colors text-sm">B2B решения</a>
+          <a href="/services/business" class="block text-marmol-navy hover:text-marmol-gold transition-colors text-sm">Для бизнеса</a>
           <a href="/services/facades" class="text-base text-gray-700 font-medium">Премиум фасады</a>
       </div>
   </div>
 
         <div>
-            <div class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-3">Экосистема</div>
+            <div class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-3">Подготовка</div>
             <div class="flex flex-col space-y-3 pl-4 border-l-2 border-gray-100">
                 <a href="/services/design" class="text-base text-gray-700 font-medium">Проектирование</a>
-                <a href="/services/landscape" class="text-base text-gray-700 font-medium">Ландшафтный дизайн</a>
-                <a href="/services/land-selection" class="text-base text-gray-700 font-medium">Подбор участка</a>
-                <a href="/services/geo" class="text-base text-gray-700 font-medium">Геология</a>
             </div>
         </div>
         
@@ -199,8 +195,9 @@ const links = [
         <a href="/contact" class="text-lg font-sans font-medium text-marmol-navy">Контакты</a>
 
         <div class="pt-4">
-             <a href="tel:+375291845481" class="text-2xl font-bold text-marmol-navy block mb-2">+375 (29) 184-54-81</a>
-             <p class="text-xs text-gray-400">Ежедневно с 9:00 до 20:00</p>
+             <a href="tel:+375291845481" class="text-2xl font-bold text-marmol-navy block mb-1">+375 (29) 184-54-81</a>
+             <a href="/contact" class="text-sm text-gray-500 block mb-2">г. Гродно, ул. Лелевеля, 12A, к 6</a> <!-- ДОБАВИЛИ -->
+             <p class="text-xs text-gray-400">Ежедневно с 9:00 до 18:00</p>
         </div>
     </div>
   </div>
@@ -217,10 +214,23 @@ const links = [
     menu?.classList.toggle('hidden');
   });
 
-  // 2. Логика кнопки "Обсудить проект"
+  // 2. Логика главной кнопки "Обсудить проект" (справа)
   const discussBtn = document.getElementById('header-discuss-btn');
+  
   discussBtn?.addEventListener('click', () => {
       formComment.set('Здравствуйте! Хочу обсудить свой будущий проект дома.');
       isModalOpen.set(true);
+  });
+
+  // 3. НОВОЕ: Логика кнопки "Записаться на встречу" (в меню Услуги)
+  const meetingBtn = document.getElementById('menu-meeting-btn');
+  
+  meetingBtn?.addEventListener('click', () => {
+      // Ставим конкретный текст, чтобы менеджер знал, что клиент хочет приехать
+      formComment.set('Здравствуйте! Хочу записаться на встречу в офисе для консультации.');
+      isModalOpen.set(true);
+      
+      // (Опционально) Закрываем меню после клика, если нужно, 
+      // но так как это hover-меню на CSS, оно закроется само, когда мышка уйдет.
   });
 </script>

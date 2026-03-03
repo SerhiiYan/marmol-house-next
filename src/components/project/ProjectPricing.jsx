@@ -1,35 +1,69 @@
+// src/components/project/ProjectPricing.jsx
 import React from 'react';
 import { globalPricing } from '../../data/pricingConfig';
+import { isModalOpen, formComment } from '../../store/modalStore';
 
-// Компонент принимает площадь дома (area) как пропс
-export default function ProjectPricing({ area }) {
+export default function ProjectPricing({ 
+  area, 
+  projectTitle = "этот проект", 
+  fixPrice = null,       // Фиксированная цена (если есть)
+  priceCategory = 'economy' // Какому тарифу соответствует фикс. цена
+}) {
   const { packages, currency } = globalPricing;
 
-  // Вспомогательная функция для форматирования цены (например: 75 000)
   const formatPrice = (price) => {
     return new Intl.NumberFormat('ru-RU').format(Math.round(price));
   };
 
-  // Превращаем объект пакетов в массив, чтобы перебрать их
-  const packagesList = Object.values(packages);
+  // --- 1. ЛОГИКА КОЭФФИЦИЕНТА ---
+  let multiplier = 1;
+
+  if (fixPrice && area > 0) {
+    // Считаем, сколько этот пакет стоил бы "по стандарту"
+    // (Если priceCategory не найдена, берем economy как базу)
+    const baseRate = packages[priceCategory]?.basePricePerMeter || packages['economy'].basePricePerMeter;
+    const standardPrice = area * baseRate;
+
+    // Вычисляем, во сколько раз реальная цена выше стандартной
+    if (standardPrice > 0) {
+        multiplier = fixPrice / standardPrice;
+    }
+  }
+
+  // Превращаем объект пакетов в массив [ключ, данные], чтобы проверять категорию
+  const packagesList = Object.entries(packages);
+
+  const handleCalculate = (packageName, price) => {
+    formComment.set(`Здравствуйте! Хочу узнать подробнее про стоимость строительства "${projectTitle}" в комплектации "${packageName}" (~${price} ${currency}).`);
+    isModalOpen.set(true);
+  };
 
   return (
-    <div className="py-10 bg-white">
-      <h3 className="text-2xl md:text-3xl font-sans font-bold text-marmol-navy mb-8 text-center">
+    <div className="w-full mt-12"> 
+      <h3 className="text-2xl md:text-3xl font-sans font-bold text-marmol-navy mb-8 text-center md:text-left">
         Стоимость строительства
       </h3>
       
-      {/* Сетка карточек */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-        
-        {packagesList.map((pkg, index) => {
-          // МАГИЯ: Считаем цену прямо здесь
-          const calculatedPrice = area * pkg.basePricePerMeter;
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {packagesList.map(([key, pkg], index) => {
+          
+          // --- 2. РАСЧЕТ ЦЕНЫ ---
+          let finalPrice;
+
+          if (fixPrice && key === priceCategory) {
+              // Если это та самая категория, ставим жесткую цену (чтобы цифра была красивой, как в админке)
+              finalPrice = fixPrice;
+          } else {
+              // Остальные пакеты умножаем на коэффициент (чтобы они тоже выросли пропорционально)
+              finalPrice = (area * pkg.basePricePerMeter) * multiplier;
+          }
+
+          // Пересчитываем цену за метр (для отображения в скобках)
+          const realMeterPrice = Math.round(finalPrice / area);
 
           return (
-            <div key={index} className="flex flex-col border border-gray-200 rounded-xl p-6 hover:shadow-xl transition-shadow duration-300 bg-white group">
+            <div key={key} className="flex flex-col bg-white border border-gray-200 rounded-xl p-6 hover:shadow-xl transition-shadow duration-300">
               
-              {/* Заголовок */}
               <div className="mb-4 border-b border-gray-100 pb-4">
                 <h4 className="text-xl font-bold text-marmol-navy mb-1">{pkg.title}</h4>
                 {pkg.subTitle && (
@@ -37,20 +71,22 @@ export default function ProjectPricing({ area }) {
                 )}
               </div>
 
-              {/* Цена */}
               <div className="mb-6">
                 <p className="text-sm text-gray-400">Стоимость домокомплекта:</p>
                 <div className="flex items-baseline gap-1">
                     <span className="text-sm text-marmol-gold font-bold">от</span>
-                    <span className="text-3xl font-bold text-marmol-navy group-hover:text-marmol-gold transition-colors">
-                        {formatPrice(calculatedPrice)}
+                    <span className="text-3xl font-bold text-marmol-navy">
+                        {formatPrice(finalPrice)}
                     </span>
                     <span className="text-sm font-bold text-marmol-navy">{currency}</span>
                 </div>
-                <p className="text-xs text-gray-300 mt-1">({pkg.basePricePerMeter} {currency}/м²)</p>
+                
+                {/* Показываем РЕАЛЬНУЮ цену метра для этого дома */}
+                <p className="text-xs text-gray-300 mt-1">
+                    ({formatPrice(realMeterPrice)} {currency}/м²)
+                </p>
               </div>
 
-              {/* Список опций */}
               <ul className="space-y-3 mb-8 flex-grow">
                 {pkg.features.map((feature, idx) => (
                   <li key={idx} className="flex items-start text-sm text-gray-600">
@@ -60,24 +96,18 @@ export default function ProjectPricing({ area }) {
                 ))}
               </ul>
 
-              {/* Кнопка заказа */}
               <button 
                 className="w-full py-3 border border-marmol-navy text-marmol-navy font-bold text-xs uppercase tracking-widest rounded hover:bg-marmol-navy hover:text-white transition-all cursor-pointer"
-                onClick={() => {
-                   // Тут можно вызывать модалку и передавать в неё выбранный пакет
-                   // например openModal(`Интересует ${pkg.title} для этого дома`)
-                   alert(`Вы выбрали: ${pkg.title}. Цена: ${formatPrice(calculatedPrice)} ${currency}`);
-                }}
+                onClick={() => handleCalculate(pkg.title, formatPrice(finalPrice))}
               >
                 Рассчитать
               </button>
             </div>
           );
         })}
-
       </div>
       
-      <p className="text-center text-xs text-gray-400 mt-8 max-w-2xl mx-auto">
+      <p className="text-xs text-gray-400 mt-6 max-w-2xl">
         * Указанные цены являются ориентировочными и зависят от геологии участка, удаленности объекта и точного выбора отделочных материалов. Не является публичной офертой.
       </p>
     </div>

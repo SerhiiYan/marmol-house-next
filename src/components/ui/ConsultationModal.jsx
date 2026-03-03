@@ -36,7 +36,7 @@ export default function ConsultationModal() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (honeypot) return isModalOpen.set(false);
+    if (honeypot) return isModalOpen.set(false); // Защита от ботов (Honeypot)
 
     // Валидация: проверяем, что телефон достаточно длинный (в formData.phone попадает только чистый номер без +375 при unmask)
     if (!formData.name.trim() || !formData.phone || formData.phone.length < 9) {
@@ -51,28 +51,42 @@ export default function ConsultationModal() {
         name: formData.name,
         phone: `+375${formData.phone}`,
         message: formData.comment,
+        honeypot: honeypot // Отправляем honeypot на сервер для двойной проверки
     };
 
     try {
-        const response = await fetch('/api/send-telegram.php', {
+        const response = await fetch('/api/form_handler.php', { // Заменил URL на актуальный
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+              'Content-Type': 'application/json',
+              'Accept': 'application/json' 
+            },
             body: JSON.stringify(requestBody),
         });
         
-        // Пытаемся распарсить JSON, даже если сервер ответил 200, но вернул пустоту (чтобы не упасть)
-        try { await response.json(); } catch(e) {} 
+        let result = {};
+        try { 
+            result = await response.json(); 
+        } catch(e) {
+            // Если сервер вернул не JSON
+        } 
 
-        if (!response.ok) throw new Error('Ошибка сервера');
+        if (!response.ok || !result.success) {
+            throw new Error(result.message || 'Ошибка сервера');
+        }
 
         setSuccess(true);
         if (window.ym) window.ym(104396711, 'reachGoal', 'form_submit');
 
+        // Автоматическое закрытие модалки после успеха (опционально)
+        setTimeout(() => {
+             isModalOpen.set(false);
+        }, 5000);
+
     } catch (err) {
         console.error(err);
-        // В продакшене лучше показать "Спасибо", даже если ошибка (и отправить лог себе), чтобы не пугать клиента
-        // Но пока оставим ошибку для теста
-        setError('Произошла ошибка при отправке. Пожалуйста, позвоните нам.');
+        // Выводим конкретную ошибку от сервера (например, "Подождите 1 минуту") или общую
+        setError(err.message === 'Failed to fetch' ? 'Ошибка сети. Проверьте интернет.' : err.message);
     } finally {
         setLoading(false);
     }
@@ -138,8 +152,8 @@ export default function ConsultationModal() {
 
                 <form onSubmit={handleSubmit} className="space-y-5 relative">
                     
-                    {/* Honeypot */}
-                    <input type="text" name="user_nickname" className="hidden" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
+                    {/* Honeypot: Важно для защиты от спама. Скрыто стилями Tailwind (hidden) */}
+                    <input type="text" name="honeypot" className="hidden" tabIndex="-1" autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
 
                     {/* Имя */}
                     <div className="group">
@@ -199,7 +213,16 @@ export default function ConsultationModal() {
                             className="mt-1 w-4 h-4 text-marmol-gold border-gray-300 rounded focus:ring-marmol-gold cursor-pointer"
                         />
                         <span className="text-xs text-gray-500 group-hover:text-gray-700 transition-colors">
-                            Принимаю условия <span className="text-marmol-gold underline">обработки данных</span>
+                            Я согласен на обработку персональных данных и принимаю условия{' '}
+                            <a 
+                                href="/privacy" 
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={(e) => e.stopPropagation()} 
+                                className="text-marmol-gold hover:underline font-bold relative z-10"
+                            >
+                                политики конфиденциальности
+                            </a>.
                         </span>
                     </label>
 

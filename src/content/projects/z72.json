@@ -10,6 +10,8 @@
   "availableTech": ["block", "frame"],
   "priceCategory": "economy",
   
+  "badges": ["Хит продаж"],
+
   "area": 118,
   "livingArea": 95,
   "dims": "10x12 м",
@@ -19,6 +21,10 @@
   "gallery": [
     "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070",
     "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2070"
+  ],
+
+  "plans": [
+    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070" 
   ],
   
   "description": "Идеальный одноэтажный дом для семьи из 3-4 человек. Рациональная планировка без лишних коридоров.",

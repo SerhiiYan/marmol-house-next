@@ -1,0 +1,103 @@
+---
+// src/pages/privacy.astro
+import Layout from '../layouts/Layout.astro';
+
+const lastUpdate = "01.02.2025"; // Дата актуализации
+---
+
+<Layout title="Политика обработки персональных данных | Marmol House">
+  
+  <main class="bg-white min-h-screen pt-32 pb-24">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-gray-700">
+      
+      <!-- Заголовок -->
+      <div class="mb-12 text-center md:text-left">
+        <h1 class="text-3xl md:text-4xl font-sans font-bold text-marmol-navy mb-4">
+            Политика в отношении обработки персональных данных
+        </h1>
+        <p class="text-sm text-gray-400">
+            Последнее обновление: {lastUpdate}
+        </p>
+      </div>
+
+      <!-- ТЕКСТ ПОЛИТИКИ -->
+      <!-- Используем классы space-y-6 для отступов между абзацами -->
+      <div class="space-y-8 leading-relaxed text-sm md:text-base">
+        
+        <section>
+            <h2 class="text-xl font-bold text-marmol-navy mb-4">1. Общие положения</h2>
+            <p>
+                1.1. Настоящая Политика определяет порядок обработки персональных данных и меры по обеспечению безопасности персональных данных в <strong>ООО «Мармоль Хаус»</strong> (далее – Оператор), расположенном по адресу: г. Гродно, ул. Лелевеля, 12А, к 6.
+            </p>
+            <p class="mt-2">
+                1.2. Политика разработана в соответствии с Законом Республики Беларусь от 07.05.2021 № 99-З «О защите персональных данных» (далее – Закон).
+            </p>
+            <p class="mt-2">
+                1.3. Действие Политики распространяется на все персональные данные, которые Оператор может получить от пользователей сайта <strong>marmolhouse.by</strong>.
+            </p>
+        </section>
+
+        <section>
+            <h2 class="text-xl font-bold text-marmol-navy mb-4">2. Какие данные мы собираем</h2>
+            <p>Оператор может обрабатывать следующие персональные данные Пользователя:</p>
+            <ul class="list-disc pl-5 mt-2 space-y-1 marker:text-marmol-gold">
+                <li>Фамилия, имя, отчество;</li>
+                <li>Номер телефона;</li>
+                <li>Адрес электронной почты;</li>
+                <li>Данные, которые передаются автоматически (IP-адрес, файлы cookie, данные о браузере).</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="text-xl font-bold text-marmol-navy mb-4">3. Цели обработки данных</h2>
+            <p>Мы собираем ваши данные исключительно для следующих целей:</p>
+            <ul class="list-disc pl-5 mt-2 space-y-1 marker:text-marmol-gold">
+                <li><strong>Обратная связь:</strong> Звонок менеджера для консультации по строительству, расчету стоимости проектов и предоставлению сметы.</li>
+                <li><strong>Исполнение договора:</strong> Подготовка документов для проектирования и строительства (если вы решите стать нашим клиентом).</li>
+                <li><strong>Аналитика:</strong> Улучшение качества работы сайта (обезличенные данные).</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="text-xl font-bold text-marmol-navy mb-4">4. Права пользователя</h2>
+            <p>Согласно Закону, вы имеете право:</p>
+            <ul class="list-disc pl-5 mt-2 space-y-1 marker:text-marmol-gold">
+                <li>В любой момент отозвать свое согласие на обработку данных.</li>
+                <li>Получить информацию о том, какие ваши данные мы храним.</li>
+                <li>Требовать внесения изменений в данные, если они устарели или неполны.</li>
+                <li>Требовать прекращения обработки и удаления своих персональных данных.</li>
+            </ul>
+            <p class="mt-4 bg-gray-50 p-4 rounded-lg border border-gray-100">
+                Для реализации своих прав вам достаточно направить нам заявление в свободной форме на электронную почту: <a href="mailto:yurmarmol@gmail.com" class="text-marmol-navy font-bold hover:text-marmol-gold">yurmarmol@gmail.com</a>. Мы ответим в течение 15 дней.
+            </p>
+        </section>
+
+        <section>
+            <h2 class="text-xl font-bold text-marmol-navy mb-4">5. Передача данных третьим лицам</h2>
+            <p>
+                Мы не передаем ваши персональные данные третьим лицам, за исключением случаев, предусмотренных законодательством Республики Беларусь (например, по запросу государственных органов), а также партнерам, участвующим в исполнении договора (например, для доставки материалов на ваш объект), исключительно в необходимом объеме.
+            </p>
+        </section>
+
+        <section>
+            <h2 class="text-xl font-bold text-marmol-navy mb-4">6. Файлы Cookie</h2>
+            <p>
+                Сайт использует файлы cookie для улучшения пользовательского опыта. Вы можете отключить их сохранение в настройках своего браузера, однако это может повлиять на корректную работу некоторых функций сайта.
+            </p>
+        </section>
+
+        <section class="border-t border-gray-200 pt-8 mt-8">
+            <h2 class="text-xl font-bold text-marmol-navy mb-4">Реквизиты Оператора</h2>
+            <div class="text-sm text-gray-500 space-y-1">
+                <p><strong>ООО «Мармоль Хаус»</strong></p>
+                <p>УНП: <strong>591536542</strong></p>
+                <p>Юридический адрес: г. Гродно, ул. Лелевеля, 12А, к 6</p>
+                <p>Email: yurmarmol@gmail.com</p>
+            </div>
+        </section>
+
+      </div>
+
+    </div>
+  </main>
+</Layout>

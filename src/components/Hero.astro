@@ -1,16 +1,30 @@
 ---
 // src/components/Hero.astro
-import {portfolioCases} from '../data/portfolio.js'
+import { getCollection } from 'astro:content';
+
 const videoUrl = "/hero-video.mp4";
+
+// 1. Получаем все проекты из папки content/portfolio
+const allPortfolio = await getCollection('portfolio');
+
+// 2. Выбираем только те, где isHero: true, и берем ровно 3 штуки
+const featuredCases = allPortfolio
+  .filter(project => project.data.isHero === true)
+  .slice(0, 3);
 ---
 
 <section class="relative w-full h-screen min-h-[700px] overflow-hidden bg-marmol-navy">
   
-  <!-- СЛОИ ФОНА (Видео + Сетка + Градиент) - БЕЗ ИЗМЕНЕНИЙ -->
+  <img 
+    src="/hero-mobile.webp" 
+    alt="Строительство каркасных и блочных домов в Гродно" 
+    class="absolute top-0 left-0 w-full h-full object-cover md:hidden"
+  />
+
   <video 
-    class="absolute top-0 left-0 w-full h-full object-cover scale-105" 
+    class="absolute top-0 left-0 w-full h-full object-cover scale-105 hidden md:block" 
     autoplay muted loop playsinline
-    poster="https://images.unsplash.com/photo-1600596542815-60c37c65b567?q=80&w=2073"
+    poster="/hero-mobile.webp"
   >
     <source src={videoUrl} type="video/mp4" />
   </video>
@@ -20,20 +34,22 @@ const videoUrl = "/hero-video.mp4";
   </div>
   <div class="absolute inset-0 z-[2] bg-gradient-to-t from-[#0F172A] via-[#0F172A]/50 to-[#0F172A]/30"></div>
 
-  <!-- КОНТЕНТ -->
-  <div class="relative z-10 max-w-[1920px] mx-auto px-6 h-full flex flex-col justify-end pb-12 md:pb-24">
+  <div class="relative z-10 max-w-[1920px] mx-auto px-12 md:px-24 h-full flex flex-col justify-end pb-12 md:pb-24">
     
     <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-end w-full">
       
-      <!-- ЛЕВАЯ ЧАСТЬ -->
       <div class="md:col-span-8 flex flex-col items-start animate-fade-in-up">
         
-        <h1 class="font-sans font-medium text-4xl md:text-6xl lg:text-[5rem] leading-[1.1] text-white uppercase tracking-wider mb-8 drop-shadow-2xl">
-          Архитектура <br />
-          <span class="text-white font-bold">Комфортной жизни</span>
+        <h1 class="flex flex-col items-start mb-8">
+          <span class="text-marmol-gold text-sm md:text-base font-bold uppercase tracking-widest mb-4 drop-shadow-md">
+            Строим каркасные и блочные дома под ключ в Гродно
+          </span>
+          <span class="font-sans font-medium text-4xl md:text-6xl lg:text-[5rem] leading-[1.1] text-white uppercase tracking-wider drop-shadow-2xl">
+            Архитектура <br />
+            <strong class="text-white font-bold font-sans">Комфортной <br /> жизни</strong>
+          </span>
         </h1>
 
-        <!-- Блок описания -->
         <div class="max-w-2xl border-l-2 border-marmol-gold pl-6 mb-12 flex flex-col gap-4 backdrop-blur-sm bg-marmol-navy/10 py-2 rounded-r-xl">
            <p class="text-gray-100 text-lg md:text-xl font-body font-light tracking-wide leading-relaxed shadow-black/50 drop-shadow-md">
              Проектирование и строительство в <strong class="text-white font-medium">Гродно, области и Минске</strong>. Работаем по всей <span class="text-white">Беларуси</span>.
@@ -44,10 +60,7 @@ const videoUrl = "/hero-video.mp4";
            </p>
         </div>
 
-        <!-- КНОПКИ ДЕЙСТВИЯ -->
         <div class="flex flex-col md:flex-row gap-5 w-full md:w-auto">
-            
-            <!-- 1. НОВАЯ КНОПКА (Открыть форму) -->
             <button 
               id="hero-consult-btn"
               class="bg-marmol-gold text-marmol-navy px-8 py-4 font-bold uppercase tracking-widest hover:bg-white transition-all duration-300 shadow-xl shadow-marmol-gold/20 transform hover:-translate-y-1 text-sm md:text-base flex justify-center items-center cursor-pointer"
@@ -55,7 +68,6 @@ const videoUrl = "/hero-video.mp4";
               Получить консультацию
           </button>
 
-            <!-- 2. Скролл (Второстепенная) -->
             <a href="#projects" class="group flex items-center justify-center md:justify-start space-x-4 text-white hover:text-marmol-gold transition-colors duration-300 py-3 md:py-0">
                 <div class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/30 flex items-center justify-center group-hover:border-marmol-gold transition-colors bg-white/5 backdrop-blur-md">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 animate-bounce mt-1">
@@ -68,29 +80,38 @@ const videoUrl = "/hero-video.mp4";
 
       </div>
 
-      <!-- ПРАВАЯ ЧАСТЬ (АВТО-СЛАЙДЕР) -->
       <div class="hidden md:flex md:col-span-4 justify-end">
         <div class="relative w-80 h-56 bg-gray-900 overflow-hidden border border-white/20 group cursor-pointer shadow-2xl backdrop-blur-md bg-white/5">
             
-            <!-- Генерируем картинки слайдера -->
-            {portfolioCases.map((slide, index) => (
-                <div 
-                    class={`hero-slide absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === 0 ? 'opacity-100' : 'opacity-0'}`}
+            {featuredCases.map((project, index) => {
+                const data = project.data; // Данные JSON
+                // В Astro 5 у каждого элемента коллекции есть свойство id (имя файла без расширения)
+                const projectUrl = `/portfolio/${project.id}`; 
+
+                return (
+                // Меняем <div> на <a> и добавляем href
+                <a 
+                    href={projectUrl}
+                    class={`hero-slide block absolute inset-0 transition-opacity duration-1000 ease-in-out cursor-pointer ${index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
                     data-index={index}
                 >
                     <img 
-                        src={slide.image} 
+                        src={data.mainImage} 
                         class="w-full h-full object-cover transition-transform duration-[5000ms] group-hover:scale-110 opacity-90"
-                        alt={slide.title}
+                        alt={data.title}
                     />
                      <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/90 to-transparent">
                         <p class="text-white text-xs uppercase tracking-widest mb-1 opacity-70">Реализованный проект</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-white font-bold uppercase tracking-wider text-sm">{slide.title}</span>
+                            <span class="text-white font-bold uppercase tracking-wider text-sm">{data.title}</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 text-marmol-gold">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                            </svg>
                         </div>
                     </div>
-                </div>
-            ))}
+                </a>
+                )
+            })}
             
             <div class="absolute inset-0 border-2 border-marmol-gold/0 group-hover:border-marmol-gold/100 transition-colors duration-300 pointer-events-none z-10"></div>
         </div>
@@ -103,33 +124,27 @@ const videoUrl = "/hero-video.mp4";
 <script>
     import { isModalOpen, formComment } from '../store/modalStore';
 
-    // 1. ЛОГИКА ОТКРЫТИЯ МОДАЛКИ
+    // Обработка клика по кнопке
     const btn = document.getElementById('hero-consult-btn');
     btn?.addEventListener('click', () => {
-        // Устанавливаем текст для ЭТОЙ кнопки
         formComment.set('Здравствуйте! Хочу получить бесплатную консультацию по строительству дома.');
-        // Открываем
         isModalOpen.set(true);
     });
 
-    // 2. ЛОГИКА СЛАЙДЕРА
+    // Логика переключения слайдов
     const slides = document.querySelectorAll('.hero-slide');
     let currentSlide = 0;
     
-    // Запускаем только если слайды существуют (на десктопе)
-    if (slides.length > 0) {
+    if (slides.length > 1) { // Запускаем интервал только если слайдов больше 1
         setInterval(() => {
-            // Скрываем текущий
             slides[currentSlide].classList.remove('opacity-100');
             slides[currentSlide].classList.add('opacity-0');
             
-            // Вычисляем следующий
             currentSlide = (currentSlide + 1) % slides.length;
             
-            // Показываем следующий
             slides[currentSlide].classList.remove('opacity-0');
             slides[currentSlide].classList.add('opacity-100');
-        }, 5000); // каждые 5 секунд
+        }, 5000); 
     }
 </script>
 

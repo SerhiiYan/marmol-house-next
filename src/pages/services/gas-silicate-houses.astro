@@ -4,209 +4,379 @@ import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 import { globalPricing } from '../../data/pricingConfig';
 
-// 1. ДИНАМИЧЕСКАЯ ЦЕНА
-// Берем цену пакета "Премиум +" (это наш топ для блоков)
-const premiumPrice = globalPricing.packages.premiumPlus.basePricePerMeter;
+// 1. ДИНАМИЧЕСКИЕ ЦЕНЫ
+const priceBase = Math.round(globalPricing.packages.premium.basePricePerMeter * 0.85); 
+const priceFull = globalPricing.packages.premiumPlus.basePricePerMeter;
 const currency = globalPricing.currency;
 
-// 2. ФИЛЬТР ПРОЕКТОВ (ИСПРАВЛЕНО)
-// Ищем те проекты, где в availableTech есть 'block'
+// 2. ФИЛЬТР ПРОЕКТОВ
 const allProjects = await getCollection('projects');
 const blockProjects = allProjects.filter(p => 
     p.data.availableTech.includes('block')
 ).slice(0, 3); 
 
+// --- ЧИСТОЕ SEO ---
+const pageTitle = "Дома из газосиликатных блоков под ключ: Капитальное строительство | Marmol House";
+const pageDescription = "Строительство капитальных домов из газосиликатных блоков под ключ в Гродно и Минске. Монолитные перекрытия, фасады из клинкера, гарантия 5 лет.";
+
 // 3. SEO Schema
 const schema = {
   "@context": "https://schema.org",
-  "@type": "Service",
-  "serviceType": "Строительство домов из газосиликатных блоков",
-  "provider": {
-    "@type": "ConstructionBusiness",
-    "name": "Marmol House"
-  },
-  "areaServed": ["Гродно", "Минск", "Гродненская область"],
-  "description": "Строительство надежных каменных домов с фасадом из клинкерного кирпича. Гарантия 5 лет, сроки от 3 месяцев."
+  "@graph": [
+    {
+      "@type": "Service",
+      "serviceType": "Строительство домов из газосиликата",
+      "provider": {
+        "@type": "ConstructionBusiness",
+        "name": "Marmol House"
+      },
+      "areaServed": ["Гродно", "Минск", "Гродненская область"],
+      "description": pageDescription,
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "BYN",
+        "price": priceBase
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Нужно ли утеплять газосиликат?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Для норм Беларуси (R=3.2) стена 400мм D500 проходит впритык. Мы рекомендуем утепление каменной ватой 50-100мм для перекрытия мостиков холода и экономии на отоплении."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Когда можно штукатурить стены?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Газосиликат должен высохнуть. Мы рекомендуем приступать к внутренней отделке через 3-4 месяца после возведения коробки, а к фасаду — после окончания мокрых работ внутри."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Какой фундамент лучше?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Блочный дом тяжелый и хрупкий, он не прощает подвижек грунта. Лучший вариант — монолитный ленточный фундамент на глубину промерзания (1.2м) или свайно-ростверковый (если позволяет геология)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Работаете ли вы с кредитами (240 указ)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Да. Мы предоставляем сметы, договоры и акты выполненных работ по формам, которые требуют банки (Беларусбанк, Белагропромбанк и др.) для выдачи кредитов на строительство, включая льготные (Указ 240, 95) и материнский капитал."
+          }
+        }
+      ]
+    }
+  ]
 };
 ---
 
-<Layout title="Дома из газосиликатных блоков под ключ в Гродно | Marmol House">
+<Layout title={pageTitle} description={pageDescription}>
   <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
 
-  <main class="bg-white pt-24">
+  <main class="bg-white">
 
-    <!-- 1. HERO SECTION -->
-    <section class="relative py-24 bg-gray-900 overflow-hidden">
-        <!-- Фон (темный, каменный) -->
-        <div class="absolute inset-0">
-            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2000" class="w-full h-full object-cover grayscale" />
-            <div class="absolute inset-0 bg-black/60"></div>
-        </div>
+    <section class="relative h-screen flex items-center md:items-end pb-0 md:pb-48 bg-marmol-navy overflow-hidden">
         
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 class="text-4xl md:text-6xl font-sans font-bold text-white mb-6 leading-tight">
-                Капитальные дома <br />
-                <span class="text-marmol-gold">на века</span>
-            </h1>
-            <p class="text-xl text-gray-300 max-w-2xl font-light">
-                Строительство из газосиликатных блоков с премиальным клинкерным фасадом. 
-                Сочетание энергоэффективности, тишины и эстетики.
-            </p>
-            
-            <div class="mt-8 flex items-center space-x-8 text-sm text-gray-400 font-bold uppercase tracking-widest">
-                <span>Гарантия 5 лет</span>
-                <span class="w-1 h-1 bg-marmol-gold rounded-full"></span>
-                <span>Срок от 3 месяцев</span>
-            </div>
+        <div class="absolute inset-0 z-0">
+             <img src="/block-house/brick-house.webp" class="w-full h-full object-cover opacity-30 mix-blend-overlay" alt="" aria-hidden="true" loading="eager" />
+             <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-marmol-navy via-marmol-navy/90 md:via-marmol-navy/80 to-transparent"></div>
         </div>
-    </section>
 
-    <!-- 2. ТЕХНОЛОГИЯ И ОТДЕЛКА -->
-    <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
-                <div>
-                    <h2 class="text-3xl font-sans font-bold text-marmol-navy mb-6">
-                        Стандарты Marmol House
-                    </h2>
-                    <div class="space-y-6 text-gray-600 leading-relaxed">
-                        <p>
-                            Основа наших каменных домов — <strong>газосиликатные блоки D400-D500</strong>. Это материал с идеальной геометрией и высокими показателями теплосбережения. Такой дом "дышит", сохраняя комфортный микроклимат зимой и летом.
-                        </p>
-                        <p>
-                            <strong>Внешняя отделка — на ваш выбор:</strong>
-                        </p>
-                        <ul class="list-disc pl-5 space-y-2">
-                            <li>
-                                <strong>Декоративная штукатурка</strong> («Корник», «Барашек»). Мы используем только качественные силиконовые и силикатные составы, которые устойчивы к загрязнениям и сохраняют цвет.
-                            </li>
-                            <li>
-                                <strong>Клинкерный кирпич</strong> (Marmol Premium). Наша фирменная технология для тех, кто хочет сделать фасад "раз и навсегда". Клинкер создает вокруг дома защитный панцирь и выглядит максимально статусно.
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row gap-8 items-center md:items-end text-center md:text-left">
                 
-                <!-- Визуал стены в разрезе -->
-                <div class="bg-gray-50 p-8 rounded-2xl border border-gray-100">
-                    <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6">Пирог стены (Marmol Standard)</h3>
-                    <ul class="space-y-4">
-                        <li class="flex items-center p-4 bg-white rounded-lg shadow-sm border-l-4 border-marmol-navy">
-                            <span class="font-bold text-marmol-navy w-32 shrink-0">Фасад</span>
-                            <span class="text-gray-600 text-sm">Штукатурка / Клинкер / Дерево</span>
-                        </li>
-                        <li class="flex items-center p-4 bg-white rounded-lg shadow-sm border-l-4 border-gray-300">
-                            <span class="font-bold text-marmol-navy w-32 shrink-0">Утепление</span>
-                            <span class="text-gray-600 text-sm">Минеральная вата (50-100 мм)</span>
-                        </li>
-                        <li class="flex items-center p-4 bg-white rounded-lg shadow-sm border-l-4 border-gray-800">
-                            <span class="font-bold text-marmol-navy w-32 shrink-0">Несущая</span>
-                            <span class="text-gray-600 text-sm">Газосиликат / Керамзитобетон</span>
-                        </li>
-                        <li class="flex items-center p-4 bg-white rounded-lg shadow-sm border-l-4 border-marmol-gold">
-                            <span class="font-bold text-marmol-navy w-32 shrink-0">Внутри</span>
-                            <span class="text-gray-600 text-sm">Гипсовая/Цементная штукатурка</span>
-                        </li>
-                    </ul>
+                <div class="hidden md:flex flex-col items-center gap-6 opacity-0 animate-fade-in-up" style="animation-delay: 0.1s;">
+                    <span class="text-gray-500 text-[10px] font-bold uppercase tracking-[0.3em] [writing-mode:vertical-rl] rotate-180">
+                        Technology
+                    </span>
+                    <div class="w-[1px] h-40 bg-gradient-to-t from-marmol-gold to-transparent"></div>
                 </div>
-            </div>
 
-            <!-- 3. ДЕТАЛЬНАЯ КОМПЛЕКТАЦИЯ -->
-            <div class="bg-gray-50 rounded-3xl p-8 md:p-12">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-marmol-navy mb-2">Комплектация «Премиум+»</h2>
-                    <p class="text-gray-500 max-w-2xl mx-auto mb-6">
-                        Максимально надежный каменный дом. Бескомпромиссное качество материалов и полная инженерная подготовка.
+                <div class="max-w-4xl">
+                    <div class="flex items-center justify-center md:justify-start gap-3 mb-6 opacity-0 animate-fade-in-up" style="animation-delay: 0.2s;">
+                        <span class="text-marmol-gold text-xs font-bold uppercase tracking-widest">Капитальное строительство</span>
+                        <div class="hidden md:block h-[1px] w-16 bg-white/10"></div>
+                    </div>
+
+                    <h1 class="text-5xl md:text-7xl lg:text-8xl font-sans font-bold text-white mb-8 leading-[1.0] tracking-tight opacity-0 animate-fade-in-up" style="animation-delay: 0.3s;">
+                        Дома из блоков <br />
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-marmol-gold via-white/80 to-white/40">под ключ</span>
+                    </h1>
+                    
+                    <p class="text-lg md:text-xl text-gray-400 font-light leading-relaxed max-w-xl md:border-l md:border-white/10 md:pl-8 opacity-0 animate-fade-in-up" style="animation-delay: 0.5s;">
+                        Профессиональное строительство из <strong class="text-white font-normal">газосиликатных блоков</strong>. <br class="hidden md:block"/>
+                        Монолитные перекрытия. Клинкерный фасад. Гарантия 5 лет.
                     </p>
-                    <div class="inline-block bg-marmol-navy text-white text-lg font-bold px-6 py-2 rounded-lg">
-                        от {premiumPrice} {currency}/м²
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                    <!-- Фундамент -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="text-lg font-bold text-marmol-navy mb-4 border-b border-gray-100 pb-2">Фундамент</h3>
-                        <ul class="space-y-2 text-sm text-gray-600">
-                            <li class="flex items-start"><svg class="w-4 h-4 text-marmol-gold mr-2 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Монолитный железобетонный (Лента/Плита)</li>
-                            <li class="flex items-start"><svg class="w-4 h-4 text-marmol-gold mr-2 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Армирование каркасами Ø12 мм</li>
-                            <li class="flex items-start"><svg class="w-4 h-4 text-marmol-gold mr-2 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Устройство крылец и террас</li>
-                        </ul>
-                    </div>
-                    <!-- Стены -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="text-lg font-bold text-marmol-navy mb-4 border-b border-gray-100 pb-2">Стены и перегородки</h3>
-                        <ul class="space-y-2 text-sm text-gray-600">
-                            <li class="flex items-start"><svg class="w-4 h-4 text-marmol-gold mr-2 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Блок 400 мм + Утепление 50 мм</li>
-                            <li class="flex items-start"><svg class="w-4 h-4 text-marmol-gold mr-2 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Внутренняя штукатурка (Гипс/Цемент)</li>
-                            <li class="flex items-start"><svg class="w-4 h-4 text-marmol-gold mr-2 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Перегородки из кирпича/блоков</li>
-                        </ul>
-                    </div>
-                    <!-- Пол и потолок -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="text-lg font-bold text-marmol-navy mb-4 border-b border-gray-100 pb-2">Пол и потолок</h3>
-                        <ul class="space-y-2 text-sm text-gray-600">
-                            <li class="flex items-start"><svg class="w-4 h-4 text-marmol-gold mr-2 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Утепленный пол + Чистовая стяжка</li>
-                            <li class="flex items-start"><svg class="w-4 h-4 text-marmol-gold mr-2 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Потолки 2.7+ м, утепление 150 мм</li>
-                        </ul>
-                    </div>
-                    <!-- Кровля и Окна -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="text-lg font-bold text-marmol-navy mb-4 border-b border-gray-100 pb-2">Кровля и Окна</h3>
-                        <ul class="space-y-2 text-sm text-gray-600">
-                            <li class="flex items-start"><svg class="w-4 h-4 text-marmol-gold mr-2 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Металлочерепица "Монтеррей Norman"</li>
-                            <li class="flex items-start"><svg class="w-4 h-4 text-marmol-gold mr-2 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Водосточная система + Софиты</li>
-                            <li class="flex items-start"><svg class="w-4 h-4 text-marmol-gold mr-2 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Пятикамерный профиль окон</li>
-                        </ul>
-                    </div>
                 </div>
             </div>
+        </div>
 
+        <div class="hidden md:flex absolute bottom-10 right-16 flex-col items-center gap-4 opacity-30 hover:opacity-100 transition-opacity">
+            <div class="h-24 w-[1px] bg-white/10 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1/2 bg-marmol-gold animate-drop-line"></div>
+            </div>
+            <span class="text-[10px] text-white uppercase tracking-widest [writing-mode:vertical-rl] rotate-180">Scroll</span>
         </div>
     </section>
 
-    <!-- 4. ЭТАПЫ СТРОИТЕЛЬСТВА -->
-    <section class="py-20 bg-marmol-navy text-white">
+    <section class="py-24 bg-gray-50" id="packages">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold mb-12 text-center">Как мы строим?</h2>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center relative">
-                <!-- Линия -->
-                <div class="hidden md:block absolute top-6 left-0 w-full h-0.5 bg-white/20 -z-0"></div>
-                <!-- Этапы... -->
-                <div class="relative z-10"><div class="w-12 h-12 bg-marmol-gold text-marmol-navy rounded-full flex items-center justify-center font-bold mx-auto mb-4 text-xl">1</div><h3 class="text-lg font-bold mb-2">Проект и Смета</h3><p class="text-sm text-gray-400">2-3 недели</p></div>
-                <div class="relative z-10"><div class="w-12 h-12 bg-marmol-navy border-2 border-marmol-gold text-white rounded-full flex items-center justify-center font-bold mx-auto mb-4 text-xl">2</div><h3 class="text-lg font-bold mb-2">Фундамент</h3><p class="text-sm text-gray-400">1 месяц</p></div>
-                <div class="relative z-10"><div class="w-12 h-12 bg-marmol-navy border-2 border-marmol-gold text-white rounded-full flex items-center justify-center font-bold mx-auto mb-4 text-xl">3</div><h3 class="text-lg font-bold mb-2">Коробка + Кровля</h3><p class="text-sm text-gray-400">1.5 - 2 месяца</p></div>
-                <div class="relative z-10"><div class="w-12 h-12 bg-white text-marmol-navy rounded-full flex items-center justify-center font-bold mx-auto mb-4 text-xl"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg></div><h3 class="text-lg font-bold mb-2">Фасад и Сдача</h3><p class="text-sm text-gray-400">2-3 недели</p></div>
+            <div class="text-center mb-12">
+                <span class="text-marmol-gold text-xs font-bold uppercase tracking-widest">Смета и материалы</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-marmol-navy mt-3">Варианты строительства</h2>
+            </div>
+
+            <div class="flex justify-center mb-16">
+                <div class="relative bg-white p-1 rounded-full shadow-sm inline-flex border border-gray-200">
+                    <div id="tab-bg" class="absolute top-1 left-1 bottom-1 w-[calc(50%-4px)] bg-marmol-navy rounded-full transition-all duration-300 ease-out z-0"></div>
+                    <button id="btn-base" class="relative z-10 w-40 py-3 rounded-full text-sm font-bold uppercase tracking-widest text-white transition-colors duration-300">
+                        Коробка
+                    </button>
+                    <button id="btn-full" class="relative z-10 w-40 py-3 rounded-full text-sm font-bold uppercase tracking-widest text-gray-500 hover:text-marmol-navy transition-colors duration-300">
+                        Премиум+
+                    </button>
+                </div>
+            </div>
+
+            <div id="content-base" class="transition-opacity duration-300">
+                <div class="bg-white rounded-2xl overflow-hidden shadow-xl">
+                    <div class="grid grid-cols-1 lg:grid-cols-12">
+                        <div class="lg:col-span-4 bg-gray-100 p-10 flex flex-col justify-between relative overflow-hidden">
+                            <div class="relative z-10">
+                                <h3 class="text-2xl font-bold text-marmol-navy">Комплектация <br/> «Коробка»</h3>
+                                <div class="mt-2 inline-block px-3 py-1 bg-white text-gray-500 text-[10px] uppercase font-bold rounded-full tracking-wide shadow-sm">Базовый контур</div>
+                                <p class="text-gray-500 mt-6 text-sm leading-relaxed">
+                                    Фундамент, стены и кровля. <br/><br/>
+                                    <strong class="text-marmol-navy">В стоимость включены:</strong> материалы, работа строителей и работа всей необходимой техники.
+                                </p>
+                            </div>
+                            <div class="relative z-10 mt-10">
+                                <div class="text-xs text-gray-400 uppercase tracking-widest mb-1">Стоимость</div>
+                                <div class="text-4xl font-bold text-marmol-navy">от {priceBase} <span class="text-lg font-normal text-gray-400">{currency}/м²</span></div>
+                            </div>
+                        </div>
+                        
+                        <div class="lg:col-span-8 p-10">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-12">
+                                <div>
+                                    <h4 class="flex items-center text-marmol-navy font-bold mb-4">
+                                        <span class="w-3 h-3 bg-marmol-gold mr-3 rounded-sm"></span>
+                                        Фундамент
+                                    </h4>
+                                    <ul class="text-sm text-gray-600 space-y-2">
+                                        <li>Монолитный железобетонный</li>
+                                        <li>Тип: <strong>Ленточный</strong></li>
+                                        <li>Ввод коммуникаций</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="flex items-center text-marmol-navy font-bold mb-4">
+                                        <span class="w-3 h-3 bg-marmol-gold mr-3 rounded-sm"></span>
+                                        Стены и Перегородки
+                                    </h4>
+                                    <ul class="text-sm text-gray-600 space-y-2">
+                                        <li>Стены из газосиликатных блоков</li>
+                                        <li>Перегородки из газоблоков и кирпича</li>
+                                        <li>Железобетонные перемычки</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="flex items-center text-marmol-navy font-bold mb-4">
+                                        <span class="w-3 h-3 bg-marmol-gold mr-3 rounded-sm"></span>
+                                        Высота потолка
+                                    </h4>
+                                    <ul class="text-sm text-gray-600 space-y-2">
+                                        <li>Высота потолков <strong>2.7 м</strong></li>
+                                        <li>Черновые перекрытия</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="flex items-center text-marmol-navy font-bold mb-4">
+                                        <span class="w-3 h-3 bg-marmol-gold mr-3 rounded-sm"></span>
+                                        Кровля
+                                    </h4>
+                                    <ul class="text-sm text-gray-600 space-y-2">
+                                        <li>Стропильная система из бруса</li>
+                                        <li>Покрытие: <strong>Металлочерепица</strong></li>
+                                        <li>Гидроизоляционная мембрана</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="content-full" class="hidden transition-opacity duration-300">
+                <div class="bg-marmol-navy rounded-2xl overflow-hidden shadow-2xl text-white">
+                    <div class="grid grid-cols-1 lg:grid-cols-12">
+                        <div class="lg:col-span-4 bg-white/5 p-10 flex flex-col justify-between relative">
+                            <div class="relative z-10">
+                                <h3 class="text-2xl font-bold text-white">Комплектация <br/> Премиум+</h3>
+                                <div class="mt-2 inline-block px-3 py-1 bg-marmol-gold text-marmol-navy text-[10px] uppercase font-bold rounded-full tracking-wide">Для Жизни (ПМЖ)</div>
+                                <p class="text-gray-400 mt-6 text-sm leading-relaxed">
+                                    Полный цикл работ: улучшенное утепление, полная разводка инженерии, остекление и чистовая стяжка.
+                                </p>
+                            </div>
+                            <div class="relative z-10 mt-10">
+                                <div class="text-xs text-gray-400 uppercase tracking-widest mb-1">Стоимость</div>
+                                <div class="text-4xl font-bold text-white">от {priceFull} <span class="text-lg font-normal text-gray-500">{currency}/м²</span></div>
+                            </div>
+                        </div>
+                        
+                        <div class="lg:col-span-8 p-10">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-12">
+                                
+                                <div>
+                                    <h4 class="flex items-center text-marmol-gold font-bold mb-4">
+                                        <span class="w-1 h-5 bg-marmol-gold mr-3 rounded-sm"></span>
+                                        Фундамент
+                                    </h4>
+                                    <ul class="text-sm text-gray-300 space-y-2">
+                                        <li>Монолитный железобетонный ленточный</li>
+                                        <li>Армирование каркасами Ø12 мм</li>
+                                        <li>Устройство крылец и террас по проекту</li>
+                                    </ul>
+                                </div>
+
+                                <div>
+                                    <h4 class="flex items-center text-marmol-gold font-bold mb-4">
+                                        <span class="w-1 h-5 bg-marmol-gold mr-3 rounded-sm"></span>
+                                        Стены и перегородки
+                                    </h4>
+                                    <ul class="text-sm text-gray-300 space-y-2">
+                                        <li>Газосиликат 400мм + <strong>утепление 50мм</strong></li>
+                                        <li>Внутренняя отделка: гипсовая/цементная штукатурка</li>
+                                        <li>Перегородки из блоков 100/200мм и кирпича</li>
+                                    </ul>
+                                </div>
+
+                                <div>
+                                    <h4 class="flex items-center text-marmol-gold font-bold mb-4">
+                                        <span class="w-1 h-5 bg-marmol-gold mr-3 rounded-sm"></span>
+                                        Пол и потолок
+                                    </h4>
+                                    <ul class="text-sm text-gray-300 space-y-2">
+                                        <li>Утепление экструдированным пенополистиролом + стяжка 70мм</li>
+                                        <li>Высота потолков 2.7 м, утепление 150мм</li>
+                                        <li><strong>Двойная обшивка</strong> потолка гипсокартоном</li>
+                                    </ul>
+                                </div>
+
+                                <div>
+                                    <h4 class="flex items-center text-marmol-gold font-bold mb-4">
+                                        <span class="w-1 h-5 bg-marmol-gold mr-3 rounded-sm"></span>
+                                        Кровля и проемы
+                                    </h4>
+                                    <ul class="text-sm text-gray-300 space-y-2">
+                                        <li>Металлочерепица "Монтеррей Norman" + водосток</li>
+                                        <li>Двухкамерные стеклопакеты (пятикамерный профиль)</li>
+                                        <li>Подшивка свесов софитом</li>
+                                    </ul>
+                                </div>
+
+                                <div class="md:col-span-2 pt-6 border-t border-white/10">
+                                     <h4 class="flex items-center text-white font-bold mb-6">
+                                         <span class="w-8 h-1 bg-marmol-gold mr-3 rounded-sm"></span>
+                                         Инженерия
+                                     </h4>
+                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                         <ul class="text-sm text-gray-300 space-y-2 pl-4 border-l border-white/20">
+                                             <li>Полный комплект электрики и сантехники</li>
+                                             <li>Вентиляционная шахта из <strong>клинкерного кирпича</strong></li>
+                                         </ul>
+                                         <ul class="text-sm text-gray-300 space-y-2 pl-4 border-l border-white/20">
+                                             <li>Разводка всех сетей по дому</li>
+                                             <li>Подготовка под установку котла</li>
+                                         </ul>
+                                     </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="py-24 bg-gray-900 text-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Правильный пирог стены</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto font-light">
+                    Мы строим так, чтобы дом "дышал", но не выпускал тепло.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <div class="group relative p-8 bg-gray-800 rounded-xl hover:bg-gray-700 transition-colors duration-300 shadow-lg">
+                    <h4 class="text-xl font-bold text-white mb-3">Блок + Вата</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Мы не используем пенопласт для стен. Только паропроницаемая каменная вата. Это исключает эффект "парника" и образование плесени внутри дома.
+                    </p>
+                </div>
+
+                <div class="group relative p-8 bg-gray-800 rounded-xl hover:bg-gray-700 transition-colors duration-300 shadow-lg">
+                    <h4 class="text-xl font-bold text-white mb-3">Армирование</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Газосиликат хрупок на изгиб. Мы армируем каждый 3-й ряд кладки и зону под окнами базальтовой сеткой или арматурой, чтобы избежать трещин при усадке.
+                    </p>
+                </div>
+
+                <div class="group relative p-8 bg-gray-800 rounded-xl hover:bg-gray-700 transition-colors duration-300 shadow-lg">
+                    <h4 class="text-xl font-bold text-white mb-3">Клей, а не раствор</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Мы кладем блоки на специальный клей с толщиной шва 5 мм. Это исключает "мостики холода", которые возникают при использовании обычного цементного раствора.
+                    </p>
+                </div>
+
             </div>
         </div>
     </section>
 
-    <!-- 5. ПОДХОДЯЩИЕ ПРОЕКТЫ -->
     <section class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-sans font-bold text-marmol-navy mb-8">Популярные проекты из газосиликата</h2>
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-marmol-navy mb-4">Проекты из блоков</h2>
+                    <p class="text-gray-500 max-w-xl">Надежные дома с монолитными перекрытиями.</p>
+                </div>
+                <a href="/projects" class="hidden md:block text-marmol-navy font-bold uppercase text-xs tracking-widest border-b border-marmol-navy/30 pb-1 hover:border-marmol-navy transition-colors">
+                    Смотреть все проекты
+                </a>
+            </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {blockProjects.map(project => {
                     const data = project.data;
-                    
-                    // --- ЛОГИКА ЦЕНЫ (ИСПРАВЛЕНА) ---
-                    // @ts-ignore
-                    const categoryKey = data.priceCategory || 'economy';
-                    const projectPrice = globalPricing.packages[categoryKey]?.basePricePerMeter || 0;
-                    const totalPrice = data.area * projectPrice;
+                    const totalPrice = data.area * priceFull; 
                     
                     return (
-                        <a href={`/projects/${project.id}`} class="group block bg-gray-50 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all">
-                            <div class="relative h-64 overflow-hidden">
-                                <img src={data.mainImage} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold text-marmol-navy mb-2">{data.title}</h3>
-                                <div class="flex justify-between text-sm text-gray-600 border-t border-gray-200 pt-4 mt-4">
-                                    <span>{data.area} м²</span>
-                                    <span class="font-bold">от {totalPrice.toLocaleString()} BYN</span>
+                        <a href={`/projects/${project.id}`} class="group relative block h-[450px] overflow-hidden rounded-sm">
+                            <img src={data.mainImage} loading="lazy" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt={`Проект блочного дома: ${data.title}`} />
+                            
+                            <div class="absolute inset-0 bg-gradient-to-t from-marmol-navy via-marmol-navy/40 to-transparent opacity-90 transition-opacity duration-300"></div>
+                            
+                            <div class="absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                                <div class="text-marmol-gold text-xs font-bold uppercase tracking-widest mb-2">{data.area} м²</div>
+                                <h3 class="text-2xl font-bold text-white mb-4 font-serif">{data.title}</h3>
+                                
+                                <div class="flex items-center gap-4 text-white/70 text-sm border-t border-white/10 pt-4 opacity-0 group-hover:opacity-100 transition-opacity delay-100">
+                                    <span>~ {totalPrice.toLocaleString()} BYN</span>
+                                    <span class="w-1 h-1 bg-marmol-gold rounded-full"></span>
+                                    <span>Подробнее &rarr;</span>
                                 </div>
                             </div>
                         </a>
@@ -214,13 +384,148 @@ const schema = {
                 })}
             </div>
             
-            <div class="text-center mt-12">
-                <a href="/projects" class="text-marmol-navy border-b border-marmol-navy font-bold uppercase tracking-widest text-xs hover:text-marmol-gold hover:border-marmol-gold transition-colors">
+             <div class="text-center mt-12 md:hidden">
+                <a href="/projects" class="inline-block px-8 py-3 border border-marmol-navy text-marmol-navy font-bold uppercase tracking-widest text-xs hover:bg-marmol-navy hover:text-white transition-all rounded">
                     Смотреть все проекты
                 </a>
             </div>
         </div>
     </section>
 
+    <section class="py-24 bg-marmol-navy relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <span class="text-marmol-gold text-xs font-bold uppercase tracking-widest">FAQ</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mt-3">Вопросы о блочных домах</h2>
+            </div>
+            
+            <div class="space-y-4">
+                
+                <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
+                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
+                        <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">Нужно ли утеплять газосиликат?</span>
+                        <span class="relative w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                        </span>
+                    </summary>
+                    <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
+                        Для климата Беларуси (требуемое сопротивление теплопередаче R=3.2) стена из блока 400мм D500 проходит нормы "впритык". Мы настоятельно рекомендуем утепление каменной ватой 50мм. Это не только повышает энергоэффективность, но и закрывает "мостики холода" (швы, перемычки, армопояс), защищая несущие стены от промерзания.
+                    </div>
+                </details>
+
+                <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
+                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
+                        <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">Когда можно начинать отделку?</span>
+                        <span class="relative w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                        </span>
+                    </summary>
+                    <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
+                        Газосиликатный блок приходит с завода влажным. Ему нужно время, чтобы отдать влагу. Мы рекомендуем выждать минимум 3-4 месяца после возведения коробки и крыши перед началом внутренних штукатурных работ. Фасад лучше делать в последнюю очередь, когда влага выйдет из дома.
+                    </div>
+                </details>
+
+                <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
+                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
+                        <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">Какой фундамент лучше?</span>
+                        <span class="relative w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
+                             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                        </span>
+                    </summary>
+                    <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
+                        Блочный дом тяжелый и хрупкий, он не прощает подвижек грунта. Лучший вариант — монолитный ленточный фундамент на глубину промерзания (1.2м) или свайно-ростверковый (если позволяет геология).
+                    </div>
+                </details>
+
+                <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
+                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
+                        <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">Работаете ли вы с кредитами (240 указ)?</span>
+                        <span class="relative w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
+                             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                        </span>
+                    </summary>
+                    <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
+                        Да. Мы предоставляем сметы, договоры и акты выполненных работ по формам, которые требуют банки (Беларусбанк, Белагропромбанк и др.) для выдачи кредитов на строительство, включая льготные (Указ 240, 95) и материнский капитал.
+                    </div>
+                </details>
+
+            </div>
+            
+            <div class="mt-16 text-center">
+                 <p class="text-gray-500 text-sm mb-4">Нужна детальная консультация?</p>
+                 <a href="/contact" class="inline-block px-10 py-4 border border-marmol-gold text-marmol-gold font-bold uppercase tracking-widest text-xs hover:bg-marmol-gold hover:text-marmol-navy transition-all rounded duration-300">
+                    Связаться с нами
+                </a>
+            </div>
+
+        </div>
+    </section>
+
   </main>
 </Layout>
+
+<style>
+    @keyframes fade-in-up {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes drop-line {
+        0% { top: -100%; }
+        50% { top: 100%; }
+        100% { top: 100%; }
+    }
+    .animate-fade-in-up {
+        animation: fade-in-up 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .animate-drop-line {
+        animation: drop-line 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+    }
+</style>
+
+<script>
+    // Обернули логику в функцию для совместимости с Astro View Transitions
+    const initBlockTabs = () => {
+        const btnBase = document.getElementById('btn-base');
+        const btnFull = document.getElementById('btn-full');
+        const contentBase = document.getElementById('content-base');
+        const contentFull = document.getElementById('content-full');
+        const tabBg = document.getElementById('tab-bg');
+
+        function switchTab(mode) {
+            if (mode === 'base') {
+                if (tabBg) tabBg.style.transform = 'translateX(0)';
+                
+                btnBase?.classList.add('text-white');
+                btnBase?.classList.remove('text-gray-500', 'hover:text-marmol-navy');
+                
+                btnFull?.classList.remove('text-white');
+                btnFull?.classList.add('text-gray-500', 'hover:text-marmol-navy');
+                
+                contentBase?.classList.remove('hidden');
+                setTimeout(() => contentBase?.classList.remove('opacity-0'), 10);
+                
+                contentFull?.classList.add('hidden', 'opacity-0');
+            } else {
+                if (tabBg) tabBg.style.transform = 'translateX(100%)';
+                
+                btnFull?.classList.add('text-white');
+                btnFull?.classList.remove('text-gray-500', 'hover:text-marmol-navy');
+                
+                btnBase?.classList.remove('text-white');
+                btnBase?.classList.add('text-gray-500', 'hover:text-marmol-navy');
+                
+                contentFull?.classList.remove('hidden');
+                setTimeout(() => contentFull?.classList.remove('opacity-0'), 10);
+                
+                contentBase?.classList.add('hidden', 'opacity-0');
+            }
+        }
+
+        // Используем .onclick, чтобы избежать дублирования событий при переходах между страницами
+        if (btnBase) btnBase.onclick = () => switchTab('base');
+        if (btnFull) btnFull.onclick = () => switchTab('full');
+    };
+
+    document.addEventListener('astro:page-load', initBlockTabs);
+    initBlockTabs();
+</script>

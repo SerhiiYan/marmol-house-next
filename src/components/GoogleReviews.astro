@@ -1,0 +1,90 @@
+---
+// src/components/GoogleReviews.astro
+
+const realReviews = [
+  {
+    name: "Анастасия",
+    text: "Отличная компания. Построили каркасный дом под ключ в Гродно очень быстро. Качество на высоте, помогли с документами по 240 указу. Рекомендую!",
+    rating: 5,
+    date: "7 месяцев назад"
+  },
+  {
+    name: "Виктория",
+    text: "Наша семья долго выбирала, кому доверить строительство дома, и очень рады, что остановились на Marmol House. С самого начала Юрий и его команда проявили себя как настоящие профессионалы.",
+    rating: 5,
+    date: "5 месяцев назад"
+  },
+  {
+    name: "Адам",
+    text: "Долго думали с кем строить, друзья посоветовали Marmol House. Все работы выполнены в срок. Фасад из кирпича выглядит просто шикарно. Рекомендую этих ребят!",
+    rating: 5,
+    date: "6 месяцев назад"
+  }
+];
+
+const totalRating = "5.0"; 
+const totalReviewsCount = "10"; 
+const googleMapsLink = "https://www.google.com/maps/place/Ooo+%22Marmol'+Khaus%22/@53.6639519,23.8208599,17z/data=!3m1!4b1!4m6!3m5!1s0x46dfd77b0f682a11:0xb520289c0721b4fd!8m2!3d53.6639519!4d23.8208599!16s%2Fg%2F11xkggms66?hl=en&entry=ttu&g_ep=EgoyMDI2MDIxOC4wIKXMDSoASAFQAw%3D%3D"; 
+
+---
+
+<section class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-6">
+      
+      <div class="flex flex-col items-start text-left">
+        <h2 class="text-3xl md:text-4xl font-sans font-bold text-marmol-navy mb-3">
+          Отзывы <span class="text-marmol-gold">клиентов</span>
+        </h2>
+        
+        <div class="flex flex-wrap items-center gap-2 text-sm text-gray-500">
+          <span class="font-medium">Рейтинг в Google:</span>
+          <div class="flex text-marmol-gold gap-0.5">
+             <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+             <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+             <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+             <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+             <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          </div>
+          <span class="font-bold text-marmol-navy">{totalRating}</span>
+          <span>({totalReviewsCount} отзывов)</span>
+        </div>
+      </div>
+
+      <div>
+        <a href={googleMapsLink} target="_blank" rel="noopener noreferrer" 
+           class="inline-flex items-center gap-2 bg-white border border-gray-200 hover:border-marmol-gold hover:text-marmol-gold text-marmol-navy px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-300 shadow-sm hover:shadow-md group">
+          <svg class="w-5 h-5 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.2,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.1,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.16,22 12.25,22C17.6,22 21.5,18.33 21.5,12.91C21.5,11.76 21.35,11.1 21.35,11.1V11.1Z" fill="#4285F4"/></svg>
+          Смотреть все отзывы
+        </a>
+      </div>
+
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {realReviews.map((review) => (
+        <div class="bg-gray-50/50 p-6 rounded-2xl border border-gray-100 flex flex-col justify-between transition-all duration-300 hover:shadow-lg hover:bg-white hover:-translate-y-1">
+          <div>
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 bg-marmol-navy text-white rounded-full flex items-center justify-center font-bold text-base shadow-sm">
+                {review.name.charAt(0)}
+              </div>
+              <div>
+                <h3 class="font-bold text-sm text-marmol-navy">{review.name}</h3>
+                <p class="text-xs text-gray-400">{review.date}</p>
+              </div>
+            </div>
+            <div class="flex text-marmol-gold mb-3 gap-0.5">
+               {[...Array(review.rating)].map(() => (
+                 <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+               ))}
+            </div>
+            <p class="text-sm text-gray-600 leading-relaxed font-light">«{review.text}»</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>

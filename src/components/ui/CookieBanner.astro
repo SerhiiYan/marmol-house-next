@@ -1,0 +1,57 @@
+---
+// src/components/ui/CookieBanner.astro
+---
+
+<div id="cookie-banner" class="fixed bottom-0 left-0 w-full bg-marmol-navy text-white py-4 px-6 shadow-2xl z-40 transform translate-y-full transition-transform duration-500 hidden border-t border-white/10">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+    
+    <!-- Текст -->
+    <div class="text-xs md:text-sm text-gray-300 text-center md:text-left">
+      <p>
+        Мы используем файлы cookie для анализа трафика и улучшения работы сайта. 
+        Продолжая использовать сайт, вы соглашаетесь с нашей 
+        <a href="/privacy" class="text-marmol-gold hover:underline font-bold">Политикой конфиденциальности</a>.
+      </p>
+    </div>
+
+    <!-- Кнопки -->
+    <div class="flex gap-4 shrink-0">
+        <button id="accept-cookies" class="bg-marmol-gold text-marmol-navy text-xs font-bold uppercase tracking-wider py-2 px-6 rounded hover:bg-white transition-colors">
+            Хорошо
+        </button>
+    </div>
+
+  </div>
+</div>
+
+<script is:inline>
+  // Скрипт проверяет, соглашался ли пользователь раньше
+  document.addEventListener('DOMContentLoaded', () => {
+    const banner = document.getElementById('cookie-banner');
+    const acceptBtn = document.getElementById('accept-cookies');
+    
+    // Ключ в памяти браузера
+    const STORAGE_KEY = 'marmol_cookie_consent';
+
+    // 1. Проверяем, есть ли запись
+    if (!localStorage.getItem(STORAGE_KEY)) {
+        // Если нет - показываем баннер (убираем hidden и поднимаем вверх)
+        banner.classList.remove('hidden');
+        // Небольшая задержка для анимации
+        setTimeout(() => {
+            banner.classList.remove('translate-y-full');
+        }, 100);
+    }
+
+    // 2. При клике "Хорошо"
+    acceptBtn.addEventListener('click', () => {
+        // Запоминаем выбор
+        localStorage.setItem(STORAGE_KEY, 'true');
+        // Прячем баннер красиво
+        banner.classList.add('translate-y-full');
+        setTimeout(() => {
+            banner.classList.add('hidden');
+        }, 500);
+    });
+  });
+</script>

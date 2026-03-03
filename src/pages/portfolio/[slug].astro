@@ -1,0 +1,199 @@
+---
+// src/pages/portfolio/[slug].astro
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import ProjectGallery from '../../components/project/ProjectGallery.jsx';
+import ConsultationModal from '../../components/ui/ConsultationModal.jsx';
+
+// 1. ГЕНЕРАЦИЯ ПУТЕЙ
+export async function getStaticPaths() {
+  const allProjects = await getCollection('portfolio');
+  
+  // Сортируем: новые сверху
+  const sortedProjects = allProjects.sort((a, b) => b.data.specs.year - a.data.specs.year);
+  
+  return sortedProjects.map((project, index) => ({
+    params: { slug: project.id }, 
+    props: { 
+        project,
+        nextProject: sortedProjects[index + 1] || sortedProjects[0] 
+    },
+  }));
+}
+
+const { project, nextProject } = Astro.props;
+const data = project.data;
+
+// Метки для технологий (для SEO и визуала)
+const techLabel = {
+    'block': 'Дом из блоков',
+    'frame': 'Каркасный дом',
+    'brick': 'Кирпичный дом'
+}[data.technology] || 'Частный дом';
+
+// 2. SEO ОПТИМИЗАЦИЯ
+const pageTitle = `${data.title} | Построенный ${techLabel.toLowerCase()} - Marmol House`;
+
+// Умная генерация Description (если редактор забыл написать текст, мы соберем его из параметров)
+const generatedDescription = `Реализованный проект: ${data.title}. Площадь: ${data.specs.area} м². Построен в ${data.specs.year} году. Локация: ${data.specs.location}. Смотрите фото фасада и интерьера.`;
+const pageDescription = data.description ? `${data.description.slice(0, 150)}...` : generatedDescription;
+
+// Индивидуальная микроразметка для реализованного объекта
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": data.title,
+  "description": pageDescription,
+  "image": data.mainImage,
+  "author": {
+    "@type": "Organization",
+    "name": "Marmol House"
+  },
+  "dateCreated": `${data.specs.year}-01-01`
+};
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
+
+  <main class="bg-white min-h-screen">
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 pb-8">
+        <a 
+            href="/portfolio" 
+            class="group inline-flex items-center text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-marmol-navy transition-colors cursor-pointer"
+        >
+            <svg class="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+            Назад в галерею
+        </a>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 border-b border-gray-100 pb-10">
+        <div class="flex items-center gap-3 mb-4 animate-fade-in">
+            <span class="w-2 h-2 rounded-full bg-marmol-gold"></span>
+            <p class="text-marmol-gold font-bold text-xs uppercase tracking-[0.2em]">
+                {data.specs.year} • {techLabel}
+            </p>
+        </div>
+        <h1 class="text-4xl md:text-5xl lg:text-5xl font-sans font-bold text-marmol-navy leading-tight max-w-5xl animate-fade-in-up">
+            {data.title}
+        </h1>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+            
+            <div class="lg:col-span-8 order-1">
+                
+                <div class="mb-16 rounded-xl overflow-hidden shadow-sm">
+                     <ProjectGallery 
+                        images={[data.mainImage, ...(data.gallery || [])]} 
+                        client:load 
+                     />
+                </div>
+
+                <div class="max-w-3xl">
+                    <h2 class="text-2xl font-bold text-marmol-navy mb-6">О реализации проекта</h2>
+                    {data.description ? (
+                        <div class="prose prose-lg text-gray-600 font-light leading-relaxed max-w-none">
+                            <p>{data.description}</p>
+                        </div>
+                    ) : (
+                        // Умный фолбэк для SEO, если нет текста
+                        <p class="text-gray-500 font-light leading-relaxed">
+                            Строительство этого объекта площадью <strong class="text-marmol-navy font-medium">{data.specs.area} м²</strong> 
+                            было завершено в {data.specs.year} году. Проект реализован в локации: {data.specs.location}. 
+                            В качестве основной технологии выбран {techLabel.toLowerCase()}.
+                        </p>
+                    )}
+                </div>
+
+            </div>
+
+            <div class="lg:col-span-4 order-2">
+                <div class="bg-gray-50 rounded-2xl p-8 sticky top-32 border border-gray-100 shadow-sm">
+                    
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6 border-b border-gray-200 pb-3">
+                        Паспорт объекта
+                    </h3>
+                    
+                    <dl class="space-y-6 text-sm mb-10">
+                        <div class="flex justify-between items-start">
+                            <dt class="text-marmol-navy font-bold">Локация</dt>
+                            <dd class="text-gray-600 text-right max-w-[60%] leading-tight">{data.specs.location}</dd>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <dt class="text-marmol-navy font-bold">Площадь</dt>
+                            <dd class="text-gray-600">{data.specs.area} м²</dd>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <dt class="text-marmol-navy font-bold">Срок строительства</dt>
+                            <dd class="text-gray-600">{data.specs.duration}</dd>
+                        </div>
+                    </dl>
+
+                    <div class="pt-6 border-t border-gray-200">
+                        <button 
+                            id="btn-want-house"
+                            class="w-full bg-marmol-navy text-white font-bold uppercase tracking-widest text-xs py-4 rounded-lg hover:bg-marmol-gold hover:text-marmol-navy transition-all duration-300 shadow-md flex justify-center items-center group cursor-pointer"
+                        >
+                            Хочу такой дом
+                            <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </button>
+                        <p class="text-center text-[10px] text-gray-400 mt-4 leading-relaxed">
+                            Сделаем точный расчет сметы под ваш участок
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <a href={`/portfolio/${nextProject.id}`} class="block border-t border-gray-100 bg-gray-50 hover:bg-white transition-colors group py-16 lg:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-end">
+            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 block group-hover:text-marmol-gold transition-colors">
+                Смотреть следующий проект
+            </span>
+            <div class="flex items-center justify-end gap-6">
+                <span class="text-3xl md:text-5xl font-sans font-bold text-marmol-navy group-hover:-translate-x-2 transition-transform duration-500">
+                    {nextProject.data.title}
+                </span>
+                <div class="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center group-hover:border-marmol-gold group-hover:bg-marmol-gold transition-colors">
+                    <svg class="w-5 h-5 text-marmol-navy group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                </div>
+            </div>
+        </div>
+    </a>
+
+  </main>
+  
+  <ConsultationModal client:load />
+
+</Layout>
+
+<script>
+    import { isModalOpen, formComment } from '../../store/modalStore';
+
+    function setupPortfolioButton() {
+        const btn = document.getElementById('btn-want-house');
+        const titleElement = document.querySelector('h1');
+        const title = titleElement ? titleElement.innerText : 'Проект из портфолио';
+
+        if (btn) {
+            // Удаляем старые слушатели при переходах (если есть)
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            
+            newBtn.addEventListener('click', () => {
+                formComment.set(`Здравствуйте! Мне понравился реализованный проект: "${title}". Хочу узнать стоимость строительства такого дома.`);
+                isModalOpen.set(true);
+            });
+        }
+    }
+
+    // Правильная инициализация для Astro
+    document.addEventListener('astro:page-load', setupPortfolioButton);
+    setupPortfolioButton();
+</script>

@@ -1,0 +1,54 @@
+{
+  "title": "Проект Z42",
+  "order": 1,
+  "hit": true,
+  
+  "category": "barnhouse",
+  "purpose": "living",
+  "style": "Европейская классика",
+  
+  "availableTech": ["block", "frame"],
+  "priceCategory": "economy",
+  
+  "badges": ["Хит продаж"],
+
+  "area": 118,
+  "livingArea": 95,
+  "dims": "10x12 м",
+  
+  "mainImage": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070",
+  
+  "gallery": [
+    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070",
+    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2070"
+  ],
+
+  "plans": [
+    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070" 
+  ],
+  
+  "description": "Идеальный одноэтажный дом для семьи из 3-4 человек. Рациональная планировка без лишних коридоров.",
+  
+  "features": [
+    "Крытая терраса",
+    "Котельная под газ",
+    "Мастер-спальня"
+  ],
+
+  "specs": {
+    "floors": 1,
+    "rooms": 4,
+    "bedrooms": 3,
+    "bathrooms": 2
+  },
+  
+  "layout": [
+    { "name": "Гостиная-кухня", "area": 35 },
+    { "name": "Спальня 1", "area": 14 },
+    { "name": "Спальня 2", "area": 14 },
+    { "name": "Кабинет/Спальня", "area": 10 },
+    { "name": "Санузел", "area": 6 },
+    { "name": "Котельная", "area": 4 },
+    { "name": "Холл", "area": 12 }
+  ]
+}

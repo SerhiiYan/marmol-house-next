@@ -11,19 +11,28 @@ const featuredProjects = allProjects
   .filter(project => project.data.hit === true)
   // @ts-ignore
   .sort((a, b) => a.data.order - b.data.order);
+
+// Helper для перевода категорий цен
+const priceCategoryLabels = {
+  economy: 'Эконом',
+  premium: 'Премиум',
+  premiumPlus: 'Премиум+',
+  box: 'Коробка'
+};
 ---
 
-<section class="py-24 bg-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section id="projects" class="py-24 bg-white relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-marmol-gold/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/3"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     
-    <!-- Шапка -->
     <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
       <div class="max-w-2xl">
         <h2 class="text-4xl md:text-5xl font-sans font-bold text-marmol-navy mb-4">
-            Популярные проекты
+            Популярные проекты домов
         </h2>
         <p class="text-gray-500 font-light text-lg">
-            Функциональные планировки, которые выбирают 80% наших клиентов.
+            Функциональные планировки, которые выбирают 80% наших клиентов в Гродно и Минске.
         </p>
       </div>
       <a href="/projects" class="hidden md:inline-flex items-center text-marmol-navy font-bold uppercase tracking-widest hover:text-marmol-gold transition-colors group">
@@ -32,64 +41,66 @@ const featuredProjects = allProjects
       </a>
     </div>
 
-    <!-- Сетка проектов -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         
         {featuredProjects.map(project => {
             const data = project.data;
             
             // --- ЛОГИКА ЦЕНЫ ---
-            // @ts-ignore
             const categoryKey = data.priceCategory || 'economy';
+            // @ts-ignore
             const pricePerMeter = globalPricing.packages[categoryKey]?.basePricePerMeter || 0;
-            const totalPrice = data.area * pricePerMeter;
+            const totalPrice = data.fixPrice || (data.area * pricePerMeter);
+            // @ts-ignore
+            const categoryLabel = priceCategoryLabels[categoryKey] || 'Базовая';
 
             return (
-            <a href={`/projects/${project.id}`} class="group block relative">
+            <a href={`/projects/${project.id}`} class="group block relative h-full">
                 
-                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100">
+                <div class="bg-white rounded-xl overflow-hidden shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_30px_-4px_rgba(15,23,42,0.1)] transition-all duration-500 hover:-translate-y-1 border border-gray-100 flex flex-col h-full">
                     
-                    <div class="relative h-[280px] overflow-hidden">
-                        {/* Бейджик Хит */}
-                        <div class="absolute top-4 left-4 z-10 bg-marmol-gold text-marmol-navy text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-sm shadow-md">
-                            Хит продаж
+                    <div class="relative h-[280px] overflow-hidden bg-gray-100 shrink-0">
+                        {/* Бейджи */}
+                        <div class="absolute top-4 left-4 z-10 flex flex-col items-start gap-2">
+                            {data.badges && data.badges.map(badge => (
+                                <span class={`text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-sm shadow-md ${badge === 'Хит продаж' ? 'bg-marmol-gold text-marmol-navy' : 'bg-marmol-navy text-white'}`}>
+                                    {badge}
+                                </span>
+                            ))}
                         </div>
                         
-                        {/* ГЛАВНОЕ ИЗМЕНЕНИЕ: используем mainImage */}
                         <img 
                             src={data.mainImage} 
-                            alt={data.title} 
+                            alt={`Проект дома ${data.title} - ${data.area} м²`}
+                            loading="lazy" 
                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         />
-                        <div class="absolute inset-0 bg-marmol-navy/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0 bg-marmol-navy/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     </div>
 
-                    <div class="p-8">
-                        {/* ГЛАВНОЕ ИЗМЕНЕНИЕ: используем style или category */}
-                        <div class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-2">
-                            {data.style || data.category}
-                        </div>
-                        
-                        <h3 class="text-2xl font-sans font-bold text-marmol-navy mb-4 group-hover:text-marmol-gold transition-colors">
+                    <div class="p-8 flex flex-col grow">
+                        <h3 class="text-2xl font-sans font-bold text-marmol-navy mb-5 group-hover:text-marmol-gold transition-colors line-clamp-2">
                             {data.title}
                         </h3>
-
-                        <div class="flex items-center justify-between py-4 border-t border-b border-gray-200 mb-6">
-                            <div class="flex flex-col">
-                                <span class="text-gray-400 text-xs uppercase">Площадь</span>
+                        <div class="grow"></div>
+                        <div class="flex flex-col gap-4 border-t border-gray-100 pt-5 mb-6">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-500 text-sm">Площадь:</span>
                                 <span class="text-marmol-navy font-bold text-lg">{data.area} м²</span>
                             </div>
-                            <div class="w-[1px] h-8 bg-gray-200"></div>
-                            <div class="flex flex-col text-right">
-                                <span class="text-gray-400 text-xs uppercase">Стоимость от</span>
-                                <span class="text-marmol-navy font-bold text-lg">
+                            <div class="flex justify-between items-end">
+                                <div class="flex flex-col">
+                                    <span class="text-gray-500 text-sm">Стоимость:</span>
+                                    <span class="text-gray-400 text-[10px] uppercase">Комплектация "{categoryLabel}"</span>
+                                </div>
+                                <span class="text-marmol-navy font-bold text-xl">
                                     {totalPrice.toLocaleString('ru-RU')} {globalPricing.currency}
                                 </span>
                             </div>
                         </div>
 
-                        <span class="inline-block w-full text-center text-xs font-bold uppercase tracking-widest text-marmol-navy border border-marmol-navy py-3 rounded hover:bg-marmol-navy hover:text-white transition-all">
-                            Смотреть планировку
+                        <span class="inline-block w-full text-center text-xs font-bold uppercase tracking-widest text-marmol-navy border border-gray-200 py-4 rounded hover:bg-marmol-navy hover:text-white hover:border-marmol-navy transition-all">
+                            Изучить проект
                         </span>
                     </div>
 
@@ -99,7 +110,7 @@ const featuredProjects = allProjects
         })}
     </div>
 
-    <div class="mt-10 text-center md:hidden">
+    <div class="mt-12 text-center md:hidden">
         <a href="/projects" class="inline-block bg-marmol-navy text-white px-8 py-4 text-xs font-bold uppercase tracking-widest rounded shadow-lg">
             Смотреть весь каталог
         </a>

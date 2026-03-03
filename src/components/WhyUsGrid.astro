@@ -6,80 +6,75 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <div class="mb-12 md:text-center max-w-3xl mx-auto">
-      <h2 class="text-3xl md:text-5xl font-sans font-bold mb-4">Наш подход к строительству</h2>
+      <h2 class="text-3xl md:text-5xl font-sans font-bold mb-4">Наш подход к строительству домов</h2>
       <p class="text-gray-400 font-light">Мы отказались от компромиссов в качестве. Создаем дома, которые не теряют в цене с годами.</p>
     </div>
 
-    <!-- Сетка BENTO (плитка) -->
     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[250px]">
       
-      <!-- Блок 1: Большой (Гарантия) - ОСТАВЛЯЕМ КАК БЫЛО -->
-      <div class="md:col-span-2 row-span-1 bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors group relative overflow-hidden">
+      <div class="md:col-span-2 row-span-1 bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors group relative overflow-hidden flex flex-col justify-between">
         <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-            <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L1 21h22M12 6l7.53 13H4.47"/></svg>
+            <svg class="w-32 h-32" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L1 21h22M12 6l7.53 13H4.47"/></svg>
         </div>
         <div class="relative z-10 flex flex-col justify-between h-full">
             <h3 class="text-2xl font-bold">Официальная гарантия</h3>
             <div>
                 <div class="text-5xl font-bold text-marmol-gold mb-2">5 лет</div>
-                <p class="text-gray-300 text-sm">На весь конструктив дома по договору. Мы уверены в каждой залитой тонне бетона.</p>
+                <p class="text-gray-300 text-sm max-w-md">На весь конструктив дома по договору. Мы уверены в каждой залитой тонне бетона.</p>
             </div>
         </div>
       </div>
 
-      <!-- Блок 2: Квадрат (Бригады) - ОСТАВЛЯЕМ -->
       <div class="md:col-span-1 bg-marmol-gold text-marmol-navy rounded-2xl p-8 flex flex-col justify-between hover:scale-[1.02] transition-transform duration-300">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10">
+        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10">
           <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
         </svg>
         <div>
             <h3 class="font-bold text-xl mb-1">Свои бригады</h3>
-            <p class="text-xs opacity-80 font-medium uppercase tracking-wide">Никаких случайных людей</p>
+            <p class="text-[10px] opacity-80 font-bold uppercase tracking-widest">Никаких случайных людей</p>
         </div>
       </div>
 
-      <!-- Блок 3: ВЫСОКИЙ (ПРЕМИУМ ФАСАД - ВИЗУАЛ) -->
-      <!-- Заменили "Геометрию стен" на Клинкер -->
       <div class="md:col-span-1 row-span-2 relative rounded-2xl overflow-hidden group border border-white/10">
-         <!-- Фото кирпича (темный графит) -->
-         <img src="/brick-offer/brick.webp" alt="Клинкерный фасад" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100" alt="Клинкерный фасад">
+         <img src="/brick-offer/brick.webp" loading="lazy" alt="Клинкерный фасад графит" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100">
          
-         <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent flex flex-col justify-end p-6">
-            <div class="bg-marmol-gold text-marmol-navy text-[10px] font-bold uppercase tracking-widest py-1 px-2 w-fit mb-2 rounded-sm">
+         <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-6">
+            <div class="bg-marmol-gold text-marmol-navy text-[10px] font-bold uppercase tracking-widest py-1 px-2 w-fit mb-3 rounded-sm shadow-md">
                 Marmol Standard
             </div>
-            <h3 class="font-bold text-white text-xl leading-tight mb-1">Премиум-фасад</h3>
-            <p class="text-gray-300 text-xs">Клинкерный кирпич «Графит». Эстетика, которая не выцветает.</p>
+            <h3 class="font-bold text-white text-2xl leading-tight mb-2">Премиум-фасад</h3>
+            <p class="text-gray-300 text-sm">Эстетика, которая не выцветает. Большой выбор фасадного кирпича и тротуарной плитки для вашего участка.</p>
          </div>
       </div>
 
-      <!-- Блок 4: Квадрат (Смета) - ОСТАВЛЯЕМ -->
-      <div class="md:col-span-1 bg-white/5 border border-white/10 rounded-2xl p-8 hover:border-marmol-gold/50 transition-colors">
-        <h3 class="text-xl font-bold mb-4 text-marmol-gold">Фикс. смета</h3>
-        <p class="text-gray-400 text-sm leading-relaxed">
-            Цена фиксируется в BYN при подписании. Рост цен на материалы — это наши риски, а не ваши.
-        </p>
+      <div class="md:col-span-1 bg-white/5 border border-white/10 rounded-2xl p-8 hover:border-marmol-gold/50 transition-colors flex flex-col justify-between">
+        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-marmol-gold mb-4 opacity-80">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+        </svg>
+        <div>
+            <h3 class="text-xl font-bold mb-2 text-marmol-gold">Фикс. смета</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+                Цена фиксируется в BYN при подписании. Рост цен на материалы — это наши риски, а не ваши.
+            </p>
+        </div>
       </div>
 
-      <!-- Блок 5: ШИРОКИЙ (ПРЕМИУМ ФАСАД - ЛОГИКА) -->
-      <!-- Заменили "Отчеты в ТГ" на выгоды кирпича -->
       <div class="md:col-span-2 bg-gradient-to-br from-white/10 to-white/5 border border-white/10 rounded-2xl p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 hover:border-marmol-gold/30 transition-colors">
          <div>
-             <div class="flex items-center space-x-3 mb-2">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#FBBF24" class="w-6 h-6">
+             <div class="flex items-center space-x-3 mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#FBBF24" class="w-6 h-6 shrink-0">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
                 </svg>
-                <h3 class="text-xl font-bold text-white">Нулевое обслуживание</h3>
+                <h3 class="text-xl font-bold text-white">Комплексный подход</h3>
              </div>
              <p class="text-gray-400 text-sm max-w-lg leading-relaxed">
-                Забудьте о покраске и ремонте штукатурки. Клинкер — это броня для стен, которая не боится ни влаги, ни морозов.
+                Мы берем на себя всю рутину: от закупки и логистики материалов до вывоза строительного мусора. Вы общаетесь с одним менеджером и просто наблюдаете за тем, как растет ваш дом.
              </p>
          </div>
          
-         <!-- Декоративная кнопка/акцент -->
          <div class="shrink-0 hidden md:block">
-            <div class="px-6 py-3 rounded border border-white/20 text-xs font-bold uppercase tracking-widest text-white">
-                Экономия в будущем
+            <div class="px-6 py-3 rounded border border-white/20 text-[10px] font-bold uppercase tracking-widest text-white hover:bg-white/10 transition-colors cursor-default">
+                Экономия времени
             </div>
          </div>
       </div>

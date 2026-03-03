@@ -1,0 +1,441 @@
+---
+// src/pages/services/design.astro
+import Layout from '../../layouts/Layout.astro';
+import CompareSlider from '../../components/ui/CompareSlider.jsx';
+
+// SEO Мета-данные
+const pageTitle = "Индивидуальное проектирование домов | Проекты в Гродно и Минске";
+const pageDescription = "Индивидуальное проектирование частных домов под ваш бюджет. Разработка эскизного (ЭП) и конструктивного (КР) раздела. Скидка 30% на проект при заказе строительства.";
+
+// SEO Schema
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Архитектурное проектирование домов",
+  "provider": {
+    "@type": "ConstructionBusiness",
+    "name": "Marmol House"
+  },
+  "areaServed": ["Гродно", "Минск"],
+  "description": pageDescription
+};
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
+
+  <main class="bg-white">
+
+    <section class="relative min-h-screen bg-marmol-navy overflow-hidden flex items-center">
+        
+        <canvas id="blueprint-canvas" class="absolute inset-0 z-0 opacity-30" aria-hidden="true"></canvas>
+
+        <div class="absolute inset-0 z-10 bg-gradient-to-r from-marmol-navy via-marmol-navy/90 md:via-marmol-navy/50 to-transparent"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full pt-20">
+            <div class="max-w-3xl">
+                <div class="flex items-center gap-4 mb-6 animate-fade-in">
+                    <span class="relative flex h-3 w-3">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-marmol-gold opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-3 w-3 bg-marmol-gold"></span>
+                    </span>
+                    <p class="text-marmol-gold font-bold uppercase tracking-[0.2em] text-xs">
+                        РАЗРАБОТКА ПРОЕКТОВ
+                    </p>
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl font-sans font-bold text-white mb-8 leading-[1.1] animate-fade-in-up">
+                    Индивидуальное <br/>
+                    проектирование <br/>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/50">домов</span>
+                </h1>
+                
+                <p class="text-gray-300 text-lg font-light leading-relaxed mb-10 border-l border-white/20 pl-6 animate-fade-in-up" style="animation-delay: 0.2s;">
+                    Создаем дома, в которых удобно жить, а не просто красивые картинки. <br class="hidden md:block"/>
+                    Учитываем бюджет стройки еще на этапе эскиза.
+                </p>
+
+                <div class="bg-white/5 backdrop-blur-sm border border-white/10 p-6 rounded-xl inline-block animate-fade-in-up" style="animation-delay: 0.4s;">
+                     <p class="text-gray-400 text-[10px] uppercase font-bold tracking-widest mb-1">Стоимость разработки</p>
+                     <div class="flex items-baseline gap-2">
+                        <span class="text-3xl font-bold text-white">от 20 BYN</span>
+                        <span class="text-sm text-marmol-gold">/ м²</span>
+                     </div>
+                     <p class="text-gray-500 text-[10px] mt-2">*Итоговая цена зависит от сложности проекта</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="budget" class="py-24 bg-white scroll-mt-20 relative">
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="border-b border-gray-900 pb-8 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div class="max-w-2xl">
+                    <span class="text-marmol-gold text-xs font-bold uppercase tracking-widest mb-2 block">Финансовая модель</span>
+                    <h2 class="text-3xl md:text-5xl font-sans font-bold text-marmol-navy leading-none">
+                        Рациональное <br/> проектирование
+                    </h2>
+                </div>
+                <p class="text-gray-400 text-sm max-w-xs text-right hidden md:block">
+                    Мы объединяем эстетику архитектуры <br/> с прагматизмом строительства.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 border-t border-gray-100">
+                
+                <div class="py-12 lg:pr-16 border-b lg:border-b-0 lg:border-r border-gray-100 relative group">
+                    <span class="text-6xl font-bold text-gray-100 absolute top-4 left-0 -z-10 group-hover:text-marmol-navy/5 transition-colors duration-500">01</span>
+                    
+                    <h3 class="text-xl font-bold text-marmol-navy mb-6 flex items-center gap-3">
+                        <span class="w-2 h-2 bg-marmol-navy rounded-full"></span>
+                        Управление сметой
+                    </h3>
+                    
+                    <p class="text-gray-600 leading-relaxed mb-8">
+                        Многие проекты так и остаются на бумаге, потому что их реализация стоит космических денег. <br/><br/>
+                        <strong class="text-marmol-navy">Мы идем от обратного.</strong> Мы сначала оцениваем ваш бюджет, а затем подбираем конструктивные решения и материалы, которые в него впишутся. Мы знаем актуальные цены на рынке, а не в каталогах.
+                    </p>
+
+                    <div class="bg-gray-50 p-4 rounded-lg flex items-center justify-between text-xs font-bold uppercase tracking-widest text-gray-500">
+                        <span>Идея</span>
+                        <div class="flex-1 mx-4 h-px bg-gray-300 relative">
+                            <div class="absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 w-2 h-2 bg-marmol-gold rounded-full"></div>
+                        </div>
+                        <span>Бюджет</span>
+                    </div>
+                </div>
+
+                <div class="py-12 lg:pl-16 relative group">
+                    <span class="text-6xl font-bold text-gray-100 absolute top-4 left-6 lg:left-20 -z-10 group-hover:text-marmol-gold/20 transition-colors duration-500">02</span>
+
+                    <h3 class="text-xl font-bold text-marmol-navy mb-6 flex items-center gap-3">
+                        <span class="w-2 h-2 bg-marmol-gold rounded-full animate-pulse"></span>
+                        Возврат инвестиций
+                    </h3>
+
+                    <p class="text-gray-600 leading-relaxed mb-8">
+                        Нам выгодно строить по своим проектам — это гарантирует отсутствие ошибок и переделок на площадке.
+                    </p>
+
+                    <div class="border border-marmol-navy p-6 relative">
+                        <div class="absolute -top-1 -left-1 w-2 h-2 bg-white border-t border-l border-marmol-navy"></div>
+                        <div class="absolute -bottom-1 -right-1 w-2 h-2 bg-white border-b border-r border-marmol-navy"></div>
+
+                        <div class="flex justify-between items-end">
+                            <div>
+                                <span class="block text-gray-400 text-[10px] uppercase tracking-widest mb-1">Условие</span>
+                                <span class="block text-marmol-navy font-bold text-sm">При заказе строительства</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="block text-gray-400 text-[10px] uppercase tracking-widest mb-1">Ваша выгода</span>
+                                <span class="block text-3xl md:text-4xl font-bold text-marmol-navy">-30% <span class="text-xs font-normal text-gray-500">на проект</span></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 text-right">
+                        <a href="/contact" class="text-xs font-bold uppercase tracking-widest text-marmol-navy hover:text-marmol-gold transition-colors border-b border-gray-300 hover:border-marmol-gold pb-1">
+                            Подробнее →
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+   <section class="py-24 bg-marmol-navy relative overflow-hidden">
+        
+        <div class="absolute inset-0 opacity-[0.05] pointer-events-none" 
+             style="background-image: 
+                linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px);
+                background-size: 60px 60px;">
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            
+            <div class="flex flex-col md:flex-row justify-between items-end mb-10 gap-6 border-b border-white/10 pb-6">
+                <div>
+                    <span class="text-marmol-gold text-xs font-bold uppercase tracking-widest flex items-center gap-2 mb-3">
+                        <span class="w-1.5 h-1.5 rounded-full bg-marmol-gold animate-pulse"></span>
+                        Контроль результата
+                    </span>
+                    <h2 class="text-3xl md:text-5xl font-sans font-bold text-white">
+                        Визуализация <span class="text-white/20 font-light mx-2">|</span> Реализация
+                    </h2>
+                </div>
+                <p class="text-gray-400 max-w-sm text-sm text-right md:text-left leading-relaxed">
+                    Мы строим ровно то, что проектируем. <br/>
+                    Полное соответствие проекта и факта.
+                </p>
+            </div>
+
+            <div class="relative group">
+                
+                <div class="flex justify-between items-center text-[10px] font-mono text-marmol-gold/60 uppercase tracking-widest mb-2 px-1">
+                    <span>Project: Private_House</span>
+                    <span class="hidden md:inline">Phase: Construction_Done</span>
+                    <span>Match: 100%</span>
+                </div>
+
+                <div class="relative p-1 border border-white/10 rounded-xl bg-white/5 backdrop-blur-sm transition-colors duration-500 hover:border-white/20">
+                    
+                    <div class="absolute top-0 left-0 w-3 h-3 border-t border-l border-marmol-gold -mt-px -ml-px"></div>
+                    <div class="absolute top-0 right-0 w-3 h-3 border-t border-r border-marmol-gold -mt-px -mr-px"></div>
+                    <div class="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-marmol-gold -mb-px -ml-px"></div>
+                    <div class="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-marmol-gold -mb-px -mr-px"></div>
+
+                    <div class="rounded-lg overflow-hidden relative z-10">
+                        <CompareSlider 
+                            before="/individual-design/project.webp" 
+                            after="/individual-design/completed.webp" 
+                            client:visible 
+                        />
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center text-[10px] font-mono text-gray-500 uppercase tracking-widest mt-2 px-1">
+                    <span>X: 53.6884 N</span>
+                    <span>Scale: 1:1</span>
+                    <span>Y: 23.8258 E</span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-sans font-bold text-marmol-navy mb-16 text-center">Что внутри проекта?</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <div class="group relative bg-gray-50 p-8 pt-16 rounded-xl border border-gray-100 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:bg-white">
+                    <span class="absolute top-6 left-8 text-6xl font-bold text-gray-200 group-hover:text-marmol-gold/20 transition-colors">01</span>
+                    <h3 class="relative text-xl font-bold text-marmol-navy mb-6 pb-4 border-b border-gray-200 group-hover:border-marmol-gold transition-colors">Эскизный раздел (ЭП)</h3>
+                    
+                    <ul class="space-y-4 relative">
+                        <li class="flex items-start text-sm text-gray-600">
+                            <svg aria-hidden="true" class="w-5 h-5 mr-3 text-marmol-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            Генплан (посадка на участок)
+                        </li>
+                        <li class="flex items-start text-sm text-gray-600">
+                            <svg aria-hidden="true" class="w-5 h-5 mr-3 text-marmol-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            Планировочные решения
+                        </li>
+                        <li class="flex items-start text-sm text-gray-600">
+                            <svg aria-hidden="true" class="w-5 h-5 mr-3 text-marmol-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            3D визуализация (Фасады)
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="group relative bg-gray-50 p-8 pt-16 rounded-xl border border-gray-100 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:bg-white">
+                    <span class="absolute top-6 left-8 text-6xl font-bold text-gray-200 group-hover:text-marmol-navy/10 transition-colors">02</span>
+                    <h3 class="relative text-xl font-bold text-marmol-navy mb-6 pb-4 border-b border-gray-200 group-hover:border-marmol-navy transition-colors">Конструктивный раздел (КР)</h3>
+                    
+                    <ul class="space-y-4 relative">
+                        <li class="flex items-start text-sm text-gray-600">
+                            <svg aria-hidden="true" class="w-5 h-5 mr-3 text-marmol-navy flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                            Фундамент и узлы
+                        </li>
+                        <li class="flex items-start text-sm text-gray-600">
+                            <svg aria-hidden="true" class="w-5 h-5 mr-3 text-marmol-navy flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                            Кладочные планы
+                        </li>
+                        <li class="flex items-start text-sm text-gray-600">
+                            <svg aria-hidden="true" class="w-5 h-5 mr-3 text-marmol-navy flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+                            <span class="font-bold">Точная смета материалов</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="group relative bg-white p-8 pt-16 rounded-xl border-2 border-dashed border-gray-200 transition-all duration-300 hover:border-marmol-gold/50">
+                    <span class="absolute top-6 left-8 text-6xl font-bold text-gray-100">03</span>
+                    <div class="absolute top-8 right-8 text-[10px] font-bold uppercase tracking-widest text-marmol-gold bg-marmol-gold/10 px-2 py-1 rounded">Опция</div>
+                    
+                    <h3 class="relative text-xl font-bold text-gray-400 mb-6 pb-4 border-b border-gray-100">Инженерные сети</h3>
+                    
+                    <ul class="space-y-4 relative opacity-70">
+                        <li class="flex items-start text-sm text-gray-500">
+                            Электрика и освещение
+                        </li>
+                        <li class="flex items-start text-sm text-gray-500">
+                            Водоснабжение (ВК)
+                        </li>
+                        <li class="flex items-start text-sm text-gray-500">
+                            Отопление и вентиляция (ОВ)
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="grid grid-cols-1 md:grid-cols-2">
+        
+        <a href="/portfolio" class="group relative block h-[50vh] overflow-hidden">
+            <img src="/business/business-house.webp" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 filter brightness-[0.6] group-hover:brightness-[0.4]" alt="Смотреть портфолио реализованных проектов домов" loading="lazy" />
+            
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-8 z-10">
+                <span class="text-marmol-gold text-xs font-bold uppercase tracking-[0.2em] mb-4 opacity-0 transform translate-y-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
+                    Наш опыт
+                </span>
+                <h3 class="text-4xl md:text-5xl font-sans font-bold text-white mb-6">Портфолио</h3>
+                <span class="inline-flex items-center justify-center w-12 h-12 rounded-full border border-white/30 text-white group-hover:bg-marmol-gold group-hover:border-marmol-gold group-hover:text-marmol-navy transition-all duration-300">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                </span>
+            </div>
+        </a>
+
+        <a href="/services/gas-silicate-houses" class="group relative block h-[50vh] overflow-hidden">
+            <img src="/individual-design/sketch_paper.webp" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 filter brightness-[0.6] group-hover:brightness-[0.4]" alt="Технологии строительства домов из блоков" loading="lazy" />
+            
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-8 z-10">
+                <span class="text-gray-300 text-xs font-bold uppercase tracking-[0.2em] mb-4 opacity-0 transform translate-y-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
+                    Технологии
+                </span>
+                <h3 class="text-4xl md:text-5xl font-sans font-bold text-white mb-6">Строительство</h3>
+                <span class="inline-flex items-center justify-center w-12 h-12 rounded-full border border-white/30 text-white group-hover:bg-white group-hover:text-marmol-navy transition-all duration-300">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                </span>
+            </div>
+        </a>
+
+    </section>
+
+  </main>
+</Layout>
+
+<script>
+    // Обернули логику инициализации Canvas в функцию
+    const initCanvas = () => {
+        const canvas = document.getElementById('blueprint-canvas');
+        
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            const lineColor = 'rgba(255, 255, 255, 0.4)'; // Цвет линий (белый, полупрозрачный)
+            
+            // Настройка размера канваса
+            const resize = () => {
+                width = window.innerWidth;
+                height = window.innerHeight; // Высота секции = высота экрана
+                canvas.width = width;
+                canvas.height = height;
+            };
+            
+            window.addEventListener('resize', resize);
+            resize();
+
+            // Класс "Карандаш", который рисует линию
+            class Pen {
+                constructor() {
+                    this.reset();
+                }
+
+                reset() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    
+                    this.vx = (Math.random() - 0.5) * 4; 
+                    this.vy = (Math.random() - 0.5) * 4;
+                    
+                    if (Math.random() > 0.5) { this.vx = 0; } else { this.vy = 0; }
+                    
+                    this.life = 0;
+                    this.maxLife = 100 + Math.random() * 200; 
+                    this.history = []; 
+                }
+
+                update() {
+                    this.life++;
+                    
+                    if (this.life % 40 === 0 && Math.random() > 0.5) {
+                        if (this.vx === 0) {
+                            this.vx = (Math.random() - 0.5) * 4;
+                            this.vy = 0;
+                        } else {
+                            this.vx = 0;
+                            this.vy = (Math.random() - 0.5) * 4;
+                        }
+                    }
+
+                    this.x += this.vx;
+                    this.y += this.vy;
+
+                    if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) {
+                        this.reset();
+                    }
+
+                    this.history.push({x: this.x, y: this.y});
+                    if (this.history.length > 50) this.history.shift(); 
+
+                    if (this.life > this.maxLife) this.reset();
+                }
+
+                draw() {
+                    ctx.beginPath();
+                    ctx.strokeStyle = lineColor;
+                    ctx.lineWidth = 1;
+                    
+                    if (this.history.length > 1) {
+                        ctx.moveTo(this.history[0].x, this.history[0].y);
+                        for (let i = 1; i < this.history.length; i++) {
+                            ctx.lineTo(this.history[i].x, this.history[i].y);
+                        }
+                    }
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    ctx.fillStyle = '#D4AF37'; 
+                    ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            const pens = Array.from({ length: 8 }, () => new Pen());
+
+            const animate = () => {
+                ctx.fillStyle = 'rgba(10, 25, 47, 0.15)'; 
+                ctx.fillRect(0, 0, width, height);
+
+                pens.forEach(pen => {
+                    pen.update();
+                    pen.draw();
+                });
+
+                drawGrid();
+
+                requestAnimationFrame(animate);
+            };
+
+            const drawGrid = () => {
+                ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+                ctx.lineWidth = 1;
+                const step = 60; 
+                
+                ctx.beginPath();
+                for (let x = 0; x < width; x += step) {
+                    ctx.moveTo(x, 0);
+                    ctx.lineTo(x, height);
+                }
+                for (let y = 0; y < height; y += step) {
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(width, y);
+                }
+                ctx.stroke();
+            }
+
+            animate();
+        }
+    };
+
+    // Поддержка Astro View Transitions
+    document.addEventListener('astro:page-load', initCanvas);
+    initCanvas();
+</script>

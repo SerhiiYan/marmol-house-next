@@ -1,0 +1,66 @@
+{
+  "title": "Баня ZP1",
+  "order": 1,
+  "hit": false,
+  "category": "bath",
+  "purpose": "living",
+  "style": "Современный",
+  "priceCategory": "economy",
+  "fixPrice": 78000,
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/assets/bath/zp1/zp1-1.jpg",
+  "gallery": [
+    "/assets/bath/zp1/zp1-2.jpg",
+    "/assets/bath/zp1/zp1-3.jpg"
+  ],
+  "plans": [
+    "/assets/bath/zp1/zp1.png"
+  ],
+  "description": "Проект бани ZP1 создан для полноценного отдыха и оздоровления. На площади в 46м² комфортно разместились просторная комната отдыха, парная и функциональная терраса. Это идеальное решение для тех, кто ценит комфорт и хочет получить полноценный спа-комплекс на своем участке. Проект может быть реализован как в каркасном, так и в газосиликатном исполнении.",
+  "features": [
+    "Металлочерепица",
+    "газоблок"
+  ],
+  "layout": [
+    {
+      "name": "Холл",
+      "area": 14
+    },
+    {
+      "name": "Прихожая",
+      "area": 3
+    },
+    {
+      "name": "Ванная комната",
+      "area": 12
+    },
+    {
+      "name": "Санузел",
+      "area": 1
+    },
+    {
+      "name": "Сауна",
+      "area": 6
+    },
+    {
+      "name": "Котельная",
+      "area": 3
+    },
+    {
+      "name": "Терраса",
+      "area": 5
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 1,
+    "bedrooms": 0,
+    "bathrooms": 2
+  },
+  "area": 46,
+  "livingArea": 0,
+  "dims": "0"
+}

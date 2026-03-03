@@ -1,17 +1,76 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Hero from '../components/Hero.astro'; // <--- Импортируем
-import WhyUsGrid from '../components/WhyUsGrid.astro';
+import Hero from '../components/Hero.astro'; 
 import FeaturedProjects from '../components/FeaturedProjects.astro';
-import GeneralPricing from '../components/GeneralPricing';
+import WhyUsGrid from '../components/WhyUsGrid.astro';
+import GeneralPricing from '../components/GeneralPricing'; 
+import GoogleReviews from '../components/GoogleReviews.astro';
+
+// Ваши реальные цифры из Google My Business для SEO
+const REAL_RATING = "5.0"; 
+const REAL_REVIEW_COUNT = "12"; 
+
+// Та самая SEO-схема, чтобы не потерять позиции и получить звездочки в поиске
+const combinedSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'LocalBusiness',
+      'name': 'Marmol House',
+      'image': 'https://marmolhouse.by/og-image.png',
+      'description': 'Строительство каркасных и блочных домов под ключ в Гродно и по всей Беларуси. Работаем по 240 указу для многодетных семей.',
+      'url': 'https://marmolhouse.by',
+      'logo': 'https://marmolhouse.by/logo-bg.png',
+      'telephone': '+375291845481',
+      'priceRange': '$$ - $$$',
+      'address': {
+        '@type': 'PostalAddress',
+        'streetAddress': 'г. Гродно, ул. Лелевеля, 12A, к 6',
+        'addressLocality': 'Гродно',
+        'addressCountry': 'BY',
+      },
+      'geo': {
+        '@type': 'GeoCoordinates',
+        'latitude': 53.6784,
+        'longitude': 23.8295,
+      },
+      'openingHoursSpecification': [{
+        '@type': 'OpeningHoursSpecification',
+        'dayOfWeek': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        'opens': '09:00',
+        'closes': '18:00',
+      }],
+      'sameAs': ['https://www.instagram.com/marmol_house/'],
+      'aggregateRating': {
+        '@type': 'AggregateRating',
+        'ratingValue': REAL_RATING, 
+        'reviewCount': REAL_REVIEW_COUNT, 
+      }
+    },
+    {
+      '@type': 'VideoObject',
+      'name': 'Строительство каркасных домов — Marmol House',
+      'description': 'Видео-презентация о строительстве современных каркасных домов в Гродно и по всей Беларуси.',
+      'thumbnailUrl': 'https://marmolhouse.by/og-image.png',
+      'uploadDate': '2024-05-10',
+      'contentUrl': 'https://marmolhouse.by/hero-video.mp4',
+      'embedUrl': 'https://marmolhouse.by/hero-video.mp4',
+    }
+  ]
+};
 ---
 
 <Layout title="Строительство домов в Гродно и Минске под ключ | Marmol House">
-	<main>
-		<Hero /> <!-- <--- Вставляем -->
+    
+    <Fragment slot="head">
+        <script type="application/ld+json" set:html={JSON.stringify(combinedSchema)} />
+    </Fragment>
+
+    <main>
+        <Hero /> 
         <FeaturedProjects />
-		<WhyUsGrid />
+        <WhyUsGrid />
         <GeneralPricing client:visible />
-        <!-- Остальной контент -->
-	</main>
+        <GoogleReviews />
+        </main>
 </Layout>

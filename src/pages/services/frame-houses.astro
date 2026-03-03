@@ -4,205 +4,312 @@ import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 import { globalPricing } from '../../data/pricingConfig';
 
-// 1. ДИНАМИЧЕСКИЕ ЦЕНЫ ИЗ КОНФИГА
-// Берем цену Эконом и Премиум пакетов
+// 1. ДИНАМИЧЕСКИЕ ЦЕНЫ
 const priceEco = globalPricing.packages.economy.basePricePerMeter;
 const pricePrem = globalPricing.packages.premium.basePricePerMeter;
 const currency = globalPricing.currency;
 
 // 2. ФИЛЬТР ПРОЕКТОВ
-// Ищем проекты, где в availableTech есть 'frame'
 const allProjects = await getCollection('projects');
 const frameProjects = allProjects.filter(p => 
     p.data.availableTech.includes('frame')
-).slice(0, 3); // Берем 3 штуки для превью
+).slice(0, 3);
+
+// --- ЧИСТОЕ SEO ---
+const pageTitle = "Каркасные дома под ключ: Скандинавская технология | Marmol House";
+const pageDescription = "Строительство каркасных домов под ключ по скандинавской технологии в Гродно и области. Фиксированная смета, энергоэффективность А+, помощь с кредитами (указы 240, 95).";
 
 // 3. SEO Schema
 const schema = {
   "@context": "https://schema.org",
-  "@type": "Service",
-  "serviceType": "Строительство каркасных домов под ключ",
-  "provider": {
-    "@type": "ConstructionBusiness",
-    "name": "Marmol House"
-  },
-  "areaServed": ["Гродно", "Минск", "Гродненская область"],
-  "description": "Энергоэффективные каркасные дома для круглогодичного проживания. Двойное утепление, скандинавская технология, сроки от 2 месяцев."
+  "@graph": [
+    {
+      "@type": "Service",
+      "serviceType": "Строительство каркасных домов",
+      "provider": {
+        "@type": "ConstructionBusiness",
+        "name": "Marmol House"
+      },
+      "areaServed": ["Гродно", "Минск", "Гродненская область"],
+      "description": pageDescription,
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "BYN",
+        "price": priceEco
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Сколько времени занимает строительство дома?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "В среднем строительство 'теплого контура' занимает 1.5 - 2 месяца. Полный цикл с отделкой и инженерией ('под ключ') — от 3 до 4 месяцев, в зависимости от площади."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Меняется ли стоимость в процессе стройки?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Нет. Мы фиксируем стоимость в договоре. Цена может измениться только если вы сами решите внести правки в проект или материалы в ходе работ."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Можно ли строить каркасный дом зимой?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Да, это всесезонная технология. Отсутствие 'мокрых' процессов (бетон, раствор) позволяет вести сборку каркаса при отрицательных температурах без потери качества."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Работаете ли по указу 240 и 95?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Да. Мы предоставляем полный пакет документов (смета, договор строительного подряда, акты выполненных работ), необходимых для строительства с привлечением льготных кредитов и субсидий (Указы №240, №95)."
+          }
+        }
+      ]
+    }
+  ]
 };
 ---
 
-<Layout title="Каркасные дома под ключ в Гродно и Минске | Marmol House">
+<Layout title={pageTitle} description={pageDescription}>
   <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
 
-  <main class="bg-white pt-24">
+  <main class="bg-white">
 
-    <!-- 1. HERO SECTION -->
-    <section class="relative py-24 bg-gray-900 overflow-hidden">
-        <!-- Фон с затемнением -->
-        <div class="absolute inset-0">
-            <img 
-                src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2000" 
-                class="w-full h-full object-cover grayscale" 
-                alt="Каркасный дом Marmol House"
-            />
-            <div class="absolute inset-0 bg-black/70"></div>
-        </div>
+    <section class="relative h-screen flex items-center md:items-end pb-0 md:pb-48 bg-marmol-navy overflow-hidden">
         
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 class="text-4xl md:text-6xl font-sans font-bold text-white mb-6 leading-tight">
-                Современные <br />
-                <span class="text-marmol-gold">Каркасные дома</span>
-            </h1>
-            <p class="text-xl text-gray-200 max-w-2xl font-light leading-relaxed">
-                Технология для тех, кто ценит энергоэффективность и скорость. 
-                Теплый контур за 2 месяца. Идеальная геометрия и свобода архитектурных форм.
-            </p>
-            
-            <div class="mt-8 flex flex-wrap gap-6 text-sm text-gray-300 font-bold uppercase tracking-widest">
-                <span class="flex items-center"><svg class="w-4 h-4 mr-2 text-marmol-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>Тепло</span>
-                <span class="flex items-center"><svg class="w-4 h-4 mr-2 text-marmol-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"/></svg>Готовность за 3 месяца</span>
+        <div class="absolute inset-0 z-0">
+             <img src="/frame-house/hero-house.webp" class="w-full h-full object-cover opacity-20 mix-blend-overlay" alt="" aria-hidden="true" loading="eager" />
+             <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-marmol-navy via-marmol-navy/90 md:via-marmol-navy/80 to-transparent"></div>
+             </div>
+
+        <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row gap-8 items-center md:items-end text-center md:text-left">
+                
+                <div class="hidden md:flex flex-col items-center gap-6 opacity-0 animate-fade-in-up" style="animation-delay: 0.1s;">
+                    <span class="text-gray-500 text-[10px] font-bold uppercase tracking-[0.3em] [writing-mode:vertical-rl] rotate-180">
+                        Technology
+                    </span>
+                    <div class="w-[1px] h-40 bg-gradient-to-t from-marmol-gold to-transparent"></div>
+                </div>
+
+                <div class="max-w-4xl">
+                    <div class="flex items-center justify-center md:justify-start gap-3 mb-6 opacity-0 animate-fade-in-up" style="animation-delay: 0.2s;">
+                        <span class="text-marmol-gold text-xs font-bold uppercase tracking-widest">Энергоэффективность А+</span>
+                        <div class="hidden md:block h-[1px] w-16 bg-white/10"></div>
+                    </div>
+
+                    <h1 class="text-5xl md:text-7xl lg:text-8xl font-sans font-bold text-white mb-8 leading-[1.0] tracking-tight opacity-0 animate-fade-in-up" style="animation-delay: 0.3s;">
+                        Каркасный <br />
+                        дом <br />
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-marmol-gold via-white/80 to-white/40">под ключ</span>
+                    </h1>
+                    
+                    <p class="text-lg md:text-xl text-gray-400 font-light leading-relaxed max-w-xl md:border-l md:border-white/10 md:pl-8 opacity-0 animate-fade-in-up" style="animation-delay: 0.5s;">
+                        Технология для тех, кто ценит тепло и скорость. <br class="hidden md:block"/>
+                        Теплый контур за 3 месяца. Идеальная геометрия.
+                    </p>
+                </div>
             </div>
+        </div>
+
+        <div class="hidden md:flex absolute bottom-10 right-16 flex-col items-center gap-4 opacity-30 hover:opacity-100 transition-opacity">
+            <div class="h-24 w-[1px] bg-white/10 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1/2 bg-marmol-gold animate-drop-line"></div>
+            </div>
+            <span class="text-[10px] text-white uppercase tracking-widest [writing-mode:vertical-rl] rotate-180">Scroll</span>
         </div>
     </section>
 
-    <!-- 2. ТЕХНОЛОГИЯ (ВЫБОР КОМПЛЕКТАЦИИ) -->
-    <section class="py-20 bg-gray-50" id="packages">
+    <section class="py-24 bg-gray-50" id="packages">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div class="text-center mb-10">
-                <h2 class="text-3xl font-sans font-bold text-marmol-navy mb-4">Выберите свою комплектацию</h2>
-                <p class="text-gray-500">
-                    Мы адаптируем любой проект под ваши задачи — от дачи выходного дня до полноценного дома для ПМЖ.
-                </p>
+            <div class="text-center mb-12">
+                <span class="text-marmol-gold text-xs font-bold uppercase tracking-widest">Прозрачная смета</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-marmol-navy mt-3">Варианты реализации</h2>
             </div>
 
-            <!-- ПЕРЕКЛЮЧАТЕЛЬ ТАБОВ -->
-            <div class="flex justify-center mb-12">
-                <div class="bg-white p-1 rounded-full shadow-md inline-flex border border-gray-200">
-                    <button id="btn-eco" class="px-8 py-3 rounded-full text-sm font-bold uppercase tracking-widest transition-all bg-marmol-navy text-white shadow-lg">
+            <div class="flex justify-center mb-16">
+                <div class="relative bg-white p-1 rounded-full shadow-sm inline-flex border border-gray-200">
+                    <div id="tab-bg" class="absolute top-1 left-1 bottom-1 w-[calc(50%-4px)] bg-marmol-navy rounded-full transition-all duration-300 ease-out z-0"></div>
+                    <button id="btn-eco" class="relative z-10 w-40 py-3 rounded-full text-sm font-bold uppercase tracking-widest text-white transition-colors duration-300">
                         Эконом
                     </button>
-                    <button id="btn-prem" class="px-8 py-3 rounded-full text-sm font-bold uppercase tracking-widest text-gray-500 hover:text-marmol-navy transition-all">
+                    <button id="btn-prem" class="relative z-10 w-40 py-3 rounded-full text-sm font-bold uppercase tracking-widest text-gray-500 hover:text-marmol-navy transition-colors duration-300">
                         Премиум
                     </button>
                 </div>
             </div>
 
-            <!-- ВАРИАНТ 1: ЭКОНОМ -->
-            <div id="content-eco" class="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-gray-100 transition-opacity duration-300">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 border-b border-gray-100 pb-6">
-                    <div>
-                        <h3 class="text-2xl font-bold text-marmol-navy flex items-center">
-                            Комплектация «Эконом»
-                            <span class="ml-3 px-3 py-1 bg-green-100 text-green-700 text-[10px] uppercase font-bold rounded-full tracking-wide">Дачный вариант</span>
-                        </h3>
-                        <p class="text-gray-500 mt-2 text-sm max-w-xl">
-                            Классический каркасный дом. Идеальный баланс цены и качества для сезонного проживания или старта строительства.
-                        </p>
-                    </div>
-                    <div class="mt-4 md:mt-0 text-right">
-                        <p class="text-gray-400 text-xs uppercase mb-1">Стоимость</p>
-                        <p class="text-3xl font-bold text-marmol-navy">от {priceEco} {currency}/м²</p>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Фундамент -->
-                    <div class="space-y-4">
-                        <h4 class="font-bold text-marmol-navy border-b border-gray-100 pb-2">Фундамент</h4>
-                        <ul class="space-y-2 text-sm text-gray-600">
-                            <li class="flex items-start"><span class="text-green-500 mr-2">✔</span> Монолитный железобетонный свайно-ростверковый</li>
-                            <li class="flex items-start"><span class="text-green-500 mr-2">✔</span> Сваи Ø300 мм, ростверк 250×400 мм</li>
-                            <li class="flex items-start"><span class="text-green-500 mr-2">✔</span> Арматура Ø10 мм, бетон C16/20</li>
-                        </ul>
-                    </div>
-                    <!-- Стены -->
-                    <div class="space-y-4">
-                        <h4 class="font-bold text-marmol-navy border-b border-gray-100 pb-2">Стены и перегородки</h4>
-                        <ul class="space-y-2 text-sm text-gray-600">
-                            <li class="flex items-start"><span class="text-green-500 mr-2">✔</span> Несущий каркас из бруса 50×150 мм</li>
-                            <li class="flex items-start"><span class="text-green-500 mr-2">✔</span> Утепление минеральной ватой 150 мм</li>
-                            <li class="flex items-start"><span class="text-green-500 mr-2">✔</span> Снаружи — имитация бруса с покраской</li>
-                            <li class="flex items-start"><span class="text-green-500 mr-2">✔</span> Внутри — ОСБ плита 9 мм или ГКЛ 12 мм</li>
-                        </ul>
-                    </div>
-                    <!-- Пол/Потолок -->
-                    <div class="space-y-4">
-                        <h4 class="font-bold text-marmol-navy border-b border-gray-100 pb-2">Пол и потолок</h4>
-                        <ul class="space-y-2 text-sm text-gray-600">
-                            <li class="flex items-start"><span class="text-green-500 mr-2">✔</span> Черновая стяжка пола 70 мм</li>
-                            <li class="flex items-start"><span class="text-green-500 mr-2">✔</span> Высота потолков 2.6 м</li>
-                            <li class="flex items-start"><span class="text-green-500 mr-2">✔</span> Утепление потолка 150 мм (Технониколь)</li>
-                            <li class="flex items-start"><span class="text-green-500 mr-2">✔</span> Обшивка потолка гипсокартоном</li>
-                        </ul>
-                    </div>
-                    <!-- Кровля -->
-                    <div class="space-y-4">
-                        <h4 class="font-bold text-marmol-navy border-b border-gray-100 pb-2">Кровля и проемы</h4>
-                        <ul class="space-y-2 text-sm text-gray-600">
-                            <li class="flex items-start"><span class="text-green-500 mr-2">✔</span> Металлочерепица "Монтеррей Norman"</li>
-                            <li class="flex items-start"><span class="text-green-500 mr-2">✔</span> Стропильная система 50×175 мм</li>
-                            <li class="flex items-start"><span class="text-green-500 mr-2">✔</span> Однокамерные стеклопакеты</li>
-                            <li class="flex items-start"><span class="text-green-500 mr-2">✔</span> Надежная входная дверь</li>
-                        </ul>
+            <div id="content-eco" class="transition-opacity duration-300">
+                <div class="bg-white rounded-2xl overflow-hidden shadow-xl">
+                    <div class="grid grid-cols-1 lg:grid-cols-12">
+                        <div class="lg:col-span-4 bg-gray-100 p-10 flex flex-col justify-between relative overflow-hidden">
+                            <div class="relative z-10">
+                                <h3 class="text-2xl font-bold text-marmol-navy">Комплектация <br/> «Эконом»</h3>
+                                <div class="mt-2 inline-block px-3 py-1 bg-white text-gray-500 text-[10px] uppercase font-bold rounded-full tracking-wide shadow-sm">Дачный вариант</div>
+                                <p class="text-gray-500 mt-6 text-sm leading-relaxed">
+                                    Классический каркасный дом. Идеальный баланс цены и качества для сезонного проживания или старта строительства.
+                                </p>
+                            </div>
+                            <div class="relative z-10 mt-10">
+                                <div class="text-xs text-gray-400 uppercase tracking-widest mb-1">Стоимость</div>
+                                <div class="text-4xl font-bold text-marmol-navy">от {priceEco} <span class="text-lg font-normal text-gray-400">{currency}/м²</span></div>
+                            </div>
+                        </div>
+                        
+                        <div class="lg:col-span-8 p-10">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-12">
+                                <div>
+                                    <h4 class="flex items-center text-marmol-navy font-bold mb-4">
+                                        <span class="w-3 h-3 bg-marmol-gold mr-3 rounded-sm"></span>
+                                        Стены и перегородки
+                                    </h4>
+                                    <ul class="text-sm text-gray-600 space-y-2">
+                                        <li>Несущий каркас из бруса 50×150 мм</li>
+                                        <li>Утепление минеральной ватой 150 мм</li>
+                                        <li>Снаружи — имитация бруса с покраской</li>
+                                        <li>Внутри — ОСБ плита 9 мм или ГКЛ 12 мм</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="flex items-center text-marmol-navy font-bold mb-4">
+                                        <span class="w-3 h-3 bg-marmol-gold mr-3 rounded-sm"></span>
+                                        Фундамент
+                                    </h4>
+                                    <ul class="text-sm text-gray-600 space-y-2">
+                                        <li>Монолитный ж/б свайно-ростверковый</li>
+                                        <li>Сваи Ø300 мм, ростверк 250×400 мм</li>
+                                        <li>Арматура Ø10 мм, бетон C16/20</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="flex items-center text-marmol-navy font-bold mb-4">
+                                        <span class="w-3 h-3 bg-marmol-gold mr-3 rounded-sm"></span>
+                                        Кровля и проемы
+                                    </h4>
+                                    <ul class="text-sm text-gray-600 space-y-2">
+                                        <li>Металлочерепица "Монтеррей Norman"</li>
+                                        <li>Стропильная система 50×175 мм</li>
+                                        <li>Однокамерные стеклопакеты</li>
+                                        <li>Надежная входная дверь</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="flex items-center text-marmol-navy font-bold mb-4">
+                                        <span class="w-3 h-3 bg-marmol-gold mr-3 rounded-sm"></span>
+                                        Пол и потолок
+                                    </h4>
+                                    <ul class="text-sm text-gray-600 space-y-2">
+                                        <li>Черновая стяжка пола 70 мм</li>
+                                        <li>Высота потолков 2.6 м</li>
+                                        <li>Утепление потолка 150 мм</li>
+                                        <li>Обшивка потолка гипсокартоном</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- ВАРИАНТ 2: ПРЕМИУМ (СКРЫТ) -->
-            <div id="content-prem" class="hidden bg-white rounded-3xl p-8 md:p-12 shadow-2xl border border-gray-100 ring-1 ring-marmol-gold/30 transition-opacity duration-300">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 border-b border-gray-100 pb-6">
-                    <div>
-                        <h3 class="text-2xl font-bold text-marmol-navy flex items-center">
-                            Комплектация «Премиум»
-                            <span class="ml-3 px-3 py-1 bg-marmol-gold text-marmol-navy text-[10px] uppercase font-bold rounded-full tracking-wide">Для Жизни (ПМЖ)</span>
-                        </h3>
-                        <p class="text-gray-500 mt-2 text-sm max-w-xl">
-                            Улучшенный каркасный дом с дополнительным утеплением и повышенным комфортом для самых требовательных.
-                        </p>
-                    </div>
-                    <div class="mt-4 md:mt-0 text-right">
-                        <p class="text-gray-400 text-xs uppercase mb-1">Стоимость</p>
-                        <p class="text-3xl font-bold text-marmol-navy">от {pricePrem} {currency}/м²</p>
-                    </div>
-                </div>
+            <div id="content-prem" class="hidden transition-opacity duration-300">
+                <div class="bg-marmol-navy rounded-2xl overflow-hidden shadow-2xl text-white">
+                    <div class="grid grid-cols-1 lg:grid-cols-12">
+                        <div class="lg:col-span-4 bg-white/5 p-10 flex flex-col justify-between relative">
+                            <div class="relative z-10">
+                                <h3 class="text-2xl font-bold text-white">Комплектация <br/> «Премиум»</h3>
+                                <div class="mt-2 inline-block px-3 py-1 bg-marmol-gold text-marmol-navy text-[10px] uppercase font-bold rounded-full tracking-wide">Для Жизни (ПМЖ)</div>
+                                <p class="text-gray-400 mt-6 text-sm leading-relaxed">
+                                    Улучшенный каркасный дом с дополнительным утеплением и полным комплектом инженерных систем. Заезжай и живи.
+                                </p>
+                            </div>
+                            <div class="relative z-10 mt-10">
+                                <div class="text-xs text-gray-400 uppercase tracking-widest mb-1">Стоимость</div>
+                                <div class="text-4xl font-bold text-white">от {pricePrem} <span class="text-lg font-normal text-gray-500">{currency}/м²</span></div>
+                            </div>
+                        </div>
+                        
+                        <div class="lg:col-span-8 p-10">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-12">
+                                <div>
+                                    <h4 class="flex items-center text-marmol-gold font-bold mb-4">
+                                        <span class="w-1 h-5 bg-marmol-gold mr-3 rounded-sm"></span>
+                                        Стены и перегородки
+                                    </h4>
+                                    <ul class="text-sm text-gray-300 space-y-2">
+                                        <li>Каркас 50×150мм + <strong>двойное утепление (150+50)</strong></li>
+                                        <li>Профессиональная ветрозащитная плёнка</li>
+                                        <li>Отделка: имитация бруса, короед или ГКЛ</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="flex items-center text-marmol-gold font-bold mb-4">
+                                        <span class="w-1 h-5 bg-marmol-gold mr-3 rounded-sm"></span>
+                                        Фундамент
+                                    </h4>
+                                    <ul class="text-sm text-gray-300 space-y-2">
+                                        <li>Усиленный свайно-ростверковый (ростверк 300мм)</li>
+                                        <li>Арматура Ø12мм</li>
+                                        <li>Класс бетона C16/20</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="flex items-center text-marmol-gold font-bold mb-4">
+                                        <span class="w-1 h-5 bg-marmol-gold mr-3 rounded-sm"></span>
+                                        Кровля и проемы
+                                    </h4>
+                                    <ul class="text-sm text-gray-300 space-y-2">
+                                        <li>Металлочерепица "Norman" + водосток</li>
+                                        <li><strong>Двухкамерные стеклопакеты</strong> (5 камер)</li>
+                                        <li>Подшивка свесов софитом</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="flex items-center text-marmol-gold font-bold mb-4">
+                                        <span class="w-1 h-5 bg-marmol-gold mr-3 rounded-sm"></span>
+                                        Пол и потолок
+                                    </h4>
+                                    <ul class="text-sm text-gray-300 space-y-2">
+                                        <li>Чистовая стяжка 70мм</li>
+                                        <li>Высота потолков 2.7 м</li>
+                                        <li>Двойная обшивка потолка ГКЛ</li>
+                                    </ul>
+                                </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Фундамент -->
-                    <div class="space-y-4">
-                        <h4 class="font-bold text-marmol-navy border-b border-gray-100 pb-2">Фундамент</h4>
-                        <ul class="space-y-2 text-sm text-gray-600">
-                            <li class="flex items-start"><span class="text-marmol-gold mr-2">✔</span> Усиленный свайно-ростверковый (ростверк 300мм)</li>
-                            <li class="flex items-start"><span class="text-marmol-gold mr-2">✔</span> Арматура Ø12мм</li>
-                            <li class="flex items-start"><span class="text-marmol-gold mr-2">✔</span> Класс бетона C16/20</li>
-                        </ul>
-                    </div>
-                    <!-- Стены (ГЛАВНОЕ) -->
-                    <div class="space-y-4">
-                        <h4 class="font-bold text-marmol-navy border-b border-gray-100 pb-2">Стены и перегородки</h4>
-                        <ul class="space-y-2 text-sm text-gray-600">
-                            <li class="flex items-start"><span class="text-marmol-gold mr-2">✔</span> Каркас 50×150мм с <strong>двойным утеплением (150+50мм)</strong></li>
-                            <li class="flex items-start"><span class="text-marmol-gold mr-2">✔</span> Отделка: имитация бруса, короед, евровагонка или 2 слоя ГКЛ</li>
-                            <li class="flex items-start"><span class="text-marmol-gold mr-2">✔</span> Профессиональная ветрозащитная плёнка</li>
-                        </ul>
-                    </div>
-                    <!-- Пол/Потолок -->
-                    <div class="space-y-4">
-                        <h4 class="font-bold text-marmol-navy border-b border-gray-100 pb-2">Пол и потолок</h4>
-                        <ul class="space-y-2 text-sm text-gray-600">
-                            <li class="flex items-start"><span class="text-marmol-gold mr-2">✔</span> Утепленный черновой пол 50мм + чистовая стяжка 70мм</li>
-                            <li class="flex items-start"><span class="text-marmol-gold mr-2">✔</span> Высота потолков 2.7 м</li>
-                            <li class="flex items-start"><span class="text-marmol-gold mr-2">✔</span> Двойная обшивка потолка гипсокартоном</li>
-                        </ul>
-                    </div>
-                    <!-- Кровля -->
-                    <div class="space-y-4">
-                        <h4 class="font-bold text-marmol-navy border-b border-gray-100 pb-2">Кровля и проемы</h4>
-                        <ul class="space-y-2 text-sm text-gray-600">
-                            <li class="flex items-start"><span class="text-marmol-gold mr-2">✔</span> Металлочерепица "Монтеррей Norman" с водосточной системой</li>
-                            <li class="flex items-start"><span class="text-marmol-gold mr-2">✔</span> <strong>Двухкамерные стеклопакеты</strong> (пятикамерный профиль)</li>
-                            <li class="flex items-start"><span class="text-marmol-gold mr-2">✔</span> Подшивка свесов софитом</li>
-                        </ul>
+                                <div class="md:col-span-2 pt-6 border-t border-white/10">
+                                     <h4 class="flex items-center text-white font-bold mb-6">
+                                         <span class="w-8 h-1 bg-marmol-gold mr-3 rounded-sm"></span>
+                                         Инженерные коммуникации
+                                     </h4>
+                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                         <div>
+                                             <div class="text-xs text-marmol-gold uppercase tracking-widest mb-2 font-bold">Электрика</div>
+                                             <ul class="text-sm text-gray-300 space-y-2 pl-4 border-l border-white/20">
+                                                 <li>Разводка электрики + ТВ кабели</li>
+                                                 <li>Контур заземления</li>
+                                             </ul>
+                                         </div>
+                                         <div>
+                                             <div class="text-xs text-marmol-gold uppercase tracking-widest mb-2 font-bold">Отопление и вода</div>
+                                             <ul class="text-sm text-gray-300 space-y-2 pl-4 border-l border-white/20">
+                                                 <li>Разводка водоснабжения и канализации</li>
+                                                 <li>Установка радиаторов отопления</li>
+                                                 <li>Вентиляционная шахта (полнотелый кирпич)</li>
+                                             </ul>
+                                         </div>
+                                     </div>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -210,29 +317,74 @@ const schema = {
         </div>
     </section>
 
-    <!-- 3. ПРОЕКТЫ (Grid) -->
+    <section class="py-24 bg-gray-900 text-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Технология "Термос"</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto font-light">
+                    Мы строим не просто деревянный каркас, а сложную многослойную систему. 
+                    Долговечность дома зависит от соблюдения трех главных правил.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <div class="group relative p-8 bg-gray-800 rounded-xl hover:bg-gray-700 transition-colors duration-300 shadow-lg">
+                    <h4 class="text-xl font-bold text-white mb-3">Идеальная геометрия</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Тепло в доме зависит не только от ваты, но и от отсутствия щелей. Строгий контроль диагоналей и миллиметровая подгонка стыков каркаса гарантируют, что в вашем доме никогда не будет гулять ветер.
+                    </p>
+                </div>
+
+                <div class="group relative p-8 bg-gray-800 rounded-xl hover:bg-gray-700 transition-colors duration-300 shadow-lg">
+                    <h4 class="text-xl font-bold text-white mb-3">Правильные пленки</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Утеплитель работает, только пока он сухой. Мы применяем профессиональные пароизоляционные и супердиффузионные мембраны, обязательно проклеивая все стыки скотчем.
+                    </p>
+                </div>
+
+                <div class="group relative p-8 bg-gray-800 rounded-xl hover:bg-gray-700 transition-colors duration-300 shadow-lg">
+                    <h4 class="text-xl font-bold text-white mb-3">Двойное утепление</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Чтобы исключить "мостики холода" по деревянным стойкам, мы делаем перекрестное утепление. Это создает замкнутый теплый контур, который держит температуру как термос.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
     <section class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-sans font-bold text-marmol-navy mb-4">Наши проекты</h2>
-            <p class="text-gray-500 mb-10 max-w-2xl">
-                Эти проекты идеально подходят для каркасной технологии. Но помните: <span class="text-marmol-gold font-bold">мы можем адаптировать любой проект</span> из нашего каталога под каркас или газосиликат.
-            </p>
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-marmol-navy mb-4">Наши проекты</h2>
+                    <p class="text-gray-500 max-w-xl">Любой из этих домов мы можем адаптировать под вашу семью.</p>
+                </div>
+                <a href="/projects" class="hidden md:block text-marmol-navy font-bold uppercase text-xs tracking-widest border-b border-marmol-navy/30 pb-1 hover:border-marmol-navy transition-colors">
+                    Смотреть все проекты
+                </a>
+            </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {frameProjects.map(project => {
                     const data = project.data;
-                    const totalPrice = data.area * priceEco; 
+                    const totalPrice = data.area * pricePrem; 
                     
                     return (
-                        <a href={`/projects/${project.id}`} class="group block bg-gray-50 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all border border-gray-100">
-                            <div class="relative h-64 overflow-hidden">
-                                <img src={data.mainImage} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold text-marmol-navy mb-2">{data.title}</h3>
-                                <div class="flex justify-between text-sm text-gray-600 border-t border-gray-200 pt-4 mt-4">
-                                    <span>{data.area} м²</span>
-                                    <span class="font-bold">от {totalPrice.toLocaleString()} BYN</span>
+                        <a href={`/projects/${project.id}`} class="group relative block h-[450px] overflow-hidden rounded-sm">
+                            <img src={data.mainImage} loading="lazy" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt={`Проект каркасного дома: ${data.title}`} />
+                            
+                            <div class="absolute inset-0 bg-gradient-to-t from-marmol-navy via-marmol-navy/40 to-transparent opacity-90 transition-opacity duration-300"></div>
+                            
+                            <div class="absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                                <div class="text-marmol-gold text-xs font-bold uppercase tracking-widest mb-2">{data.area} м²</div>
+                                <h3 class="text-2xl font-bold text-white mb-4 font-serif">{data.title}</h3>
+                                
+                                <div class="flex items-center gap-4 text-white/70 text-sm border-t border-white/10 pt-4 opacity-0 group-hover:opacity-100 transition-opacity delay-100">
+                                    <span>~ {totalPrice.toLocaleString()} BYN</span>
+                                    <span class="w-1 h-1 bg-marmol-gold rounded-full"></span>
+                                    <span>Подробнее &rarr;</span>
                                 </div>
                             </div>
                         </a>
@@ -240,44 +392,152 @@ const schema = {
                 })}
             </div>
             
-            <div class="text-center mt-12">
+             <div class="text-center mt-12 md:hidden">
                 <a href="/projects" class="inline-block px-8 py-3 border border-marmol-navy text-marmol-navy font-bold uppercase tracking-widest text-xs hover:bg-marmol-navy hover:text-white transition-all rounded">
-                    Смотреть весь каталог
+                    Смотреть все проекты
                 </a>
             </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-marmol-navy relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <span class="text-marmol-gold text-xs font-bold uppercase tracking-widest">FAQ</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mt-3">Вопросы о каркасных домах</h2>
+            </div>
+            
+            <div class="space-y-4">
+                
+                <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
+                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
+                        <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">Сколько времени занимает строительство?</span>
+                        <span class="relative w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                        </span>
+                    </summary>
+                    <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
+                        Каркасная технология — самая быстрая. В среднем монтаж "теплого контура" (фундамент, стены, кровля, окна) занимает <strong class="text-white">1.5 - 2 месяца</strong>. Полный цикл с внешней и внутренней отделкой ("под ключ") занимает от 3 до 4 месяцев. Вы сможете заехать в дом в тот же сезон, когда начали стройку.
+                    </div>
+                </details>
+
+                <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
+                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
+                        <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">Фиксируется ли цена в договоре?</span>
+                        <span class="relative w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                        </span>
+                    </summary>
+                    <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
+                        Да, стоимость работ и материалов фиксируется в смете при подписании договора. Мы не меняем цену в процессе строительства, если вы сами не решите внести изменения в проект или выбрать более дорогие отделочные материалы.
+                    </div>
+                </details>
+
+                <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
+                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
+                        <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">Можно ли строить зимой?</span>
+                        <span class="relative w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
+                             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                        </span>
+                    </summary>
+                    <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
+                        Да, каркасный дом — это "сухая" технология сборки. Мы можем возводить силовой каркас, монтировать кровлю и утепление при отрицательных температурах. Зимняя древесина часто даже лучше, так как в ней меньше влаги. Единственное ограничение — фундамент, но современные присадки позволяют заливать бетон и зимой.
+                    </div>
+                </details>
+
+                <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
+                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
+                        <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">Работаете ли вы по 240 и 95 указу?</span>
+                        <span class="relative w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
+                             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                        </span>
+                    </summary>
+                    <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
+                        Да. Мы предоставляем полный пакет документов (смета, договор строительного подряда, акты выполненных работ), необходимых для строительства с привлечением льготных кредитов и субсидий (Указы №240, №95/13).
+                    </div>
+                </details>
+
+            </div>
+            
+            <div class="mt-16 text-center">
+                 <p class="text-gray-500 text-sm mb-4">Нужна детальная консультация?</p>
+                 <a href="/contact" class="inline-block px-10 py-4 border border-marmol-gold text-marmol-gold font-bold uppercase tracking-widest text-xs hover:bg-marmol-gold hover:text-marmol-navy transition-all rounded duration-300">
+                    Связаться с нами
+                </a>
+            </div>
+
         </div>
     </section>
 
   </main>
 </Layout>
 
-<!-- СКРИПТ (Чтобы переключалка работала) -->
-<script>
-    const btnEco = document.getElementById('btn-eco');
-    const btnPrem = document.getElementById('btn-prem');
-    const contentEco = document.getElementById('content-eco');
-    const contentPrem = document.getElementById('content-prem');
-
-    function switchTab(mode) {
-        if (mode === 'eco') {
-            btnEco?.classList.add('bg-marmol-navy', 'text-white', 'shadow-lg');
-            btnEco?.classList.remove('text-gray-500', 'hover:text-marmol-navy');
-            btnPrem?.classList.remove('bg-marmol-navy', 'text-white', 'shadow-lg');
-            btnPrem?.classList.add('text-gray-500', 'hover:text-marmol-navy');
-            
-            contentEco?.classList.remove('hidden');
-            contentPrem?.classList.add('hidden');
-        } else {
-            btnPrem?.classList.add('bg-marmol-navy', 'text-white', 'shadow-lg');
-            btnPrem?.classList.remove('text-gray-500', 'hover:text-marmol-navy');
-            btnEco?.classList.remove('bg-marmol-navy', 'text-white', 'shadow-lg');
-            btnEco?.classList.add('text-gray-500', 'hover:text-marmol-navy');
-            
-            contentPrem?.classList.remove('hidden');
-            contentEco?.classList.add('hidden');
-        }
+<style>
+    /* ... стили те же ... */
+    @keyframes fade-in-up {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
     }
+    @keyframes drop-line {
+        0% { top: -100%; }
+        50% { top: 100%; }
+        100% { top: 100%; }
+    }
+    .animate-fade-in-up {
+        animation: fade-in-up 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .animate-drop-line {
+        animation: drop-line 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+    }
+</style>
 
-    btnEco?.addEventListener('click', () => switchTab('eco'));
-    btnPrem?.addEventListener('click', () => switchTab('prem'));
+<script>
+    // Обернули в функцию для работы с Astro View Transitions (если включены)
+    const initTabs = () => {
+        const btnEco = document.getElementById('btn-eco');
+        const btnPrem = document.getElementById('btn-prem');
+        const contentEco = document.getElementById('content-eco');
+        const contentPrem = document.getElementById('content-prem');
+        const tabBg = document.getElementById('tab-bg');
+
+        function switchTab(mode) {
+            if (mode === 'eco') {
+                if (tabBg) tabBg.style.transform = 'translateX(0)';
+                
+                btnEco?.classList.add('text-white');
+                btnEco?.classList.remove('text-gray-500', 'hover:text-marmol-navy');
+                
+                btnPrem?.classList.remove('text-white');
+                btnPrem?.classList.add('text-gray-500', 'hover:text-marmol-navy');
+                
+                contentEco?.classList.remove('hidden');
+                setTimeout(() => contentEco?.classList.remove('opacity-0'), 10);
+                
+                contentPrem?.classList.add('hidden', 'opacity-0');
+            } else {
+                if (tabBg) tabBg.style.transform = 'translateX(100%)';
+                
+                btnPrem?.classList.add('text-white');
+                btnPrem?.classList.remove('text-gray-500', 'hover:text-marmol-navy');
+                
+                btnEco?.classList.remove('text-white');
+                btnEco?.classList.add('text-gray-500', 'hover:text-marmol-navy');
+                
+                contentPrem?.classList.remove('hidden');
+                setTimeout(() => contentPrem?.classList.remove('opacity-0'), 10);
+                
+                contentEco?.classList.add('hidden', 'opacity-0');
+            }
+        }
+
+        // Предотвращение дублирования слушателей
+        btnEco?.removeEventListener('click', () => switchTab('eco'));
+        btnPrem?.removeEventListener('click', () => switchTab('prem'));
+
+        btnEco?.addEventListener('click', () => switchTab('eco'));
+        btnPrem?.addEventListener('click', () => switchTab('prem'));
+    };
+
+    document.addEventListener('astro:page-load', initTabs);
+    initTabs();
 </script>

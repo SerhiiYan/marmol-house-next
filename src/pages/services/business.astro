@@ -1,0 +1,493 @@
+---
+// src/pages/services/business.astro
+import Layout from '../../layouts/Layout.astro';
+
+// SEO Мета-данные
+const pageTitle = "Строительство для бизнеса: Глэмпинги и Эко-отели | Marmol House";
+const pageDescription = "Проектирование и строительство домиков для аренды под ключ. A-frame, Barnhouse, глэмпинги и базы отдыха. Ликвидные активы с быстрым сроком запуска.";
+
+// 3. SEO Schema (Обновленная с FAQ)
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      "serviceType": "Строительство баз отдыха и глэмпингов",
+      "provider": {
+        "@type": "ConstructionBusiness",
+        "name": "Marmol House"
+      },
+      "areaServed": ["Гродно", "Минск", "Беларусь"],
+      "description": "Проектирование и строительство домиков для аренды (A-frame, Barnhouse) под ключ."
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Какой формат домов лучше всего сдается в аренду?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Статистика показывает, что A-Frame (дом-шалаш) является абсолютным лидером по визуальной привлекательности для соцсетей (Instagram), что обеспечивает высокий поток пар. Barnhouse чаще выбирают для длительного семейного отдыха из-за большей эргономики."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "С какого дома выгоднее начать (минимальный бюджет)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Каркасная технология — самая доступная точка входа. A-Frame площадью 40-50 м² требует меньше материалов на фасад (так как кровля выполняет роль стен) и фундамент, что делает его оптимальным для старта бизнеса."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Какой интерьер сейчас наиболее востребован?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Тренд последних лет — «Eco-Minimalism» и «Scandi». Натуральное дерево, панорамные окна, отсутствие визуального шума. Туристы едут за единением с природой, поэтому интерьер должен быть продолжением пейзажа за окном."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Можно ли строить на склоне или в лесу без вырубки?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Да. Мы используем свайно-винтовой фундамент. Это позволяет сохранить корневую систему деревьев и вписать дом в ландшафт с любым перепадом высот, не загоняя на участок тяжелую технику."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Сколько времени занимает строительство «под ключ»?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Полный цикл производства — от заезда на участок до сдачи готового объекта с отделкой и коммуникациями — занимает в среднем 3 месяца. Это позволяет запустить проект к началу сезона."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
+
+  <main class="bg-white">
+
+    <section class="relative h-screen flex items-center md:items-end pb-0 md:pb-48 bg-marmol-navy overflow-hidden">
+        
+        <div class="absolute inset-0 z-0">
+             <img src="/business/business-house.webp" class="w-full h-full object-cover opacity-40 mix-blend-overlay" alt="Строительство глэмпингов и баз отдыха" loading="eager" />
+             <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-marmol-navy via-marmol-navy/90 md:via-marmol-navy/70 to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row gap-8 items-center md:items-end text-center md:text-left">
+                
+                <div class="hidden md:flex flex-col items-center gap-6 opacity-0 animate-fade-in-up" style="animation-delay: 0.1s;">
+                    <span class="text-gray-500 text-[10px] font-bold uppercase tracking-[0.3em] [writing-mode:vertical-rl] rotate-180">
+                        B2B Solutions
+                    </span>
+                    <div class="w-[1px] h-40 bg-gradient-to-t from-marmol-gold to-transparent"></div>
+                </div>
+
+                <div class="max-w-4xl">
+                    <div class="flex items-center justify-center md:justify-start gap-3 mb-6 opacity-0 animate-fade-in-up" style="animation-delay: 0.2s;">
+                        <span class="text-marmol-gold text-xs font-bold uppercase tracking-widest">Коммерческое строительство</span>
+                        <div class="hidden md:block h-[1px] w-16 bg-white/10"></div>
+                    </div>
+
+                    <h1 class="text-5xl md:text-7xl lg:text-8xl font-sans font-bold text-white mb-8 leading-[1.0] tracking-tight opacity-0 animate-fade-in-up" style="animation-delay: 0.3s;">
+                        Недвижимость <br />
+                        для арендного <br />
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-marmol-gold via-white/80 to-white/40">бизнеса</span>
+                    </h1>
+                    
+                    <p class="text-lg md:text-xl text-gray-400 font-light leading-relaxed max-w-xl md:border-l md:border-white/10 md:pl-8 opacity-0 animate-fade-in-up" style="animation-delay: 0.5s;">
+                        Строим ликвидные активы: Глэмпинги, Эко-отели, Базы отдыха. <br class="hidden md:block"/>
+                        Форматы, которые востребованы рынком.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="hidden md:flex absolute bottom-10 right-16 flex-col items-center gap-4 opacity-30 hover:opacity-100 transition-opacity">
+            <div class="h-24 w-[1px] bg-white/10 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1/2 bg-marmol-gold animate-drop-line"></div>
+            </div>
+            <span class="text-[10px] text-white uppercase tracking-widest [writing-mode:vertical-rl] rotate-180">Scroll</span>
+        </div>
+    </section>
+
+    <section class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-marmol-navy mb-4">Востребованные форматы</h2>
+                <p class="text-gray-500 max-w-2xl mx-auto">
+                    Мы специализируемся на двух типах строений, которые показывают максимальную загрузку в Беларуси.
+                </p>
+            </div>
+
+            <div class="space-y-24">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="relative h-[500px] rounded-sm overflow-hidden group shadow-2xl">
+                        <img src="/business/aframe.webp" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Проект дома A-frame для сдачи в аренду" loading="lazy" />
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-4 mb-6">
+                            <span class="w-8 h-[1px] bg-marmol-navy"></span>
+                            <span class="text-marmol-gold text-xs font-bold uppercase tracking-widest">Хит Instagram</span>
+                        </div>
+                        <h3 class="text-4xl font-bold text-marmol-navy mb-6">A-Frame</h3>
+                        <p class="text-gray-600 text-lg leading-relaxed mb-8">
+                            Треугольный дом-шалаш. Главный визуальный магнит для туристов. Идеально подходит для романтического отдыха пар. Благодаря скатной кровле до земли, не требует чистки снега и обслуживания фасада.
+                        </p>
+                        
+                        <div class="grid grid-cols-2 gap-6 border-t border-gray-100 pt-8 mb-8">
+                            <div>
+                                <div class="text-sm text-gray-400 uppercase tracking-wider mb-1">Аудитория</div>
+                                <div class="font-bold text-marmol-navy">Пары (2 чел)</div>
+                            </div>
+                            <div>
+                                <div class="text-sm text-gray-400 uppercase tracking-wider mb-1">Особенность</div>
+                                <div class="font-bold text-marmol-navy">Второй свет</div>
+                            </div>
+                        </div>
+
+                        <a href="/projects?category=A-Frame" class="text-marmol-navy font-bold uppercase text-xs tracking-widest border-b border-marmol-navy pb-1 hover:text-marmol-gold hover:border-marmol-gold transition-colors">
+                            Смотреть проекты
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="order-2 lg:order-1">
+                        <div class="flex items-center gap-4 mb-6">
+                            <span class="w-8 h-[1px] bg-marmol-navy"></span>
+                            <span class="text-marmol-gold text-xs font-bold uppercase tracking-widest">Семейный формат</span>
+                        </div>
+                        <h3 class="text-4xl font-bold text-marmol-navy mb-6">Barnhouse</h3>
+                        <p class="text-gray-600 text-lg leading-relaxed mb-8">
+                            Дом в амбарном стиле. За счет вертикальных стен имеет большую полезную площадь при тех же габаритах фундамента. Позволяет разместить семью с детьми или компанию друзей, что повышает средний чек.
+                        </p>
+                        
+                        <div class="grid grid-cols-2 gap-6 border-t border-gray-100 pt-8 mb-8">
+                            <div>
+                                <div class="text-sm text-gray-400 uppercase tracking-wider mb-1">Аудитория</div>
+                                <div class="font-bold text-marmol-navy">Семьи (4-6 чел)</div>
+                            </div>
+                            <div>
+                                <div class="text-sm text-gray-400 uppercase tracking-wider mb-1">Особенность</div>
+                                <div class="font-bold text-marmol-navy">Эргономика</div>
+                            </div>
+                        </div>
+
+                        <a href="/projects?category=Barnhouse" class="text-marmol-navy font-bold uppercase text-xs tracking-widest border-b border-marmol-navy pb-1 hover:text-marmol-gold hover:border-marmol-gold transition-colors">
+                            Смотреть проекты
+                        </a>
+                    </div>
+                    <div class="order-1 lg:order-2 relative h-[500px] rounded-sm overflow-hidden group shadow-2xl">
+                        <img src="/business/barnhouse.webp" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Проект дома Barnhouse для бизнеса" loading="lazy" />
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-gray-900 text-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Коммерческая эксплуатация</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto font-light">
+                    Мы понимаем разницу между "дачей для себя" и "домом для аренды".
+                    Наши решения нацелены на минимизацию амортизации.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <div class="group relative p-8 bg-gray-800 rounded-xl hover:bg-gray-700 transition-colors duration-300 shadow-lg">
+                    <h4 class="text-xl font-bold text-white mb-3">
+                        <span class="inline-block w-2 h-2 bg-marmol-gold rounded-full mr-2 mb-1"></span>
+                        Износостойкость
+                    </h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Используем "антивандальные" материалы: кварцвинил на полу (не боится воды и каблуков), моющиеся краски, защита внешних углов.
+                    </p>
+                </div>
+
+                <div class="group relative p-8 bg-gray-800 rounded-xl hover:bg-gray-700 transition-colors duration-300 shadow-lg">
+                    <h4 class="text-xl font-bold text-white mb-3">
+                        <span class="inline-block w-2 h-2 bg-marmol-gold rounded-full mr-2 mb-1"></span>
+                        Шумоизоляция
+                    </h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        В глэмпингах дома часто стоят плотно. Мы делаем усиленную звукоизоляцию стен, чтобы гости не мешали друг другу отдыхать.
+                    </p>
+                </div>
+
+                <div class="group relative p-8 bg-gray-800 rounded-xl hover:bg-gray-700 transition-colors duration-300 shadow-lg">
+                    <h4 class="text-xl font-bold text-white mb-3">
+                        <span class="inline-block w-2 h-2 bg-marmol-gold rounded-full mr-2 mb-1"></span>
+                        Скорость запуска
+                    </h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Каркасная технология позволяет построить юнит за 3 месяца. Вы не замораживаете деньги в долгий строй и успеваете к началу сезона.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="bg-marmol-navy rounded-3xl p-8 md:p-16 relative overflow-hidden shadow-2xl">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-marmol-gold rounded-full opacity-10 blur-3xl translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 relative z-10">
+                    
+                    <div class="lg:col-span-4 flex flex-col justify-between">
+                        <div>
+                            <span class="text-marmol-gold text-xs font-bold uppercase tracking-widest mb-4 block">Все включено</span>
+                            <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">
+                                Строительство <br/>
+                                <span class="text-transparent bg-clip-text bg-gradient-to-r from-marmol-gold to-white">«Под ключ»</span>
+                            </h2>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-8">
+                                Вы предоставляете участок — мы сдаем готовый объект, в который можно заселять гостей в день сдачи.
+                                <br/><br/>
+                                Полная ответственность за материалы, логистику и сроки.
+                            </p>
+                        </div>
+                        
+                        <div class="hidden lg:block">
+                            <button id="biz-consult-btn-desk" class="w-full py-4 border border-marmol-gold text-marmol-gold hover:bg-marmol-gold hover:text-marmol-navy transition-all font-bold uppercase tracking-widest text-xs rounded-sm">
+                                Обсудить проект
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-8">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            
+                            <div class="p-6 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-colors group">
+                                <div class="flex items-start gap-4">
+                                    <span class="mt-1 w-2 h-2 bg-marmol-gold rounded-sm shrink-0 group-hover:scale-125 transition-transform"></span>
+                                    <div>
+                                        <h4 class="text-white font-bold mb-1">Проектирование</h4>
+                                        <p class="text-xs text-gray-400">Привязка дома к участку, генплан расстановки строений.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-6 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-colors group">
+                                <div class="flex items-start gap-4">
+                                    <span class="mt-1 w-2 h-2 bg-marmol-gold rounded-sm shrink-0 group-hover:scale-125 transition-transform"></span>
+                                    <div>
+                                        <h4 class="text-white font-bold mb-1">Фундамент</h4>
+                                        <p class="text-xs text-gray-400">Свайно-винтовой или ж/б лента (в зависимости от грунта).</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-6 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-colors group">
+                                <div class="flex items-start gap-4">
+                                    <span class="mt-1 w-2 h-2 bg-marmol-gold rounded-sm shrink-0 group-hover:scale-125 transition-transform"></span>
+                                    <div>
+                                        <h4 class="text-white font-bold mb-1">Теплый контур</h4>
+                                        <p class="text-xs text-gray-400">Каркас, зимнее утепление 200мм, ветрозащита, кровля.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-6 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-colors group">
+                                <div class="flex items-start gap-4">
+                                    <span class="mt-1 w-2 h-2 bg-marmol-gold rounded-sm shrink-0 group-hover:scale-125 transition-transform"></span>
+                                    <div>
+                                        <h4 class="text-white font-bold mb-1">Остекление</h4>
+                                        <p class="text-xs text-gray-400">Панорамные окна с энергосберегающим напылением.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-6 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-colors group">
+                                <div class="flex items-start gap-4">
+                                    <span class="mt-1 w-2 h-2 bg-marmol-gold rounded-sm shrink-0 group-hover:scale-125 transition-transform"></span>
+                                    <div>
+                                        <h4 class="text-white font-bold mb-1">Инженерия</h4>
+                                        <p class="text-xs text-gray-400">Скрытая разводка электрики, водоснабжение, канализация.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-6 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-colors group">
+                                <div class="flex items-start gap-4">
+                                    <span class="mt-1 w-2 h-2 bg-marmol-gold rounded-sm shrink-0 group-hover:scale-125 transition-transform"></span>
+                                    <div>
+                                        <h4 class="text-white font-bold mb-1">Чистовая отделка</h4>
+                                        <p class="text-xs text-gray-400">Имитация бруса/планкен, покраска, укладка плитки в с/у.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-6 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-colors group">
+                                <div class="flex items-start gap-4">
+                                    <span class="mt-1 w-2 h-2 bg-marmol-gold rounded-sm shrink-0 group-hover:scale-125 transition-transform"></span>
+                                    <div>
+                                        <h4 class="text-white font-bold mb-1">Терраса</h4>
+                                        <p class="text-xs text-gray-400">Открытая терраса из лиственницы или импрегнированной доски.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-6 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-colors group">
+                                <div class="flex items-start gap-4">
+                                    <span class="mt-1 w-2 h-2 bg-marmol-gold rounded-sm shrink-0 group-hover:scale-125 transition-transform"></span>
+                                    <div>
+                                        <h4 class="text-white font-bold mb-1">Клининг</h4>
+                                        <p class="text-xs text-gray-400">Вывоз строительного мусора и финальная уборка перед сдачей.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        
+                        <div class="mt-8 lg:hidden">
+                            <button id="biz-consult-btn-mob" class="w-full py-4 border border-marmol-gold text-marmol-gold font-bold uppercase tracking-widest text-xs rounded-sm">
+                                Рассчитать проект
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-marmol-navy relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <span class="text-marmol-gold text-xs font-bold uppercase tracking-widest">FAQ</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mt-3">Важные вопросы</h2>
+            </div>
+            
+            <div class="space-y-4">
+                
+                <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
+                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
+                        <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">Какой формат домов лучше всего сдается?</span>
+                        <span class="relative w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                        </span>
+                    </summary>
+                    <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
+                        A-Frame (дом-шалаш) — абсолютный лидер по визуальной привлекательности для Instagram, что обеспечивает высокий поток пар и романтических заездов. Barnhouse чаще выбирают для длительного и комфортного семейного отдыха из-за вертикальных стен и эргономики.
+                    </div>
+                </details>
+
+                <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
+                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
+                        <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">С какого дома выгоднее начать (бюджет)?</span>
+                        <span class="relative w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                        </span>
+                    </summary>
+                    <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
+                        Каркасная технология — самая доступная точка входа. A-Frame небольшой площади (40-60 м²) часто требует меньше вложений на старте, так как кровля выполняет роль стен, а свайный фундамент дешевле плиты. Это оптимальный вариант для первого объекта.
+                    </div>
+                </details>
+
+                <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
+                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
+                        <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">Какой интерьер сейчас в тренде?</span>
+                        <span class="relative w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                        </span>
+                    </summary>
+                    <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
+                        Туристы едут за "визуальной тишиной". Сейчас наиболее востребован скандинавский минимализм и эко-стиль: много натурального дерева, панорамные окна, спокойные тона и качественный текстиль. Интерьер должен быть продолжением природы за окном.
+                    </div>
+                </details>
+
+                <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
+                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
+                        <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">Можно ли строить в лесу без вырубки?</span>
+                        <span class="relative w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
+                             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                        </span>
+                    </summary>
+                    <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
+                        Да, это наш профиль. Мы используем свайно-винтовой фундамент, который монтируется точечно. Это позволяет сохранить корневую систему деревьев и вписать дом в сложный ландшафт (склон, берег) без использования тяжелой техники.
+                    </div>
+                </details>
+
+                <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
+                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
+                        <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">Какой реальный срок запуска объекта?</span>
+                        <span class="relative w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
+                             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                        </span>
+                    </summary>
+                    <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
+                        При наличии готового домокомплекта полный цикл работ — от фундамента до сдачи ключей с внутренней отделкой и разводкой сетей — занимает <strong class="text-white">3 месяца</strong>. Это позволяет вам быстро запустить бизнес и начать окупать вложения.
+                    </div>
+                </details>
+
+            </div>
+            <div class="mt-16 text-center">
+                 <p class="text-gray-500 text-sm mb-4">Нужна детальная консультация?</p>
+                 <a href="/contact" class="inline-block px-10 py-4 border border-marmol-gold text-marmol-gold font-bold uppercase tracking-widest text-xs hover:bg-marmol-gold hover:text-marmol-navy transition-all rounded duration-300">
+                    Связаться с нами
+                </a>
+            </div>
+        </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+    @keyframes fade-in-up {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes drop-line {
+        0% { top: -100%; }
+        50% { top: 100%; }
+        100% { top: 100%; }
+    }
+    .animate-fade-in-up {
+        animation: fade-in-up 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .animate-drop-line {
+        animation: drop-line 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+    }
+</style>
+
+<script>
+    import { isModalOpen, formComment } from '../../store/modalStore';
+    
+    // Обернуто в функцию для поддержки Astro View Transitions
+    const setupModals = () => {
+        const setupBtn = (id) => {
+            const btn = document.getElementById(id);
+            if (btn) {
+                // Предотвращение дублирования
+                const newBtn = btn.cloneNode(true);
+                if (btn.parentNode) btn.parentNode.replaceChild(newBtn, btn);
+                
+                newBtn.addEventListener('click', () => {
+                    formComment.set(`Интересует строительство для бизнеса (Под ключ).`);
+                    isModalOpen.set(true);
+                });
+            }
+        };
+        setupBtn('biz-consult-btn-desk');
+        setupBtn('biz-consult-btn-mob');
+    };
+
+    document.addEventListener('astro:page-load', setupModals);
+    setupModals();
+</script>

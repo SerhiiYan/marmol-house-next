@@ -37,7 +37,7 @@ export const globalPricing = {
     premium: {
       title: "Премиум",
       subTitle: "Каркас + Инженерия",
-      basePricePerMeter: 1600,
+      basePricePerMeter: 1500,
       features: [
         "Усиленный фундамент",
         "Утепление 200 мм + Ветрозащита",
@@ -51,7 +51,8 @@ export const globalPricing = {
     premiumPlus: {
       title: "Премиум +",
       subTitle: "Каменный дом под ключ",
-      basePricePerMeter: 1900,
+      basePricePerMeter: 1700,
+      isPopular: true,
       features: [
         "Монолитная плита / Лента",
         "Стены: Газосиликат + Утепление",
