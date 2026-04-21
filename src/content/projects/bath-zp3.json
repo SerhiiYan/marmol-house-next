@@ -1,0 +1,62 @@
+{
+  "title": "Баня ZP3",
+  "order": 3,
+  "hit": false,
+  "category": "bath",
+  "purpose": "living",
+  "style": "Скандинавский",
+  "priceCategory": "economy",
+  "fixPrice": 65500,
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/bath/zp3/zp1.webp",
+  "gallery": [
+    "/projects/bath/zp3/zp2.webp",
+    "/projects/bath/zp3/zp3.webp"
+  ],
+  "plans": [
+    "/projects/bath/zp3/plan.webp"
+  ],
+  "description": "Ультра-компактный проект бани ZP3 на 28м² — идеальное и экономичное решение. Включает в себя всё самое необходимое: парную и комнату отдыха. Прекрасно подойдет для дачного участка, обеспечивая полноценный банный опыт без лишних затрат на строительство и обслуживание.",
+  "features": [
+    "Газоблок",
+    "Металлочерепица"
+  ],
+  "layout": [
+    {
+      "name": "Комната отдыха",
+      "area": 10
+    },
+    {
+      "name": "Санузел",
+      "area": 2
+    },
+    {
+      "name": "Парная",
+      "area": 6
+    },
+    {
+      "name": "Кухня",
+      "area": 4
+    },
+    {
+      "name": "Предбанник",
+      "area": 4
+    },
+    {
+      "name": "Терраса",
+      "area": 11
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 1,
+    "bedrooms": 0,
+    "bathrooms": 1
+  },
+  "area": 28,
+  "livingArea": 25,
+  "dims": "7,15x6,25 м"
+}

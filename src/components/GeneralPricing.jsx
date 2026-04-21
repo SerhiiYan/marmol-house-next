@@ -12,13 +12,16 @@ export default function GeneralPricing() {
     isModalOpen.set(true);
   };
 
+  const roundToMarketingPrice = (price) => {
+      return Math.round(price / 50) * 50;
+  }
+
   return (
     <section className="py-24 bg-gray-50 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Шапка секции */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          {/* SEO Улучшение: Более точный ключ в H2 */}
           <h2 className="text-4xl font-sans font-bold text-marmol-navy mb-4">
             Цены на строительство домов под ключ
           </h2>
@@ -31,8 +34,10 @@ export default function GeneralPricing() {
         {/* Сетка карточек */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {packagesList.map((pkg, index) => {
-            // Техническое улучшение: берем флаг из базы, либо страхуемся индексом
             const isPopular = pkg.isPopular; 
+            
+            // НОВОЕ: Округляем цену для показа
+            const displayPrice = roundToMarketingPrice(pkg.basePricePerMeter);
 
             return (
               <div 
@@ -54,7 +59,8 @@ export default function GeneralPricing() {
                   
                   <div className="flex items-center justify-center text-marmol-navy">
                     <span className="text-sm font-medium mr-1 text-gray-400">от</span>
-                    <span className="text-4xl font-bold font-sans">{pkg.basePricePerMeter}</span>
+                    {/* НОВОЕ: Выводим округленную цену */}
+                    <span className="text-4xl font-bold font-sans">{displayPrice}</span>
                     <div className="flex flex-col items-start ml-2 leading-none">
                         <span className="text-xs font-bold">{currency}</span>
                         <span className="text-[10px] text-gray-400">за м²</span>
@@ -67,7 +73,6 @@ export default function GeneralPricing() {
                   {pkg.features.map((feature, idx) => (
                     <li key={idx} className="flex items-start">
                       <div className="shrink-0 mt-0.5 w-5 h-5 rounded-full bg-gray-50 flex items-center justify-center mr-3 border border-gray-100">
-                         {/* A11y: скрыли иконку от читалок */}
                          <svg aria-hidden="true" className="w-3 h-3 text-marmol-gold" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                          </svg>

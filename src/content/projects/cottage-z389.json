@@ -1,0 +1,59 @@
+{
+  "title": "Дача Z389",
+  "order": 9,
+  "hit": false,
+  "category": "cottage",
+  "purpose": "living",
+  "style": "Современный барнхаус",
+  "priceCategory": "economy",
+  "fixPrice": 105000,
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/cottage/z389/1.webp",
+  "gallery": [
+    "/projects/cottage/z389/1.webp",
+    "/projects/cottage/z389/2.webp",
+    "/projects/cottage/z389/3.webp"
+  ],
+  "plans": [
+    "/projects/cottage/z389/plan.webp"
+  ],
+  "description": "Стильный и современный проект дачи Z389 (48м²) с односкатной крышей. Открытая планировка кухни-гостиной создает ощущение простора, а отдельная спальня обеспечивает приватность. Отличный вариант для тех, кто ценит современную архитектуру.",
+  "features": [
+    "Газоблок",
+    "Металлочерепица"
+  ],
+  "layout": [
+    {
+      "name": "Кухня",
+      "area": 9
+    },
+    {
+      "name": "Ванная комната",
+      "area": 4
+    },
+    {
+      "name": "Спальня",
+      "area": 10
+    },
+    {
+      "name": "Гостиная",
+      "area": 22
+    },
+    {
+      "name": "Прихожая",
+      "area": 3
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 2,
+    "bedrooms": 1,
+    "bathrooms": 1
+  },
+  "area": 48,
+  "livingArea": 48,
+  "dims": "12x7 м"
+}

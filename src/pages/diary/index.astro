@@ -1,0 +1,61 @@
+---
+// src/pages/diary/index.astro
+import Layout from '../../layouts/Layout.astro';
+import DiaryList from '../../components/diary/DiaryList.jsx'; // Импортируем наш новый компонент
+import rawDiaryData from '../../data/diary.json';
+
+const pageTitle = "Ход строительства | Marmol House";
+const pageDescription = "Следите за ходом строительства объектов Marmol House в реальном времени. Хроника скрытых работ, фундаментов и фасадов.";
+const diaryEntries = [...rawDiaryData].reverse();
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Ход строительства Marmol House",
+  "description": pageDescription
+};
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
+
+  <main class="bg-gray-50 min-h-screen pt-28 pb-24 relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-marmol-gold/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/3"></div>
+
+    <section class="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative z-10">
+        
+        <div class="mb-10 max-w-3xl animate-fade-in text-center md:text-left mx-auto md:mx-0">
+            <h1 class="text-4xl md:text-5xl font-sans font-bold text-marmol-navy mb-6">
+                Наши работы
+            </h1>
+            <p class="text-gray-500 text-lg leading-relaxed font-light">
+                Взгляните на готовые фасады наших домов или переключитесь в хронику объектов, чтобы увидеть процессы скрытых работ прямо сейчас.
+            </p>
+        </div>
+
+        {/* === ПЕРЕКЛЮЧАТЕЛЬ === */}
+        <div class="flex justify-center md:justify-start mb-16 animate-fade-in">
+            <div class="bg-white p-1.5 rounded-full inline-flex shadow-sm border border-gray-100 w-full sm:w-auto relative">
+                <a 
+                    href="/portfolio" 
+                    class="flex-1 sm:flex-none px-8 py-3 text-xs font-bold uppercase tracking-widest rounded-full transition-all duration-300 text-gray-500 hover:text-marmol-navy text-center block"
+                >
+                    Готовые проекты
+                </a>
+                <a 
+                    href="/diary" 
+                    class="flex-1 sm:flex-none px-8 py-3 text-xs font-bold uppercase tracking-widest rounded-full transition-all duration-300 bg-marmol-navy text-white shadow-md text-center block"
+                >
+                    Ход строительства
+                </a>
+            </div>
+        </div>
+
+        {/* Вызываем наш интерактивный компонент */}
+        <div class="animate-fade-in">
+            <DiaryList items={diaryEntries} client:load />
+        </div>
+
+    </section>
+  </main>
+</Layout>

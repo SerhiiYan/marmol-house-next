@@ -1,0 +1,63 @@
+{
+  "title": "Дача Z60",
+  "order": 6,
+  "hit": false,
+  "category": "cottage",
+  "purpose": "living",
+  "style": "Скандинавский",
+  "priceCategory": "economy",
+  "fixPrice": 73000,
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/cottage/z60/1.webp",
+  "gallery": [
+    "/projects/cottage/z60/1.webp",
+    "/projects/cottage/z60/2.webp"
+  ],
+  "plans": [
+    "/projects/cottage/z60/plan.webp"
+  ],
+  "description": "Проект дачного дома Z60 — это воплощение уюта на площади 43м². Идеален для летнего отдыха, он включает в себя спальню, гостиную и кухню. Возможность добавления террасы позволит наслаждаться свежим воздухом. Экономичное и быстрое в возведении решение для вашего участка.",
+  "features": [
+    "Газоблок",
+    "Металлочерепица",
+    "Каркас"
+  ],
+  "layout": [
+    {
+      "name": "Прихожая",
+      "area": 3
+    },
+    {
+      "name": "Терраса",
+      "area": 10
+    },
+    {
+      "name": "Спальня",
+      "area": 9
+    },
+    {
+      "name": "Кухня",
+      "area": 9
+    },
+    {
+      "name": "Гостиная",
+      "area": 15
+    },
+    {
+      "name": "Ванная комната",
+      "area": 7
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 2,
+    "bedrooms": 1,
+    "bathrooms": 1
+  },
+  "area": 43,
+  "livingArea": 43,
+  "dims": "7,51x7,71 м"
+}

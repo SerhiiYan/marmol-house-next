@@ -1,0 +1,53 @@
+{
+  "title": "Дом А27",
+  "order": 50,
+  "hit": false,
+  "category": "a-frame",
+  "purpose": "business",
+  "style": "Классический A-frame",
+  "priceCategory": "economy",
+  "availableTech": [
+    "frame"
+  ],
+  "mainImage": "/projects/aframe/a27/1.jpg",
+  "gallery": [
+    "/projects/aframe/a27/1.jpg",
+    "/projects/aframe/a27/2.jpg"
+  ],
+  "plans": [
+    "/projects/aframe/a27/plan.jpg"
+  ],
+  "description": "Проект А27 — это увеличенная версия A-frame с габаритами 6х8 метров. Главное преимущество перед моделями 6х6 — наличие изолированной спальни на первом этаже. Это делает дом удобным для семей с детьми или пожилых людей. Просторная гостиная и большая антресоль позволяют комфортно разместить компанию до 8 человек, что повышает арендный потенциал.",
+  "features": [
+    "Деревянный каркас",
+    "Металлическая кровля",
+    "Стеклопакеты"
+  ],
+  "layout": [
+    {
+      "name": "Кухня - Гостинная",
+      "area": 27
+    },
+    {
+      "name": "Спальня (1 этаж)",
+      "area": 10
+    },
+    {
+      "name": "Спальня",
+      "area": 11
+    },
+    {
+      "name": "Санузел",
+      "area": 5
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 3,
+    "bedrooms": 2,
+    "bathrooms": 1
+  },
+  "area": 53,
+  "livingArea": 53,
+  "dims": "6x8 м"
+}

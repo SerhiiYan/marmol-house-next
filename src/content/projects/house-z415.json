@@ -1,0 +1,83 @@
+{
+  "title": "Дом Z415",
+  "order": 27,
+  "hit": false,
+  "category": "house",
+  "purpose": "living",
+  "style": "Европейский",
+  "priceCategory": "economy",
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/house-150/z415/1.webp",
+  "gallery": [
+    "/projects/house-150/z415/1.webp",
+    "/projects/house-150/z415/2.webp",
+    "/projects/house-150/z415/3.webp"
+  ],
+  "plans": [
+    "/projects/house-150/z415/plan.webp"
+  ],
+  "description": "Проект дома Z415 (113м²) — это воплощение комфорта. Три просторные спальни, два санузла, большая гостиная и котельная. Этот дом идеально подходит для тех, кто ищет надежное и просторное жилье для своей семьи на долгие годы.",
+  "features": [
+    "Кирпич",
+    "Металлочерепица",
+    "Утеплённый фундамент"
+  ],
+  "layout": [
+    {
+      "name": "Прихожая",
+      "area": 6
+    },
+    {
+      "name": "Спальня",
+      "area": 14
+    },
+    {
+      "name": "Спальня",
+      "area": 16
+    },
+    {
+      "name": "Спальня",
+      "area": 13
+    },
+    {
+      "name": "Ванная комната",
+      "area": 7
+    },
+    {
+      "name": "Ванная комната",
+      "area": 5
+    },
+    {
+      "name": "Холл",
+      "area": 6
+    },
+    {
+      "name": "Гостиная + столовая",
+      "area": 31
+    },
+    {
+      "name": "Кухня",
+      "area": 10
+    },
+    {
+      "name": "Котельная",
+      "area": 6
+    },
+    {
+      "name": "Терраса",
+      "area": 29
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 4,
+    "bedrooms": 3,
+    "bathrooms": 2
+  },
+  "area": 113,
+  "livingArea": 113,
+  "dims": "11x15 м"
+}

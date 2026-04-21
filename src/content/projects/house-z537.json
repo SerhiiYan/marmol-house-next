@@ -1,0 +1,75 @@
+{
+  "title": "Дом Z537",
+  "order": 44,
+  "hit": false,
+  "category": "house",
+  "purpose": "living",
+  "style": "Европейский",
+  "priceCategory": "economy",
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/house-100/z537/1.webp",
+  "gallery": [
+    "/projects/house-100/z537/1.webp",
+    "/projects/house-100/z537/2.webp",
+    "/projects/house-100/z537/3.webp"
+  ],
+  "plans": [
+    "/projects/house-100/z537/plan.webp"
+  ],
+  "description": "Проект Z537 — это экономичный одноэтажный дом, оптимизированный для строительства на плитном фундаменте. Продуманная планировка на площади 81 м² включает три спальни и просторную ванную комнату, что делает его отличным выбором для комфортного проживания семьи с детьми.",
+  "features": [
+    "Каркас",
+    "Газосиликат",
+    "Металлочерепица"
+  ],
+  "layout": [
+    {
+      "name": "Гостиная + столовая",
+      "area": 19
+    },
+    {
+      "name": "Спальня",
+      "area": 12
+    },
+    {
+      "name": "Спальня",
+      "area": 11
+    },
+    {
+      "name": "Спальня",
+      "area": 9
+    },
+    {
+      "name": "Кухня",
+      "area": 6
+    },
+    {
+      "name": "Ванная комната",
+      "area": 7
+    },
+    {
+      "name": "Холл",
+      "area": 9
+    },
+    {
+      "name": "Прихожая",
+      "area": 5
+    },
+    {
+      "name": "Хоз. помещение",
+      "area": 3
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 4,
+    "bedrooms": 3,
+    "bathrooms": 1
+  },
+  "area": 81,
+  "livingArea": 81,
+  "dims": "8x13 м"
+}

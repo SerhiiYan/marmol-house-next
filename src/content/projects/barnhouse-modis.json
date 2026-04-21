@@ -1,0 +1,64 @@
+{
+  "title": "Модис",
+  "order": 28,
+  "hit": false,
+  "category": "barnhouse",
+  "purpose": "living",
+  "style": "Сканди барнхаус",
+  "priceCategory": "economy",
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/barnhouse/modis/1.webp",
+  "gallery": [
+    "/projects/barnhouse/modis/1.webp",
+    "/projects/barnhouse/modis/2.webp",
+    "/projects/barnhouse/modis/3.webp"
+  ],
+  "plans": [
+    "/projects/barnhouse/modis/plan.webp"
+  ],
+  "description": "Проект 'Модис' на 65м² — это квинтэссенция стиля барнхаус. Открытая планировка кухни-гостиной, панорамные окна и лаконичные формы создают ощущение простора и света. Две уютные спальни делают его идеальным для современной семьи, ценящей стиль и функциональность.",
+  "features": [
+    "Металлопрофиль",
+    "Панорамные окна",
+    "Каркас",
+    "Блок"
+  ],
+  "layout": [
+    {
+      "name": "Прихожая",
+      "area": 5
+    },
+    {
+      "name": "Спальня",
+      "area": 11
+    },
+    {
+      "name": "Спальня",
+      "area": 11
+    },
+    {
+      "name": "Ванная комната",
+      "area": 5
+    },
+    {
+      "name": "Гостиная + кухня",
+      "area": 34
+    },
+    {
+      "name": "Терраса",
+      "area": 23
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 3,
+    "bedrooms": 2,
+    "bathrooms": 1
+  },
+  "area": 65,
+  "livingArea": 65,
+  "dims": "8x12 м"
+}

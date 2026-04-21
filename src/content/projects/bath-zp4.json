@@ -1,0 +1,77 @@
+{
+  "title": "Баня ZP4",
+  "order": 4,
+  "hit": false,
+  "category": "bath",
+  "purpose": "living",
+  "style": "Скандинавский",
+  "priceCategory": "economy",
+  "fixPrice": 153000,
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/bath/zp4/zp1.webp",
+  "gallery": [
+    "/projects/bath/zp4/zp1.webp",
+    "/projects/bath/zp4/zp2.webp",
+    "/projects/bath/zp4/zp3.webp"
+  ],
+  "plans": [
+    "/projects/bath/zp4/plan1.webp",
+    "/projects/bath/zp4/plan2.webp"
+  ],
+  "description": "Проект ZP4 на 95м² — это уже не просто баня, а полноценный гостевой дом с банным комплексом. Две спальни, просторная гостиная и кухня делают его идеальным местом для длительного отдыха или приема гостей. Совместите пользу для здоровья с комфортом загородного дома.",
+  "features": [
+    "Газоблок",
+    "Металлочерепица",
+    "Стеклопакеты"
+  ],
+  "layout": [
+    {
+      "name": "Комната отдыха",
+      "area": 25
+    },
+    {
+      "name": "Парная",
+      "area": 7
+    },
+    {
+      "name": "Санузел",
+      "area": 4
+    },
+    {
+      "name": "Кухня",
+      "area": 9
+    },
+    {
+      "name": "Прихожая",
+      "area": 4
+    },
+    {
+      "name": "Холл",
+      "area": 6
+    },
+    {
+      "name": "Ванная комната",
+      "area": 8
+    },
+    {
+      "name": "Спальня",
+      "area": 14
+    },
+    {
+      "name": "Спальня",
+      "area": 17
+    }
+  ],
+  "specs": {
+    "floors": 2,
+    "rooms": 4,
+    "bedrooms": 2,
+    "bathrooms": 2
+  },
+  "area": 95,
+  "livingArea": 95,
+  "dims": "7x11,70 м"
+}

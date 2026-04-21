@@ -1,0 +1,80 @@
+{
+  "title": "Дом Фонстер",
+  "order": 58,
+  "hit": false,
+  "category": "house",
+  "purpose": "living",
+  "style": "Сканди",
+  "priceCategory": "economy",
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/house-150/foster/1.webp",
+  "gallery": [
+    "/projects/house-150/foster/1.webp",
+    "/projects/house-150/foster/2.webp",
+    "/projects/house-150/foster/3.webp"
+  ],
+  "plans": [
+    "/projects/house-150/foster/plan.webp"
+  ],
+  "description": "Проект Фонстер — это эталон современного скандинавского стиля. Компактная, но очень продуманная внутренняя площадь (105 м²) вмещает всё необходимое: три спальни, включая мастер-блок для родителей, два санузла и гардеробную. Визитная карточка дома — огромная терраса площадью 43 м² с перголой, которая стирает границу между домом и садом.",
+  "features": [
+    "Газосиликат/Каркас",
+    "Дерево (планкен)",
+    "Декоративная штукатурка",
+    "Фальц/металлочерепица"
+  ],
+  "layout": [
+    {
+      "name": "Мастер спальня",
+      "area": 13
+    },
+    {
+      "name": "Санузел",
+      "area": 3
+    },
+    {
+      "name": "Гардероб",
+      "area": 2
+    },
+    {
+      "name": "Прихожая",
+      "area": 6
+    },
+    {
+      "name": "Санузел",
+      "area": 5
+    },
+    {
+      "name": "Спальня",
+      "area": 13
+    },
+    {
+      "name": "Спальня",
+      "area": 13
+    },
+    {
+      "name": "Котельная",
+      "area": 5
+    },
+    {
+      "name": "Кухня - Гостинная",
+      "area": 32
+    },
+    {
+      "name": "Терраса",
+      "area": 18
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 4,
+    "bedrooms": 3,
+    "bathrooms": 2
+  },
+  "area": 149,
+  "livingArea": 105,
+  "dims": "12x17"
+}

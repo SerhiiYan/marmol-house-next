@@ -1,0 +1,126 @@
+---
+// src/pages/blog/[slug].astro
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+// 1. ГЕНЕРАЦИЯ ПУТЕЙ ДЛЯ ВСЕХ MDX ФАЙЛОВ
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog');
+  return blogEntries.map(entry => ({
+    params: { slug: entry.slug }, 
+    props: { entry },
+  }));
+}
+
+// 2. ПОЛУЧАЕМ ДАННЫЕ И КОМПОНЕНТ ДЛЯ РЕНДЕРА ТЕКСТА
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+// 3. ЗАЩИТА ОТ ОШИБОК КОНТЕНТ-МЕНЕДЖЕРА (Парсер YouTube)
+function extractYouTubeId(urlOrId) {
+    if (!urlOrId) return null;
+    
+    // Если это уже чистый ID (11 символов без слешей)
+    if (urlOrId.length === 11 && !urlOrId.includes('/')) return urlOrId; 
+    
+    // Если это ссылка, вытаскиваем ID регулярным выражением
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = String(urlOrId).match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+}
+
+const videoId = extractYouTubeId(entry.data.youtubeVideoId);
+
+// Форматирование даты
+const formatDate = (date) => {
+    return new Intl.DateTimeFormat('ru-RU', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    }).format(date);
+};
+
+const categoryLabels = {
+    'technology': 'Технологии',
+    'review': 'Обзор',
+    'tips': 'Советы',
+    'news': 'Новости'
+};
+
+// SEO Оптимизация
+const pageTitle = entry.data.seo?.title || `${entry.data.title} | Блог Marmol House`;
+const pageDescription = entry.data.seo?.description || `Читайте статью "${entry.data.title}" в блоге строительной компании Marmol House.`;
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <main class="bg-white min-h-screen pt-36 pb-24">
+    
+    <article class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* КНОПКА НАЗАД */}
+        <a 
+            href="/blog" 
+            class="group inline-flex items-center text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-marmol-navy transition-colors mb-12"
+        >
+            <svg class="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+            Назад в блог
+        </a>
+
+        {/* ШАПКА СТАТЬИ */}
+        <header class="mb-12 text-center md:text-left">
+            <div class="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-6">
+                <span class="bg-gray-100 text-marmol-navy text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-sm">
+                    {/* @ts-ignore */}
+                    {categoryLabels[entry.data.category] || entry.data.category}
+                </span>
+                <span class="w-1.5 h-1.5 bg-marmol-gold rounded-full"></span>
+                <time class="text-sm text-gray-500 font-medium">{formatDate(entry.data.date)}</time>
+                
+                {entry.data.readTime && !videoId && (
+                    <>
+                        <span class="w-1.5 h-1.5 bg-gray-300 rounded-full"></span>
+                        <span class="text-sm text-gray-500 font-medium">{entry.data.readTime} мин чтения</span>
+                    </>
+                )}
+            </div>
+            
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-sans font-bold text-marmol-navy leading-tight mb-8">
+                {entry.data.title}
+            </h1>
+        </header>
+
+        {/* МЕДИА-БЛОК (ВИДЕО ИЛИ ОБЛОЖКА) */}
+        <div class="mb-16">
+            {videoId ? (
+                /* Умный адаптивный плеер YouTube */
+                <div class="w-full aspect-video rounded-2xl overflow-hidden shadow-lg bg-gray-900 border border-gray-100">
+                    <iframe 
+                        class="w-full h-full"
+                        src={`https://www.youtube.com/embed/${videoId}?rel=0`} 
+                        title="YouTube video player" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            ) : (
+                /* Обычная обложка для текстовой статьи */
+                <div class="w-full aspect-video md:aspect-[21/9] rounded-2xl overflow-hidden shadow-sm">
+                    <img 
+                        src={entry.data.mainImage} 
+                        alt={entry.data.title} 
+                        class="w-full h-full object-cover"
+                    />
+                </div>
+            )}
+        </div>
+
+        {/* ТЕЛО СТАТЬИ (МАГИЯ РЕНДЕРА MDX) */}
+        <div class="prose prose-lg md:prose-xl prose-headings:font-bold prose-headings:text-marmol-navy prose-a:text-marmol-gold hover:prose-a:text-marmol-navy prose-img:rounded-xl prose-img:shadow-sm max-w-4xl text-gray-600 font-light leading-relaxed">
+            <Content />
+        </div>
+
+    </article>
+
+  </main>
+</Layout>

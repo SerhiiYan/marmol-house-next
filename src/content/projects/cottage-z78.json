@@ -1,0 +1,79 @@
+{
+  "title": "Дача Z78",
+  "order": 8,
+  "hit": false,
+  "category": "cottage",
+  "purpose": "living",
+  "style": "Европейский",
+  "priceCategory": "economy",
+  "fixPrice": 108000,
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/cottage/z78/1.webp",
+  "gallery": [
+    "/projects/cottage/z78/1.webp",
+    "/projects/cottage/z78/2.webp",
+    "/projects/cottage/z78/3.webp"
+  ],
+  "plans": [
+    "/projects/cottage/z78/plan.webp"
+  ],
+  "description": "Проект Z78 на 70м² — это уже не просто дача, а небольшой, но полноценный загородный дом с двумя спальнями. Идеально подходит для семей с детьми. Наличие котельной делает его пригодным для круглогодичного проживания. Отличное сочетание цены и функциональности.",
+  "features": [
+    "Газоблок",
+    "Металлочерепица"
+  ],
+  "layout": [
+    {
+      "name": "Прихожая",
+      "area": 4
+    },
+    {
+      "name": "Котельная",
+      "area": 5
+    },
+    {
+      "name": "Холл",
+      "area": 3
+    },
+    {
+      "name": "Гостиная + столовая",
+      "area": 15
+    },
+    {
+      "name": "Кухня",
+      "area": 8
+    },
+    {
+      "name": "Спальня",
+      "area": 13
+    },
+    {
+      "name": "Спальня",
+      "area": 11
+    },
+    {
+      "name": "Ванная комната",
+      "area": 5
+    },
+    {
+      "name": "Холл",
+      "area": 4
+    },
+    {
+      "name": "Терраса",
+      "area": 3
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 3,
+    "bedrooms": 2,
+    "bathrooms": 1
+  },
+  "area": 70,
+  "livingArea": 70,
+  "dims": "9x10,5 м"
+}

@@ -1,0 +1,84 @@
+{
+  "title": "Дом Нордбор",
+  "order": 55,
+  "hit": false,
+  "category": "house",
+  "purpose": "living",
+  "style": "Сканди",
+  "priceCategory": "economy",
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/house-150/nordbor/1.webp",
+  "gallery": [
+    "/projects/house-150/nordbor/1.webp",
+    "/projects/house-150/nordbor/2.webp",
+    "/projects/house-150/nordbor/3.webp"
+  ],
+  "plans": [
+    "/projects/house-150/nordbor/plan.webp"
+  ],
+  "description": "Проект Нордбор — это стильный одноэтажный дом в скандинавском стиле с двускатной крышей. Планировка продумана до мелочей: три спальни (одна из них — мастер-спальня с собственным комфортом), отдельная гардеробная и котельная. Главное украшение дома — огромная крытая терраса площадью 49 м², которая станет любимым местом отдыха всей семьи.",
+  "features": [
+    "Газосиликат/Каркас",
+    "Дерево",
+    "Декоративная штукатурка",
+    "Металлочерепица"
+  ],
+  "layout": [
+    {
+      "name": "Мастер спальня",
+      "area": 13
+    },
+    {
+      "name": "Санузел",
+      "area": 3
+    },
+    {
+      "name": "Гардероб",
+      "area": 2
+    },
+    {
+      "name": "Холл",
+      "area": 9
+    },
+    {
+      "name": "Прихожая",
+      "area": 3
+    },
+    {
+      "name": "Санузел",
+      "area": 9
+    },
+    {
+      "name": "Спальня",
+      "area": 12
+    },
+    {
+      "name": "Спальня",
+      "area": 14
+    },
+    {
+      "name": "Котельная",
+      "area": 7
+    },
+    {
+      "name": "Кухня - Гостинная",
+      "area": 31
+    },
+    {
+      "name": "Терраса/крыльцо",
+      "area": 49
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 4,
+    "bedrooms": 3,
+    "bathrooms": 2
+  },
+  "area": 153,
+  "livingArea": 104,
+  "dims": "13x15 м"
+}

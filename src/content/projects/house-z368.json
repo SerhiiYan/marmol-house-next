@@ -1,0 +1,87 @@
+{
+  "title": "Дом Z368",
+  "order": 26,
+  "hit": false,
+  "category": "house",
+  "purpose": "living",
+  "style": "Европейский",
+  "priceCategory": "economy",
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/house-150/z368/1.webp",
+  "gallery": [
+    "/projects/house-150/z368/1.webp",
+    "/projects/house-150/z368/2.webp",
+    "/projects/house-150/z368/3.webp"
+  ],
+  "plans": [
+    "/projects/house-150/z368/plan.webp"
+  ],
+  "description": "Комфортабельный проект Z368 (108м²) с тремя спальнями и двумя санузлами. Наличие кладовой при просторной кухне добавляет практичности. Этот дом создан для большой семьи, ценящей комфорт и удобство в повседневной жизни.",
+  "features": [
+    "Кирпич",
+    "Металлочерепица",
+    "Утеплённый фундамент"
+  ],
+  "layout": [
+    {
+      "name": "Прихожая",
+      "area": 4
+    },
+    {
+      "name": "Гостиная",
+      "area": 28
+    },
+    {
+      "name": "Кухня",
+      "area": 13
+    },
+    {
+      "name": "Спальня",
+      "area": 12
+    },
+    {
+      "name": "Спальня",
+      "area": 14
+    },
+    {
+      "name": "Спальня",
+      "area": 13
+    },
+    {
+      "name": "Кладовая",
+      "area": 4
+    },
+    {
+      "name": "Ванная комната",
+      "area": 5
+    },
+    {
+      "name": "Холл",
+      "area": 10
+    },
+    {
+      "name": "Санузел",
+      "area": 2
+    },
+    {
+      "name": "Санузел",
+      "area": 3
+    },
+    {
+      "name": "Терраса",
+      "area": 42
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 4,
+    "bedrooms": 3,
+    "bathrooms": 3
+  },
+  "area": 108,
+  "livingArea": 108,
+  "dims": "11x14 м"
+}

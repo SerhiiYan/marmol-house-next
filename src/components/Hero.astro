@@ -92,7 +92,7 @@ const featuredCases = allPortfolio
                 // Меняем <div> на <a> и добавляем href
                 <a 
                     href={projectUrl}
-                    class={`hero-slide block absolute inset-0 transition-opacity duration-1000 ease-in-out cursor-pointer ${index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+                    class={`hero-slide block absolute inset-0 transition-all duration-1000 ease-in-out cursor-pointer ${index === 0 ? 'opacity-100 z-10 pointer-events-auto' : 'opacity-0 z-0 pointer-events-none'}`}
                     data-index={index}
                 >
                     <img 
@@ -135,15 +135,16 @@ const featuredCases = allPortfolio
     const slides = document.querySelectorAll('.hero-slide');
     let currentSlide = 0;
     
-    if (slides.length > 1) { // Запускаем интервал только если слайдов больше 1
+    if (slides.length > 1) {
         setInterval(() => {
-            slides[currentSlide].classList.remove('opacity-100');
-            slides[currentSlide].classList.add('opacity-0');
+            
+            slides[currentSlide].classList.remove('opacity-100', 'z-10', 'pointer-events-auto');
+            slides[currentSlide].classList.add('opacity-0', 'z-0', 'pointer-events-none');
             
             currentSlide = (currentSlide + 1) % slides.length;
             
-            slides[currentSlide].classList.remove('opacity-0');
-            slides[currentSlide].classList.add('opacity-100');
+            slides[currentSlide].classList.remove('opacity-0', 'z-0', 'pointer-events-none');
+            slides[currentSlide].classList.add('opacity-100', 'z-10', 'pointer-events-auto');
         }, 5000); 
     }
 </script>

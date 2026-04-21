@@ -1,0 +1,80 @@
+{
+  "title": "Баир",
+  "order": 34,
+  "hit": false,
+  "category": "barnhouse",
+  "purpose": "living",
+  "style": "Сканди барнхаус",
+  "priceCategory": "economy",
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/barnhouse/bair/1.png",
+  "gallery": [
+    "/projects/barnhouse/bair/1.png",
+    "/projects/barnhouse/bair/2.png",
+    "/projects/barnhouse/bair/3.png"
+  ],
+  "plans": [
+    "/projects/barnhouse/bair/plan.webp"
+  ],
+  "description": "Классический барнхаус 'Баир' (62м²) с гибкой планировкой. Особенностью проекта является возможность выбора высоты окон — классической или панорамной 'в пол'. Это позволяет создать как традиционный, так и ультрасовременный интерьер по вашему вкусу.",
+  "features": [
+    "Металлопрофиль",
+    "Блок",
+    "Панорамные окна",
+    "Каркас"
+  ],
+  "layout": [
+    {
+      "name": "Прихожая",
+      "area": 3
+    },
+    {
+      "name": "Холл",
+      "area": 7
+    },
+    {
+      "name": "Спальня",
+      "area": 11
+    },
+    {
+      "name": "Спальня",
+      "area": 11
+    },
+    {
+      "name": "Гардероб",
+      "area": 3
+    },
+    {
+      "name": "Ванная комната",
+      "area": 3
+    },
+    {
+      "name": "Гостиная + кухня",
+      "area": 21
+    },
+    {
+      "name": "Тех помещение",
+      "area": 3
+    },
+    {
+      "name": "Терраса",
+      "area": 14
+    },
+    {
+      "name": "Крыльцо",
+      "area": 3
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 3,
+    "bedrooms": 2,
+    "bathrooms": 1
+  },
+  "area": 62,
+  "livingArea": 62,
+  "dims": "7x10 м"
+}

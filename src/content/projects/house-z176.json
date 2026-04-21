@@ -1,0 +1,83 @@
+{
+  "title": "Дом Z176",
+  "order": 22,
+  "hit": false,
+  "category": "house",
+  "purpose": "living",
+  "style": "Европейский",
+  "priceCategory": "economy",
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/house-150/z176/1.webp",
+  "gallery": [
+    "/projects/house-150/z176/1.webp",
+    "/projects/house-150/z176/2.webp",
+    "/projects/house-150/z176/3.webp"
+  ],
+  "plans": [
+    "/projects/house-150/z176/plan.webp"
+  ],
+  "description": "Просторный и солидный дом Z176 площадью 115м² с тремя спальнями. Большая кухня и гостиная-столовая идеально подходят для приема гостей. Этот проект создан для тех, кто ценит простор, комфорт и основательность во всем.",
+  "features": [
+    "Кирпич",
+    "Металлочерепица",
+    "Утеплённый фундамент"
+  ],
+  "layout": [
+    {
+      "name": "Прихожая",
+      "area": 5
+    },
+    {
+      "name": "Холл",
+      "area": 4
+    },
+    {
+      "name": "Ванная комната",
+      "area": 7
+    },
+    {
+      "name": "Спальня",
+      "area": 13
+    },
+    {
+      "name": "Спальня",
+      "area": 18
+    },
+    {
+      "name": "Спальня",
+      "area": 12
+    },
+    {
+      "name": "Гостиная + столовая",
+      "area": 29
+    },
+    {
+      "name": "Кухня",
+      "area": 16
+    },
+    {
+      "name": "Котельная",
+      "area": 7
+    },
+    {
+      "name": "Терраса",
+      "area": 24
+    },
+    {
+      "name": "Холл",
+      "area": 5
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 4,
+    "bedrooms": 3,
+    "bathrooms": 1
+  },
+  "area": 115,
+  "livingArea": 115,
+  "dims": "11x16 м"
+}

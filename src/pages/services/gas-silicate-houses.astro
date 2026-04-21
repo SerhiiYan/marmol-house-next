@@ -5,7 +5,7 @@ import { getCollection } from 'astro:content';
 import { globalPricing } from '../../data/pricingConfig';
 
 // 1. ДИНАМИЧЕСКИЕ ЦЕНЫ
-const priceBase = Math.round(globalPricing.packages.premium.basePricePerMeter * 0.85); 
+const priceBase = Math.round(globalPricing.packages.premium.basePricePerMeter * 0.80); 
 const priceFull = globalPricing.packages.premiumPlus.basePricePerMeter;
 const currency = globalPricing.currency;
 

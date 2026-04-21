@@ -10,7 +10,7 @@ const projectsCollection = defineCollection({
     hit: z.boolean().default(false),
     
     // КАТЕГОРИИ
-    category: z.enum(['house', 'bath', 'commercial', 'a-frame', 'barnhouse']).default('house'),
+    category: z.enum(['house', 'bath', 'commercial', 'a-frame', 'barnhouse', 'cottage']).default('house'),
     purpose: z.enum(['living', 'business']).default('living'),
 
     badges: z.array(z.string()).optional(),
@@ -112,28 +112,66 @@ const portfolioCollection = defineCollection({
     title: z.string(), // "Дом в Тарасово"
     mainImage: z.string(), // Обложка для списка
     
-    // === ДОБАВЛЯЕМ ФЛАГ ДЛЯ ГЛАВНОЙ СТРАНИЦЫ ===
+    // Флаги и связи
     isHero: z.boolean().optional(),
+    relatedProjectSlug: z.string().optional(), // <-- Связь с каталогом (например, "z42")
+    status: z.enum(['completed', 'in_progress']).default('completed'),
+    technology: z.enum(['frame', 'block', 'reconstruction']),
     
-    // Фильтры
-    technology: z.enum(['frame', 'block']), // Каркас или Блок
-    
-    // Паспорт объекта (4 главные цифры)
+    // Паспорт объекта
     specs: z.object({
       location: z.string(), // "Гродно, Барановичи"
       area: z.number(),     // 120
       year: z.number(),     // 2023
-      duration: z.string(), // "3.5 месяца"
+      durationMonths: z.number(), // <-- Теперь это строго число (например, 4)
     }),
+
+    // SEO
+    seo: z.object({
+      title: z.string().optional(),
+      description: z.string().optional(),
+    }).optional(),
 
     // Контент
     description: z.string().optional(), // Небольшая история
-    gallery: z.array(z.string()),       // Фотографии результата
+    keyFeatures: z.array(z.string()).optional(), // <-- Список выполненных работ
+    progress: z.number().optional(),
+    currentStage: z.string().optional(),
+    gallery: z.array(z.string()).optional(),     // Фотографии результата
+  }),
+});
+
+// 4. НОВАЯ коллекция: БЛОГ / СТАТЬИ / ВИДЕО
+const blogCollection = defineCollection({
+  type: 'content', // ВАЖНО! Для блога используем 'content' (MD/MDX файлы), а не 'data'
+  schema: z.object({
+    title: z.string(), // "Как выбрать фундамент для дома из газоблока"
+    date: z.date(),    // Дата публикации (нужна для сортировки свежих постов)
+    author: z.string().default('Marmol House'),
+    mainImage: z.string(), // Обложка карточки
+    
+    // Категории для будущих фильтров
+    category: z.enum(['technology', 'review', 'tips', 'news']).default('news'),
+    
+    // === ТОТ САМЫЙ ЗАДЕЛ ПОД YOUTUBE ===
+    // Храним только ID видео (например, 'dQw4w9WgXcQ'), так будет гораздо проще 
+    // встраивать стандартный плеер YouTube прямо на страницу
+    youtubeVideoId: z.string().optional(), 
+    
+    // Дополнительные фишки для красивой карточки
+    readTime: z.number().optional(), // Время чтения в минутах (например, 5)
+    
+    // SEO
+    seo: z.object({
+      title: z.string().optional(),
+      description: z.string().optional(),
+    }).optional(),
   }),
 });
 
 export const collections = {
   'projects': projectsCollection,
   'real-estate': realEstateCollection,
-  'portfolio': portfolioCollection, 
+  'portfolio': portfolioCollection,
+  'blog': blogCollection,
 };

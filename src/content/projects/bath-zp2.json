@@ -1,0 +1,64 @@
+{
+  "title": "Баня ZP2",
+  "order": 2,
+  "hit": false,
+  "category": "bath",
+  "purpose": "living",
+  "style": "Скандинавский",
+  "priceCategory": "economy",
+  "fixPrice": 71000,
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/bath/zp2/zp1.webp",
+  "gallery": [
+    "/projects/bath/zp2/zp2.webp",
+    "/projects/bath/zp2/zp3.webp"
+  ],
+  "plans": [
+    "/projects/bath/zp2/plan.webp"
+  ],
+  "description": "Компактный и функциональный проект бани ZP2 площадью 34м² предлагает всё необходимое для комфортного отдыха. Продуманная планировка включает уютную комнату отдыха, эффективную сауну и все удобства. Отличный выбор для небольших участков, не жертвуя при этом качеством и комфортом. Возможны различные варианты исполнения и материалов.",
+  "features": [
+    "Металлочерепица",
+    "Газоблок",
+    "Каркас",
+    "Терраса"
+  ],
+  "layout": [
+    {
+      "name": "Прихожая",
+      "area": 4
+    },
+    {
+      "name": "Парная",
+      "area": 5
+    },
+    {
+      "name": "Санузел",
+      "area": 1
+    },
+    {
+      "name": "Предбанник",
+      "area": 4
+    },
+    {
+      "name": "Комната отдыха",
+      "area": 18
+    },
+    {
+      "name": "Терраса",
+      "area": 8
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 1,
+    "bedrooms": 0,
+    "bathrooms": 1
+  },
+  "area": 34,
+  "livingArea": 34,
+  "dims": "7,35x6,95 м"
+}

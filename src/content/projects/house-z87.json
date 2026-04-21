@@ -1,0 +1,78 @@
+{
+  "title": "Дом Z87",
+  "order": 12,
+  "hit": false,
+  "category": "house",
+  "purpose": "living",
+  "style": "Скандинавский",
+  "priceCategory": "economy",
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/house-100/z87/1.webp",
+  "gallery": [
+    "/projects/house-100/z87/1.webp",
+    "/projects/house-100/z87/2.webp"
+  ],
+  "plans": [
+    "/projects/house-100/z87/plan.webp"
+  ],
+  "description": "Эффективный и экономичный проект дома Z87 на 70м² с двумя спальнями и котельной. Благодаря продуманной планировке, каждый квадратный метр используется с максимальной пользой. Отличный вариант для небольшой семьи, ищущей комфортное жилье для постоянного проживания.",
+  "features": [
+    "Кирпич",
+    "Металлочерепица",
+    "Утеплённый фундамент"
+  ],
+  "layout": [
+    {
+      "name": "Прихожая",
+      "area": 4
+    },
+    {
+      "name": "Котельная",
+      "area": 5
+    },
+    {
+      "name": "Холл",
+      "area": 2
+    },
+    {
+      "name": "Гостиная + столовая",
+      "area": 16
+    },
+    {
+      "name": "Кухня",
+      "area": 8
+    },
+    {
+      "name": "Спальня",
+      "area": 13
+    },
+    {
+      "name": "Спальня",
+      "area": 11
+    },
+    {
+      "name": "Ванная комната",
+      "area": 5
+    },
+    {
+      "name": "Холл",
+      "area": 4
+    },
+    {
+      "name": "Терраса",
+      "area": 15
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 3,
+    "bedrooms": 2,
+    "bathrooms": 1
+  },
+  "area": 70,
+  "livingArea": 70,
+  "dims": "9x12 м"
+}

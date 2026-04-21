@@ -1,0 +1,80 @@
+{
+  "title": "Баня Памир",
+  "order": 5,
+  "hit": false,
+  "category": "bath",
+  "purpose": "living",
+  "style": "Скандинавский",
+  "priceCategory": "economy",
+  "fixPrice": 94000,
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/bath/pamir/pamir.webp",
+  "gallery": [
+    "/projects/bath/pamir/pamir.webp",
+    "/projects/bath/pamir/pamir1.webp",
+    "/projects/bath/pamir/pamir2.webp"
+  ],
+  "plans": [
+    "/projects/bath/pamir/plan.webp"
+  ],
+  "description": "Проект 'Памир' 65м² отличается своей современной архитектурой и удобной планировкой. Просторная комната отдыха и эффективная парная делают его центром притяжения для всей семьи. Отличный баланс между стилем, функциональностью и стоимостью.",
+  "features": [
+    "Газоблок",
+    "Металлочерепица",
+    "Каркас"
+  ],
+  "layout": [
+    {
+      "name": "Комната отдыха",
+      "area": 20
+    },
+    {
+      "name": "Парная",
+      "area": 7
+    },
+    {
+      "name": "Душевая",
+      "area": 5
+    },
+    {
+      "name": "Санузел",
+      "area": 2
+    },
+    {
+      "name": "Хоз помещение",
+      "area": 6
+    },
+    {
+      "name": "Прихожая",
+      "area": 3
+    },
+    {
+      "name": "Ванная комната",
+      "area": 8
+    },
+    {
+      "name": "Спальня",
+      "area": 11
+    },
+    {
+      "name": "Крыльцо",
+      "area": 2
+    },
+    {
+      "name": "Терраса",
+      "area": 10
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 2,
+    "bedrooms": 1,
+    "bathrooms": 1
+  },
+  "area": 65,
+  "livingArea": 65,
+  "dims": "8,5x8,5 м"
+}

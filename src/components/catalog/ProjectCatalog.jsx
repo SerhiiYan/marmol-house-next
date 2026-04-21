@@ -11,7 +11,8 @@ export default function ProjectCatalog({ allProjects }) {
   const [activeTech, setActiveTech] = useState('all');
   const [activeArea, setActiveArea] = useState('all');
   const [activeRooms, setActiveRooms] = useState('all');
-  const [visibleCount, setVisibleCount] = useState(6);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [visibleCount, setVisibleCount] = useState(12);
   
   // Состояние для мобильной шторки фильтров
   const [isFilterModalOpen, setFilterModalOpen] = useState(false);
@@ -50,7 +51,8 @@ export default function ProjectCatalog({ allProjects }) {
             'bath': 'Бани', 
             'a-frame': 'A-Frame', 
             'commercial': 'Коммерция',
-            'barnhouse': 'Barnhouse' // <-- ДОБАВИЛИ
+            'barnhouse': 'Barnhouse',
+            'cottage': 'Дачи'
         };
         cats.add(map[p.data.category] || p.data.category);
     });
@@ -65,10 +67,14 @@ export default function ProjectCatalog({ allProjects }) {
   // ФИЛЬТРАЦИЯ
   const filteredProjects = allProjects.filter(project => {
     const data = project.data;
-    const map = { 'house': 'Дома', 'bath': 'Бани', 'a-frame': 'A-Frame', 'commercial': 'Коммерция', 'barnhouse': 'Barnhouse' };
+    const map = { 'bath': 'Бани', 'a-frame': 'A-Frame', 'commercial': 'Коммерция', 'barnhouse': 'Barnhouse', 'cottage': 'Дачи', 'house': 'Дома' };
     const currentCatName = map[data.category] || data.category;
 
     if (activeCategory !== 'Все' && currentCatName !== activeCategory) return false;
+    if (searchQuery.trim() !== '') {
+        const titleMatch = data.title.toLowerCase().includes(searchQuery.toLowerCase());
+        if (!titleMatch) return false;
+    }
     if (activeTech !== 'all' && !data.availableTech.includes(activeTech)) return false;
 
     if (activeArea !== 'all') {
@@ -91,73 +97,134 @@ export default function ProjectCatalog({ allProjects }) {
   const sortedProjects = filteredProjects.sort((a, b) => a.data.order - b.data.order);
   const visibleProjects = sortedProjects.slice(0, visibleCount);
 
-  // --- ХЕЛПЕР: СОДЕРЖИМОЕ ФИЛЬТРОВ (Чтобы не дублировать код в модалке и на десктопе) ---
-  const FilterControls = ({ mobileMode = false }) => (
-    <div className={`flex flex-wrap items-center gap-3 md:gap-6 ${mobileMode ? 'flex-col items-start w-full gap-6' : ''}`}>
+  // --- ХЕЛПЕР: СОДЕРЖИМОЕ ФИЛЬТРОВ ---
+  const renderFilterControls = (mobileMode = false) => (
+    <div className={`flex flex-col gap-4 w-full`}>
         
-        {/* Группа 1: Технология */}
-        <div className={`flex items-center ${mobileMode ? 'w-full flex-col items-start gap-2' : 'space-x-2 bg-white px-3 py-1 rounded-lg border border-gray-200'}`}>
-            <span className={`text-[10px] uppercase font-bold text-gray-400 ${mobileMode ? 'text-xs' : 'mr-1'}`}>Технология:</span>
-            <div className={mobileMode ? 'flex gap-2 w-full' : 'flex'}>
-                {['all', 'frame', 'block'].map(tech => (
-                    <button
-                        key={tech}
-                        onClick={() => setActiveTech(tech)}
-                        className={`text-xs font-bold uppercase px-3 py-2 rounded transition-all ${
-                            activeTech === tech 
-                            ? 'bg-marmol-gold text-marmol-navy shadow-sm' 
-                            : 'text-gray-500 hover:text-marmol-navy bg-gray-50'
-                        } ${mobileMode ? 'flex-1 text-center' : ''}`}
-                    >
-                        {{ all: 'Любая', frame: 'Каркас', block: 'Блок' }[tech]}
+        {/* === ОСНОВНАЯ ПАНЕЛЬ ФИЛЬТРОВ === */}
+        <div className={`flex ${mobileMode ? 'flex-col gap-4' : 'flex-row items-center bg-white p-2 rounded-2xl shadow-sm border border-gray-100'}`}>
+            
+            {/* 1. ПОЛЕ ПОИСКА */}
+            {/* Добавили min-w-[220px], чтобы инпут больше никогда не сжимался! */}
+            <div className={`relative flex items-center ${mobileMode ? 'w-full' : 'flex-1 min-w-[220px] border-r border-gray-100 pr-4 pl-2 h-full'}`}>
+                <svg className="w-5 h-5 text-gray-400 absolute left-3 md:left-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input 
+                    type="text" 
+                    placeholder="Найти проект..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className={`text-sm w-full outline-none bg-transparent pl-10 md:pl-12 py-3 ${mobileMode ? 'border border-gray-200 rounded-xl focus:border-marmol-navy focus:ring-1 focus:ring-marmol-navy' : 'transition-all duration-300'}`}
+                />
+                {searchQuery && (
+                    <button onClick={() => setSearchQuery('')} className="absolute right-4 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                     </button>
-                ))}
+                )}
             </div>
-        </div>
 
-        {/* Группа 2: Площадь */}
-        <div className={`flex items-center ${mobileMode ? 'w-full flex-col items-start gap-2' : 'space-x-2 bg-white px-3 py-1 rounded-lg border border-gray-200'}`}>
-            <span className={`text-[10px] uppercase font-bold text-gray-400 ${mobileMode ? 'text-xs' : 'mr-1'}`}>Площадь:</span>
-            <div className={mobileMode ? 'grid grid-cols-4 gap-2 w-full' : 'flex'}>
-                {[
-                    { val: 'all', label: 'Любая' },
-                    { val: 'small', label: '< 100' },
-                    { val: 'medium', label: '100-150' },
-                    { val: 'large', label: '150+' }
-                ].map(opt => (
-                    <button
-                        key={opt.val}
-                        onClick={() => setActiveArea(opt.val)}
-                        className={`text-xs font-bold uppercase px-2 py-2 rounded transition-colors ${
-                            activeArea === opt.val ? 'bg-marmol-navy text-white' : 'text-gray-500 hover:text-marmol-navy bg-gray-50'
-                        } ${mobileMode ? 'w-full text-center' : ''}`}
-                    >
-                        {opt.label}
-                    </button>
-                ))}
-            </div>
-        </div>
+            {/* КОНТЕЙНЕР ДЛЯ ГРУПП (Подписи теперь СВЕРХУ) */}
+            <div className={`flex ${mobileMode ? 'flex-col gap-4' : 'flex-row items-start gap-4 pl-4 pr-2 pt-1 pb-1'}`}>
+                
+                {/* Группа 1: Технология */}
+                {/* flex-col ставит элементы друг под друга */}
+                <div className={`flex flex-col items-start gap-1.5 ${mobileMode ? 'w-full bg-gray-50 p-3 rounded-xl' : ''}`}>
+                    <span className="text-[9px] md:text-[10px] uppercase font-bold text-gray-400 pl-1 whitespace-nowrap tracking-wider">Технология</span>
+                    <div className="flex bg-gray-100/50 p-1 rounded-lg w-full md:w-auto">
+                        {['all', 'frame', 'block'].map(tech => (
+                            <button
+                                key={tech}
+                                onClick={() => setActiveTech(tech)}
+                                className={`text-xs font-bold uppercase px-3 md:px-4 py-2 rounded-md transition-all ${
+                                    activeTech === tech 
+                                    ? 'bg-white text-marmol-navy shadow-sm' 
+                                    : 'text-gray-500 hover:text-marmol-navy'
+                                } ${mobileMode ? 'flex-1 text-center' : ''}`}
+                            >
+                                {{ all: 'Любая', frame: 'Каркас', block: 'Блок' }[tech]}
+                            </button>
+                        ))}
+                    </div>
+                </div>
 
-        {/* Группа 3: Спальни */}
-        <div className={`flex items-center ${mobileMode ? 'w-full flex-col items-start gap-2' : 'space-x-2 bg-white px-3 py-1 rounded-lg border border-gray-200'}`}>
-            <span className={`text-[10px] uppercase font-bold text-gray-400 ${mobileMode ? 'text-xs' : 'mr-1'}`}>Спальни:</span>
-            <div className={mobileMode ? 'flex gap-2 w-full' : 'flex'}>
-                {['all', '2', '3', '4+'].map(room => (
-                    <button
-                        key={room}
-                        onClick={() => setActiveRooms(room)}
-                        className={`text-xs font-bold uppercase px-3 py-2 rounded transition-colors ${
-                            activeRooms === room ? 'bg-marmol-navy text-white' : 'text-gray-500 hover:text-marmol-navy bg-gray-50'
-                        } ${mobileMode ? 'flex-1 text-center' : ''}`}
-                    >
-                        {room === 'all' ? 'Любое' : room}
-                    </button>
-                ))}
+                {/* Разделитель на десктопе */}
+                {/* Добавил mt-4 чтобы палочка была по центру кнопок, а не уезжала вверх к подписям */}
+                {!mobileMode && <div className="h-8 w-px bg-gray-200 mt-4"></div>}
+
+                {/* Группа 2: Площадь */}
+                <div className={`flex flex-col items-start gap-1.5 ${mobileMode ? 'w-full bg-gray-50 p-3 rounded-xl' : ''}`}>
+                    <span className="text-[9px] md:text-[10px] uppercase font-bold text-gray-400 pl-1 whitespace-nowrap tracking-wider">Площадь (м²)</span>
+                    <div className="flex bg-gray-100/50 p-1 rounded-lg w-full md:w-auto">
+                        {[
+                            { val: 'all', label: 'Любая' },
+                            { val: 'small', label: '<100' },
+                            { val: 'medium', label: '100-150' },
+                            { val: 'large', label: '>150' }
+                        ].map(opt => (
+                            <button
+                                key={opt.val}
+                                onClick={() => setActiveArea(opt.val)}
+                                className={`text-xs font-bold uppercase px-2 md:px-3 py-2 rounded-md transition-all ${
+                                    activeArea === opt.val ? 'bg-white text-marmol-navy shadow-sm' : 'text-gray-500 hover:text-marmol-navy'
+                                } ${mobileMode ? 'flex-1 text-center' : ''}`}
+                            >
+                                {opt.label}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Разделитель на десктопе */}
+                {!mobileMode && <div className="h-8 w-px bg-gray-200 mt-4"></div>}
+
+                {/* Группа 3: Спальни */}
+                 <div className={`flex flex-col items-start gap-1.5 ${mobileMode ? 'w-full bg-gray-50 p-3 rounded-xl' : ''}`}>
+                    <span className="text-[9px] md:text-[10px] uppercase font-bold text-gray-400 pl-1 whitespace-nowrap tracking-wider">Спальни</span>
+                    <div className="flex bg-gray-100/50 p-1 rounded-lg w-full md:w-auto">
+                        {['all', '2', '3', '4+'].map(room => (
+                            <button
+                                key={room}
+                                onClick={() => setActiveRooms(room)}
+                                className={`text-xs font-bold uppercase px-3 py-2 rounded-md transition-all ${
+                                    activeRooms === room ? 'bg-white text-marmol-navy shadow-sm' : 'text-gray-500 hover:text-marmol-navy'
+                                } ${mobileMode ? 'flex-1 text-center' : ''}`}
+                            >
+                                {room === 'all' ? 'Любое' : room}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>
   );
+  // --- АКТИВНЫЕ ФИЛЬТРЫ (Для отображения чипсов) ---
+  const activeFilterTags = [];
+  
+  if (searchQuery.trim() !== '') {
+      activeFilterTags.push({ label: `Поиск: ${searchQuery}`, clear: () => setSearchQuery('') });
+  }
+  if (activeTech !== 'all') {
+      activeFilterTags.push({ label: { frame: 'Каркас', block: 'Блок' }[activeTech], clear: () => setActiveTech('all') });
+  }
+  if (activeArea !== 'all') {
+      activeFilterTags.push({ label: { small: '< 100 м²', medium: '100-150 м²', large: '> 150 м²' }[activeArea], clear: () => setActiveArea('all') });
+  }
+  if (activeRooms !== 'all') {
+      activeFilterTags.push({ label: `${activeRooms} сп.`, clear: () => setActiveRooms('all') });
+  }
 
+  const handleClearAllFilters = () => {
+      setSearchQuery('');
+      setActiveTech('all');
+      setActiveArea('all');
+      setActiveRooms('all');
+      // Категорию ('Все', 'Дома' и т.д.) обычно не сбрасывают кнопкой "Сбросить все", 
+      // так как это базовый раздел каталога, но если хочешь - можно раскомментировать:
+      // setActiveCategory('Все');
+  };
   return (
     <div>
       
@@ -208,7 +275,7 @@ export default function ProjectCatalog({ allProjects }) {
 
                 {/* ДЕСКТОПНЫЕ ФИЛЬТРЫ (Скрыты на mobile) */}
                 <div className="hidden md:block pt-2">
-                    <FilterControls />
+                    {renderFilterControls(false)}
                 </div>
 
             </div>
@@ -233,7 +300,7 @@ export default function ProjectCatalog({ allProjects }) {
                 </div>
                 
                 {/* Фильтры внутри шторки */}
-                <FilterControls mobileMode={true} />
+                {renderFilterControls(true)}
 
                 <button 
                     onClick={() => setFilterModalOpen(false)}
@@ -244,7 +311,32 @@ export default function ProjectCatalog({ allProjects }) {
             </div>
         </div>
       )}
+        {/* --- ЧИПСЫ АКТИВНЫХ ФИЛЬТРОВ --- */}
+      {activeFilterTags.length > 0 && (
+          <div className="flex flex-wrap items-center gap-2 mt-6 md:mt-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+              <span className="text-xs text-gray-400 font-medium mr-1">Выбрано:</span>
+              
+              {activeFilterTags.map((tag, idx) => (
+                  <button 
+                      key={idx} 
+                      onClick={tag.clear}
+                      className="flex items-center gap-1.5 bg-marmol-gold/10 text-marmol-navy border border-marmol-gold/30 text-[11px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full hover:bg-marmol-gold hover:text-white transition-colors group cursor-pointer"
+                  >
+                      {tag.label}
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3 h-3 text-marmol-navy opacity-50 group-hover:text-white group-hover:opacity-100 transition-colors">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                  </button>
+              ))}
 
+              <button 
+                  onClick={handleClearAllFilters}
+                  className="text-xs text-gray-400 underline hover:text-marmol-navy ml-2 transition-colors cursor-pointer"
+              >
+                  Сбросить всё
+              </button>
+          </div>
+      )}    
       {/* --- СЕТКА РЕЗУЛЬТАТОВ (ОСТАЛАСЬ ТАКОЙ ЖЕ) --- */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12 mt-8">
         {visibleProjects.map((project) => {
@@ -294,13 +386,13 @@ export default function ProjectCatalog({ allProjects }) {
       {visibleProjects.length === 0 && (
           <div className="text-center py-20 bg-white rounded-xl border border-dashed border-gray-300">
               <p className="text-gray-500 mb-2">Нет проектов с такими параметрами.</p>
-              <button onClick={() => {setActiveCategory('Все'); setActiveTech('all'); setActiveArea('all'); setActiveRooms('all')}} className="text-marmol-gold underline font-bold cursor-pointer">Сбросить фильтры</button>
+              <button onClick={() => {setActiveCategory('Все'); setActiveTech('all'); setActiveArea('all'); setActiveRooms('all'); setSearchQuery('');}} className="text-marmol-gold underline font-bold cursor-pointer">Сбросить фильтры</button>
           </div>
       )}
 
       {visibleProjects.length < filteredProjects.length && (
         <div className="text-center">
-            <button onClick={() => setVisibleCount(prev => prev + 6)} className="inline-block px-10 py-4 bg-white border border-gray-200 text-marmol-navy font-bold uppercase tracking-widest text-xs hover:border-marmol-navy hover:bg-marmol-navy hover:text-white transition-all shadow-sm rounded-full cursor-pointer">Показать еще (+{filteredProjects.length - visibleProjects.length})</button>
+            <button onClick={() => setVisibleCount(prev => prev + 12)} className="inline-block px-10 py-4 bg-white border border-gray-200 text-marmol-navy font-bold uppercase tracking-widest text-xs hover:border-marmol-navy hover:bg-marmol-navy hover:text-white transition-all shadow-sm rounded-full cursor-pointer">Показать еще (+{filteredProjects.length - visibleProjects.length})</button>
         </div>
       )}
 

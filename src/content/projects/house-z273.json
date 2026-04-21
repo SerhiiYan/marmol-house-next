@@ -1,0 +1,79 @@
+{
+  "title": "Дом Z273",
+  "order": 25,
+  "hit": false,
+  "category": "house",
+  "purpose": "living",
+  "style": "Европейский",
+  "priceCategory": "economy",
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/house-100/z273/1.webp",
+  "gallery": [
+    "/projects/house-100/z273/1.webp",
+    "/projects/house-100/z273/2.webp",
+    "/projects/house-100/z273/3.webp"
+  ],
+  "plans": [
+    "/projects/house-100/z273/plan.webp"
+  ],
+  "description": "Проект дома Z273 (94м²) с тремя комфортабельными спальнями. Классическая Т-образная форма позволяет эффективно зонировать пространство, отделяя спальную зону от дневной. Отличное решение для большой и дружной семьи.",
+  "features": [
+    "Кирпич",
+    "Металлочерепица",
+    "Утеплённый фундамент"
+  ],
+  "layout": [
+    {
+      "name": "Санузел",
+      "area": 3
+    },
+    {
+      "name": "Терраса",
+      "area": 24
+    },
+    {
+      "name": "Гостиная",
+      "area": 26
+    },
+    {
+      "name": "Кухня + кладовая",
+      "area": 11
+    },
+    {
+      "name": "Прихожая",
+      "area": 4
+    },
+    {
+      "name": "Ванная комната",
+      "area": 6
+    },
+    {
+      "name": "Спальня",
+      "area": 12
+    },
+    {
+      "name": "Спальня",
+      "area": 13
+    },
+    {
+      "name": "Спальня",
+      "area": 12
+    },
+    {
+      "name": "Холл",
+      "area": 7
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 4,
+    "bedrooms": 3,
+    "bathrooms": 2
+  },
+  "area": 94,
+  "livingArea": 94,
+  "dims": "11x12 м"
+}

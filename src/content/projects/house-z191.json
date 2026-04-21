@@ -1,0 +1,82 @@
+{
+  "title": "Дом Z191",
+  "order": 23,
+  "hit": false,
+  "category": "house",
+  "purpose": "living",
+  "style": "Европейский",
+  "priceCategory": "economy",
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/house-150/z191/1.webp",
+  "gallery": [
+    "/projects/house-150/z191/1.webp",
+    "/projects/house-150/z191/2.webp"
+  ],
+  "plans": [
+    "/projects/house-150/z191/plan.webp"
+  ],
+  "description": "Многофункциональный проект Z191 (101м²) с двумя спальнями и отдельным кабинетом. Это идеальное решение для семьи, где один из членов работает из дома. Продуманная планировка четко разделяет рабочее и личное пространство.",
+  "features": [
+    "Кирпич",
+    "Металлочерепица",
+    "Утеплённый фундамент"
+  ],
+  "layout": [
+    {
+      "name": "Прихожая",
+      "area": 4
+    },
+    {
+      "name": "Котельная",
+      "area": 6
+    },
+    {
+      "name": "Холл",
+      "area": 8
+    },
+    {
+      "name": "Гостиная + столовая",
+      "area": 27
+    },
+    {
+      "name": "Кухня",
+      "area": 9
+    },
+    {
+      "name": "Кладовая",
+      "area": 3
+    },
+    {
+      "name": "Ванная комната",
+      "area": 6
+    },
+    {
+      "name": "Спальня",
+      "area": 12
+    },
+    {
+      "name": "Спальня",
+      "area": 13
+    },
+    {
+      "name": "Кабинет",
+      "area": 11
+    },
+    {
+      "name": "Терраса",
+      "area": 51
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 4,
+    "bedrooms": 2,
+    "bathrooms": 1
+  },
+  "area": 101,
+  "livingArea": 101,
+  "dims": "10x14 м"
+}

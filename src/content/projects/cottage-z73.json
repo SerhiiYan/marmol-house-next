@@ -1,0 +1,66 @@
+{
+  "title": "Дача Z73",
+  "order": 7,
+  "hit": false,
+  "category": "cottage",
+  "purpose": "living",
+  "style": "Скандинавский",
+  "priceCategory": "economy",
+  "fixPrice": 73500,
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/cottage/z73/1.webp",
+  "gallery": [
+    "/projects/cottage/z73/1.webp",
+    "/projects/cottage/z73/2.webp"
+  ],
+  "plans": [
+    "/projects/cottage/z73/plan.webp"
+  ],
+  "description": "Продуманный проект дачи Z73 площадью 50м² предлагает комфортную планировку с отдельной спальней и просторной кухней-гостиной. Этот дом станет прекрасным местом для семейного отдыха за городом. Адаптируем проект под ваши нужды и технологию строительства.",
+  "features": [
+    "Газоблок",
+    "Металлочерепица"
+  ],
+  "layout": [
+    {
+      "name": "Прихожая",
+      "area": 4
+    },
+    {
+      "name": "Холл",
+      "area": 5
+    },
+    {
+      "name": "Кухня",
+      "area": 7
+    },
+    {
+      "name": "Гостиная + столовая",
+      "area": 16
+    },
+    {
+      "name": "Спальня",
+      "area": 12
+    },
+    {
+      "name": "Ванная комната",
+      "area": 5
+    },
+    {
+      "name": "Терраса",
+      "area": 5
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 2,
+    "bedrooms": 1,
+    "bathrooms": 1
+  },
+  "area": 50,
+  "livingArea": 50,
+  "dims": "9x7,85 м"
+}

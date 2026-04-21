@@ -1,0 +1,74 @@
+{
+  "title": "Дом Z139",
+  "order": 13,
+  "hit": false,
+  "category": "house",
+  "purpose": "living",
+  "style": "Европейский",
+  "priceCategory": "economy",
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/house-100/z139/1.webp",
+  "gallery": [
+    "/projects/house-100/z139/1.webp",
+    "/projects/house-100/z139/2.webp"
+  ],
+  "plans": [
+    "/projects/house-100/z139/plan.webp"
+  ],
+  "description": "Компактный дом Z139 площадью 60м², который вмещает в себя целых три спальни. Это уникальное решение для семей, которым нужно максимум жилых комнат на небольшой площади. Идеально для строительства на узких участках. Проект может быть адаптирован под ваши нужды.",
+  "features": [
+    "Кирпич",
+    "Металлочерепица",
+    "Утеплённый фундамент"
+  ],
+  "layout": [
+    {
+      "name": "Прихожая",
+      "area": 19
+    },
+    {
+      "name": "Холл",
+      "area": 6
+    },
+    {
+      "name": "Ванная комната",
+      "area": 3
+    },
+    {
+      "name": "Спальня",
+      "area": 8
+    },
+    {
+      "name": "Спальня",
+      "area": 9
+    },
+    {
+      "name": "Спальня",
+      "area": 7
+    },
+    {
+      "name": "Гостиная",
+      "area": 16
+    },
+    {
+      "name": "Кухня",
+      "area": 9
+    },
+    {
+      "name": "Терраса",
+      "area": 23
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 4,
+    "bedrooms": 3,
+    "bathrooms": 1
+  },
+  "area": 60,
+  "livingArea": 60,
+  "dims": "7x15 м"
+}

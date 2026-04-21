@@ -1,0 +1,83 @@
+{
+  "title": "Дом Z356",
+  "order": 16,
+  "hit": false,
+  "category": "house",
+  "purpose": "living",
+  "style": "Европейский",
+  "priceCategory": "economy",
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/house-100/z356/1.webp",
+  "gallery": [
+    "/projects/house-100/z356/1.webp",
+    "/projects/house-100/z356/2.webp",
+    "/projects/house-100/z356/3.webp"
+  ],
+  "plans": [
+    "/projects/house-100/z356/plan.webp"
+  ],
+  "description": "Проект дома Z356 99 м² предлагает максимальный комфорт на площади до 100м². Две спальни, отдельная гардеробная, два санузла и просторная кухня-столовая. Этот дом спроектирован для тех, кто не готов к компромиссам и ценит комфорт в каждой детали.",
+  "features": [
+    "Кирпич",
+    "Металлочерепица",
+    "Утеплённый фундамент"
+  ],
+  "layout": [
+    {
+      "name": "Прихожая",
+      "area": 6
+    },
+    {
+      "name": "Спальня",
+      "area": 11
+    },
+    {
+      "name": "Спальня",
+      "area": 12
+    },
+    {
+      "name": "Гардеробная",
+      "area": 5
+    },
+    {
+      "name": "Санузел",
+      "area": 3
+    },
+    {
+      "name": "Гостиная",
+      "area": 28
+    },
+    {
+      "name": "Кухня + столовая",
+      "area": 16
+    },
+    {
+      "name": "Котельная",
+      "area": 6
+    },
+    {
+      "name": "Холл",
+      "area": 6
+    },
+    {
+      "name": "Ванная комната",
+      "area": 6
+    },
+    {
+      "name": "Терраса",
+      "area": 13
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 4,
+    "bedrooms": 2,
+    "bathrooms": 2
+  },
+  "area": 99,
+  "livingArea": 99,
+  "dims": "15x9 м"
+}

@@ -164,7 +164,46 @@ const schema = {
                         <ProjectGallery images={data.gallery} client:visible />
                     </section>
                 )}
-
+                {/* === НОВЫЙ БЛОК: КАРТА === */}
+                {data.location?.coords && data.location.coords.length === 2 && (
+                    <section class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100" id="map">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-2xl font-bold text-marmol-navy">Расположение на карте</h2>
+                            <a 
+                                href={`https://www.google.com/maps/dir/?api=1&destination=${data.location.coords[0]},${data.location.coords[1]}`} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                class="text-[10px] font-bold uppercase tracking-widest text-marmol-gold hover:text-marmol-navy transition-colors flex items-center gap-1"
+                            >
+                                Проложить маршрут
+                                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                            </a>
+                        </div>
+                        
+                        <div class="w-full h-[400px] rounded-xl overflow-hidden bg-gray-100 border border-gray-200 relative group">
+                            {/* Заглушка, пока карта грузится */}
+                            <div class="absolute inset-0 flex items-center justify-center bg-gray-50 z-0">
+                                <span class="text-gray-400 text-sm font-bold uppercase tracking-widest">Загрузка карты...</span>
+                            </div>
+                            
+                            {/* Интерактивный iframe Google Карт */}
+                            <iframe 
+                                class="relative z-10 w-full h-full grayscale group-hover:grayscale-0 transition-all duration-700"
+                                frameborder="0" 
+                                scrolling="no" 
+                                marginheight="0" 
+                                marginwidth="0" 
+                                src={`https://maps.google.com/maps?q=${data.location.coords[0]},${data.location.coords[1]}&t=m&z=15&output=embed&hl=ru`}
+                                title={`Расположение: ${data.location.city}, ${data.location.address}`}
+                            ></iframe>
+                        </div>
+                        
+                        <p class="text-sm text-gray-500 mt-5 flex items-center">
+                            <svg class="w-4 h-4 mr-2 text-marmol-gold shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            <span>Точные координаты для навигатора: <strong class="font-medium text-marmol-navy">{data.location.coords[0]}, {data.location.coords[1]}</strong></span>
+                        </p>
+                    </section>
+                )}
             </div>
 
             <div class="hidden lg:block relative">

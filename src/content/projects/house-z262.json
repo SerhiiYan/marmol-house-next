@@ -1,0 +1,70 @@
+{
+  "title": "Дом Z262",
+  "order": 14,
+  "hit": false,
+  "category": "house",
+  "purpose": "living",
+  "style": "Европейский",
+  "priceCategory": "economy",
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/house-100/z262/1.webp",
+  "gallery": [
+    "/projects/house-100/z262/1.webp",
+    "/projects/house-100/z262/2.webp"
+  ],
+  "plans": [
+    "/projects/house-100/z262/plan.webp"
+  ],
+  "description": "Практичный проект одноэтажного дома Z262 на 65м² с двумя спальнями и удобной кухней, совмещенной с кладовой. Простая форма и двускатная крыша делают его экономичным в строительстве, а продуманная планировка обеспечивает высокий уровень комфорта для проживания.",
+  "features": [
+    "Кирпич",
+    "Металлочерепица",
+    "Утеплённый фундамент"
+  ],
+  "layout": [
+    {
+      "name": "Прихожая",
+      "area": 4
+    },
+    {
+      "name": "Кухня + кладовая",
+      "area": 12
+    },
+    {
+      "name": "Холл",
+      "area": 4
+    },
+    {
+      "name": "Ванная комната",
+      "area": 6
+    },
+    {
+      "name": "Гостиная",
+      "area": 16
+    },
+    {
+      "name": "Спальня",
+      "area": 10
+    },
+    {
+      "name": "Спальня",
+      "area": 12
+    },
+    {
+      "name": "Терраса",
+      "area": 24
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 3,
+    "bedrooms": 2,
+    "bathrooms": 1
+  },
+  "area": 65,
+  "livingArea": 65,
+  "dims": "9x11 м"
+}

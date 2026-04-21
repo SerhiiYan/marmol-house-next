@@ -1,0 +1,67 @@
+{
+  "title": "Дом Z563",
+  "order": 46,
+  "hit": false,
+  "category": "house",
+  "purpose": "living",
+  "style": "Европейский",
+  "priceCategory": "economy",
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/house-100/z563/1.webp",
+  "gallery": [
+    "/projects/house-100/z563/1.webp",
+    "/projects/house-100/z563/2.webp",
+    "/projects/house-100/z563/3.webp"
+  ],
+  "plans": [
+    "/projects/house-100/z563/plan.webp"
+  ],
+  "description": "Проект Z563 — это современный и компактный одноэтажный дом, специально спроектированный для узких участков. Особенностью планировки является расположение гостиной в передней части дома. На площади почти 70 м² размещены две просторные спальни и все необходимые помещения для комфортной жизни.",
+  "features": [
+    "Каркас",
+    "Газосиликат",
+    "Металлочерепица"
+  ],
+  "layout": [
+    {
+      "name": "Спальня",
+      "area": 16
+    },
+    {
+      "name": "Спальня",
+      "area": 10
+    },
+    {
+      "name": "Кухня + Гостинная",
+      "area": 26
+    },
+    {
+      "name": "Ванная комната",
+      "area": 4
+    },
+    {
+      "name": "Холл",
+      "area": 6
+    },
+    {
+      "name": "Прихожая",
+      "area": 5
+    },
+    {
+      "name": "Хоз. помещение",
+      "area": 3
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 3,
+    "bedrooms": 2,
+    "bathrooms": 1
+  },
+  "area": 70,
+  "livingArea": 70,
+  "dims": "12x8 м"
+}

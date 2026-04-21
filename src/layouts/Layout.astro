@@ -4,10 +4,8 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ConsultationModal from '../components/ui/ConsultationModal.jsx'
-// import CookieBanner from '../components/ui/CookieBanner.astro'; 
+import CookieBanner from '../components/ui/CookieBanner.astro';
 
-// Делаем интерфейс гибким. 
-// Если страница не передаст описание или картинку, подставятся значения по умолчанию (со старого сайта).
 interface Props {
     title: string;
     description?: string;
@@ -15,13 +13,19 @@ interface Props {
     canonicalURL?: string;
 }
 
+const siteDomain = Astro.site ?? 'https://marmolhouse.by';
+
 const { 
     title, 
     description = "Строим каркасные и блочные дома под ключ в Беларуси. Проект в подарок! Работа по 240 и 95 указу. Фиксированная цена. Гарантия 5 лет. Закажите расчет на сайте Marmol House.",
-    image = "https://marmolhouse.by/og-image.png",
-    // Создаем гарантированно правильную ссылку, используя домен сайта и путь текущей страницы
-    canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://marmolhouse.by').href,
+    // Сделал путь относительным по умолчанию, мы его превратим в абсолютный ниже
+    image = "/og-image.png", 
+    canonicalURL = new URL(Astro.url.pathname, siteDomain).href,
 } = Astro.props;
+
+// === НОВОЕ: Железобетонная генерация абсолютного пути для картинки ===
+// new URL() автоматически подклеит домен, если image - это относительный путь (например, /images/dom.jpg)
+const ogImageURL = new URL(image, siteDomain).href;
 ---
 
 <!doctype html>
@@ -29,7 +33,6 @@ const {
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="generator" content={Astro.generator} />
         
         <title>{title}</title>
@@ -41,42 +44,23 @@ const {
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={canonicalURL} />
-        <meta property="og:image" content={image} />
+        {/* Подставляем нашу новую переменную ogImageURL */}
+        <meta property="og:image" content={ogImageURL} />
         <meta property="og:locale" content="ru_RU" />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={image} />
-
+        {/* И сюда тоже */}
+        <meta name="twitter:image" content={ogImageURL} />
+        
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-        <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-KNB082B9WE"></script> -->
-        <!-- <script is:inline>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-KNB082B9WE');
-        </script> -->
-
-        <script is:inline type="text/javascript">
-           (function(m,e,t,r,i,k,a){
-              m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-              m[i].l=1*new Date();
-              for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-              k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-           })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=104396711', 'ym');
-
-           ym(104396711, 'init', {
-                ssr:true, 
-                webvisor:true, 
-                clickmap:true, 
-                accurateTrackBounce:true, 
-                trackLinks:true
-           });
-        </script>
-        <noscript><div><img src="https://mc.yandex.ru/watch/104396711" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
         <slot name="head" />
     </head>
     <body class="bg-marmol-bg text-marmol-navy font-body antialiased">
@@ -84,5 +68,6 @@ const {
         <slot />
         <Footer />
         <ConsultationModal client:load /> 
+        <CookieBanner />
     </body>
 </html>

@@ -1,0 +1,76 @@
+{
+  "title": "Мерлен",
+  "order": 31,
+  "hit": false,
+  "category": "barnhouse",
+  "purpose": "living",
+  "style": "Сканди барнхаус",
+  "priceCategory": "economy",
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/barnhouse/marlen/1.png",
+  "gallery": [
+    "/projects/barnhouse/marlen/1.png",
+    "/projects/barnhouse/marlen/2.png",
+    "/projects/barnhouse/marlen/3.png"
+  ],
+  "plans": [
+    "/projects/barnhouse/marlen/plan.webp"
+  ],
+  "description": "Проект 'Мерлен' (87м²) предлагает гибкую планировку и современный дизайн. Просторная гостиная с выходом на террасу, три спальни и возможность обустройства второго санузла или техпомещения делают этот дом максимально адаптивным под нужды вашей семьи.",
+  "features": [
+    "Металлопрофиль",
+    "Каркас",
+    "Блок",
+    "Панорамные окна"
+  ],
+  "layout": [
+    {
+      "name": "Прихожая",
+      "area": 4
+    },
+    {
+      "name": "Коридор",
+      "area": 8
+    },
+    {
+      "name": "Спальня",
+      "area": 11
+    },
+    {
+      "name": "Спальня",
+      "area": 16
+    },
+    {
+      "name": "Спальня",
+      "area": 11
+    },
+    {
+      "name": "Тех помещение",
+      "area": 3
+    },
+    {
+      "name": "Ванная комната",
+      "area": 5
+    },
+    {
+      "name": "Гостиная + кухня",
+      "area": 29
+    },
+    {
+      "name": "Терраса",
+      "area": 20
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 4,
+    "bedrooms": 3,
+    "bathrooms": 1
+  },
+  "area": 87,
+  "livingArea": 87,
+  "dims": "8x14 м"
+}

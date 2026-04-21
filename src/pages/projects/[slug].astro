@@ -41,7 +41,28 @@ const pageTitle = `Проект дома ${cleanTitle} (${data.area} м²) | Mar
 // Проверяем массив технологий, чтобы составить грамотное описание
 const techText = data.availableTech.includes('frame') ? 'каркасной технологии' : 'газосиликатных блоков';
 const generatedDesc = `Готовый проект дома ${data.title}. Площадь: ${data.area} м². Строительство по ${techText} под ключ. Изучите планировку и рассчитайте стоимость.`;
-const pageDescription = data.description ? `${data.description.slice(0, 155)}...` : generatedDesc;
+
+// 2. Умная обрезка текста для SEO (не рубит слова пополам)
+let finalSeoDescription = generatedDesc;
+
+if (data.description) {
+    if (data.description.length <= 155) {
+        finalSeoDescription = data.description;
+    } else {
+        // Используем современный метод .slice() вместо устаревшего .substr()
+        const truncated = data.description.slice(0, 155);
+        const lastSpaceIndex = truncated.lastIndexOf(" ");
+        
+        // Если пробел не найден (вся строка - одно слово), просто режем как есть
+        if (lastSpaceIndex === -1) {
+             finalSeoDescription = truncated + "...";
+        } else {
+             finalSeoDescription = truncated.slice(0, lastSpaceIndex) + "...";
+        }
+    }
+}
+
+const pageDescription = finalSeoDescription;
 
 // 3. Микроразметка Product
 const schema = {
@@ -175,8 +196,6 @@ const schema = {
                         <ProjectGallery images={data.gallery} client:visible />
                     </section>
                 )}
-
-                <!-- КАЛЬКУЛЯТОР -->
                 <!-- Здесь мы передаем fixPrice внутрь компонента -->
                 <section id="pricing">
                     <ProjectPricing 

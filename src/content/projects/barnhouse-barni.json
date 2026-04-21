@@ -1,0 +1,72 @@
+{
+  "title": "Барни",
+  "order": 33,
+  "hit": false,
+  "category": "barnhouse",
+  "purpose": "living",
+  "style": "Сканди барнхаус",
+  "priceCategory": "economy",
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/barnhouse/barni/1.png",
+  "gallery": [
+    "/projects/barnhouse/barni/1.png",
+    "/projects/barnhouse/barni/2.png",
+    "/projects/barnhouse/barni/3.png"
+  ],
+  "plans": [
+    "/projects/barnhouse/barni/plan.webp"
+  ],
+  "description": "Проект 'Барни' (63м²) — это мечта для ценителей спа-отдыха. Помимо двух спален и гостиной, этот барнхаус включает собственную сауну для максимального расслабления. Идеальный вариант для тех, кто хочет совместить дом и личный спа-курорт.",
+  "features": [
+    "Металлопрофиль",
+    "Блок",
+    "Панорамные окна",
+    "Каркас"
+  ],
+  "layout": [
+    {
+      "name": "Прихожая",
+      "area": 5
+    },
+    {
+      "name": "Спальня",
+      "area": 11
+    },
+    {
+      "name": "Спальня",
+      "area": 9
+    },
+    {
+      "name": "Ванная комната",
+      "area": 5
+    },
+    {
+      "name": "Гостиная + кухня",
+      "area": 37
+    },
+    {
+      "name": "Тех помещение",
+      "area": 3
+    },
+    {
+      "name": "Терраса",
+      "area": 16
+    },
+    {
+      "name": "Парная",
+      "area": 3
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 3,
+    "bedrooms": 2,
+    "bathrooms": 1
+  },
+  "area": 63,
+  "livingArea": 63,
+  "dims": "8x9 м"
+}

@@ -1,5 +1,6 @@
 /* src/styles/global.css */
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme {
   /* Твои фирменные цвета */

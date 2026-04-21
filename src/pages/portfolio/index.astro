@@ -4,24 +4,17 @@ import Layout from '../../layouts/Layout.astro';
 import PortfolioList from '../../components/portfolio/PortfolioList.jsx';
 import { getCollection } from 'astro:content';
 
-// Получаем и сортируем проекты (от новых к старым)
 const allProjects = await getCollection('portfolio');
 const sortedProjects = allProjects.sort((a, b) => b.data.specs.year - a.data.specs.year);
 
-// SEO Мета-данные
-const pageTitle = "Наши проекты | Портфолио строительства Marmol House";
-const pageDescription = "Галерея реализованных проектов Marmol House. Фотографии построенных каркасных и каменных домов в Гродно и области. Качество, которое можно увидеть.";
+const pageTitle = "Наши проекты | Marmol House";
+const pageDescription = "Галерея реализованных проектов Marmol House. Посмотрите наши готовые каркасные и блочные дома в Гродно и области.";
 
-// Микроразметка Schema.org
 const schema = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
   "name": "Портфолио Marmol House",
-  "description": pageDescription,
-  "provider": {
-    "@type": "ConstructionBusiness",
-    "name": "Marmol House"
-  }
+  "description": pageDescription
 };
 ---
 
@@ -29,28 +22,43 @@ const schema = {
   <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
 
   <main class="bg-gray-50 min-h-screen pt-28 pb-24 relative overflow-hidden">
-    
     <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-marmol-navy/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/3"></div>
 
     <section class="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative z-10">
         
-        <div class="mb-12 max-w-3xl animate-fade-in">
-            <div class="inline-block bg-marmol-gold text-marmol-navy text-[10px] font-bold uppercase tracking-widest px-3 py-1 mb-4 rounded-sm shadow-sm">
-                Галерея работ
-            </div>
-            
+        <div class="mb-10 max-w-3xl animate-fade-in text-center md:text-left mx-auto md:mx-0">
             <h1 class="text-4xl md:text-5xl font-sans font-bold text-marmol-navy mb-6">
-                Реализованные проекты домов
+                Наши работы
             </h1>
-            
             <p class="text-gray-500 text-lg leading-relaxed font-light">
-                Мы не просто рисуем красивые рендеры — мы строим надежные дома для комфортной жизни. 
-                Посмотрите фотографии наших реальных объектов в <strong class="font-medium text-marmol-navy">Гродно и области</strong>: 
-                от закладки фундамента до готового клинкерного фасада.
+                Взгляните на готовые фасады наших домов а также на ход строительства в данный момент, чтобы увидеть качество скрытых работ.
             </p>
         </div>
 
-        <PortfolioList items={sortedProjects} client:load />
+        {/* === ПЕРЕКЛЮЧАТЕЛЬ (Теперь это настоящие ссылки!) === */}
+        <div class="flex justify-center md:justify-start mb-12 animate-fade-in">
+            <div class="bg-white p-1.5 rounded-full inline-flex shadow-sm border border-gray-100 w-full sm:w-auto relative">
+                {/* Активная ссылка (Портфолио) */}
+                <a 
+                    href="/portfolio" 
+                    class="flex-1 sm:flex-none px-8 py-3 text-xs font-bold uppercase tracking-widest rounded-full transition-all duration-300 bg-marmol-navy text-white shadow-md text-center block"
+                >
+                    Готовые проекты
+                </a>
+                {/* Неактивная ссылка (Дневник) */}
+                <a 
+                    href="/diary" 
+                    class="flex-1 sm:flex-none px-8 py-3 text-xs font-bold uppercase tracking-widest rounded-full transition-all duration-300 text-gray-500 hover:text-marmol-navy text-center block"
+                >
+                    Ход строительства
+                </a>
+            </div>
+        </div>
+
+        {/* Только готовые проекты */}
+        <div class="animate-fade-in">
+            <PortfolioList items={sortedProjects} client:load />
+        </div>
 
     </section>
   </main>

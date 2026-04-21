@@ -1,0 +1,80 @@
+{
+  "title": "Омега",
+  "order": 30,
+  "hit": false,
+  "category": "barnhouse",
+  "purpose": "living",
+  "style": "Сканди барнхаус",
+  "priceCategory": "economy",
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/barnhouse/omega/1.png",
+  "gallery": [
+    "/projects/barnhouse/omega/1.png",
+    "/projects/barnhouse/omega/2.png",
+    "/projects/barnhouse/omega/3.png"
+  ],
+  "plans": [
+    "/projects/barnhouse/omega/plan.webp"
+  ],
+  "description": "Проект 'Омега' (88м²) — это просторный и комфортабельный семейный барнхаус. Три спальни, большая кухня-гостиная с выходом на террасу и продуманная планировка делают его идеальным для постоянного проживания. Современная архитектура и качественные материалы гарантируют комфорт на долгие годы.",
+  "features": [
+    "Металлопрофиль",
+    "Каркас",
+    "Блок",
+    "Панорамные окна"
+  ],
+  "layout": [
+    {
+      "name": "Прихожая",
+      "area": 4
+    },
+    {
+      "name": "Гардероб",
+      "area": 4
+    },
+    {
+      "name": "Спальня",
+      "area": 11
+    },
+    {
+      "name": "Спальня",
+      "area": 11
+    },
+    {
+      "name": "Спальня",
+      "area": 12
+    },
+    {
+      "name": "Ванная комната",
+      "area": 7
+    },
+    {
+      "name": "Гостиная + кухня",
+      "area": 36
+    },
+    {
+      "name": "Тех помещение",
+      "area": 4
+    },
+    {
+      "name": "Терраса",
+      "area": 16
+    },
+    {
+      "name": "Крыльцо",
+      "area": 3
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 4,
+    "bedrooms": 3,
+    "bathrooms": 1
+  },
+  "area": 88,
+  "livingArea": 88,
+  "dims": "8x14 м"
+}

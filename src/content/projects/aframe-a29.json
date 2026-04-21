@@ -1,0 +1,53 @@
+{
+  "title": "Дом А29",
+  "order": 52,
+  "hit": false,
+  "category": "a-frame",
+  "purpose": "business",
+  "style": "Классический A-frame",
+  "priceCategory": "economy",
+  "availableTech": [
+    "frame"
+  ],
+  "mainImage": "/projects/aframe/a29/1.jpg",
+  "gallery": [
+    "/projects/aframe/a29/1.jpg",
+    "/projects/aframe/a29/2.jpg"
+  ],
+  "plans": [
+    "/projects/aframe/a29/plan.jpg"
+  ],
+  "description": "Проект А29 — это флагманский A-frame площадью 98 м². Его главная особенность — грандиозная кухня-гостиная площадью 39 м² с панорамным остеклением и «вторым светом». Дом имеет полноценную спальню на первом этаже и огромный второй этаж (32 м²), который можно зонировать на две спальни. Это идеальный выбор для премиальной сдачи в аренду большим компаниям.",
+  "features": [
+    "Деревянный каркас",
+    "Металлическая кровля",
+    "Стеклопакеты"
+  ],
+  "layout": [
+    {
+      "name": "Кухня - Гостинная",
+      "area": 39
+    },
+    {
+      "name": "Санузел",
+      "area": 6
+    },
+    {
+      "name": "Спальня (1 этаж)",
+      "area": 12
+    },
+    {
+      "name": "Второй этаж",
+      "area": 32
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 3,
+    "bedrooms": 2,
+    "bathrooms": 1
+  },
+  "area": 98,
+  "livingArea": 98,
+  "dims": "8x9 м"
+}

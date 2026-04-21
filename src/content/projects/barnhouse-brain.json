@@ -1,0 +1,80 @@
+{
+  "title": "Брейн",
+  "order": 32,
+  "hit": false,
+  "category": "barnhouse",
+  "purpose": "living",
+  "style": "Сканди барнхаус",
+  "priceCategory": "economy",
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/barnhouse/brain/1.png",
+  "gallery": [
+    "/projects/barnhouse/brain/1.png",
+    "/projects/barnhouse/brain/2.png",
+    "/projects/barnhouse/brain/3.png"
+  ],
+  "plans": [
+    "/projects/barnhouse/brain/plan.webp"
+  ],
+  "description": "Гибкий и многофункциональный проект 'Брейн' (69м²) в стиле барнхаус. Три спальни и два санузла обеспечивают комфорт, а возможность добавить сауну или мастер-блок позволяет создать дом вашей мечты. Идеальный выбор для тех, кто любит персонализацию.",
+  "features": [
+    "Металлопрофиль",
+    "Блок",
+    "Панорамные окна",
+    "Каркас"
+  ],
+  "layout": [
+    {
+      "name": "Холл",
+      "area": 3
+    },
+    {
+      "name": "Спальня",
+      "area": 10
+    },
+    {
+      "name": "Спальня",
+      "area": 13
+    },
+    {
+      "name": "Спальня",
+      "area": 19
+    },
+    {
+      "name": "Санузел",
+      "area": 1
+    },
+    {
+      "name": "Ванная комната",
+      "area": 3
+    },
+    {
+      "name": "Гостиная + кухня",
+      "area": 26
+    },
+    {
+      "name": "Тех помещение",
+      "area": 5
+    },
+    {
+      "name": "Терраса",
+      "area": 19
+    },
+    {
+      "name": "Крыльцо",
+      "area": 3
+    }
+  ],
+  "specs": {
+    "floors": 1,
+    "rooms": 4,
+    "bedrooms": 3,
+    "bathrooms": 2
+  },
+  "area": 69,
+  "livingArea": 69,
+  "dims": "8x13 м"
+}

@@ -1,0 +1,63 @@
+{
+  "title": "Вента",
+  "order": 29,
+  "hit": false,
+  "category": "barnhouse",
+  "purpose": "living",
+  "style": "Современный барнхаус",
+  "priceCategory": "economy",
+  "availableTech": [
+    "frame",
+    "block"
+  ],
+  "mainImage": "/projects/barnhouse/venta/1.png",
+  "gallery": [
+    "/projects/barnhouse/venta/1.png",
+    "/projects/barnhouse/venta/2.png",
+    "/projects/barnhouse/venta/3.png"
+  ],
+  "plans": [
+    "/projects/barnhouse/venta/plan.webp"
+  ],
+  "description": "Стильный барнхаус 'Вента' (62м²) с мансардным этажом и уютной крытой террасой. Панорамные окна наполняют гостиную светом, а свободная планировка второго этажа дает простор для фантазии — можно обустроить дополнительную спальню или творческую мастерскую.",
+  "features": [
+    "Металлопрофиль",
+    "Бетон",
+    "Кирпич"
+  ],
+  "layout": [
+    {
+      "name": "Спальня",
+      "area": 20
+    },
+    {
+      "name": "Спальня",
+      "area": 11
+    },
+    {
+      "name": "Ванная комната",
+      "area": 4
+    },
+    {
+      "name": "Гостиная + кухня",
+      "area": 27
+    },
+    {
+      "name": "Терраса",
+      "area": 6
+    },
+    {
+      "name": "Крыльцо",
+      "area": 1
+    }
+  ],
+  "specs": {
+    "floors": 2,
+    "rooms": 3,
+    "bedrooms": 2,
+    "bathrooms": 1
+  },
+  "area": 68,
+  "livingArea": 68,
+  "dims": "6x10 м"
+}
