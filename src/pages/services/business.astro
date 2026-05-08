@@ -6,7 +6,31 @@ import Layout from '../../layouts/Layout.astro';
 const pageTitle = "Строительство для бизнеса: Глэмпинги и Эко-отели | Marmol House";
 const pageDescription = "Проектирование и строительство домиков для аренды под ключ. A-frame, Barnhouse, глэмпинги и базы отдыха. Ликвидные активы с быстрым сроком запуска.";
 
-// 3. SEO Schema (Обновленная с FAQ)
+// --- ДАННЫЕ ДЛЯ FAQ ---
+const faqData = [
+  {
+    question: "Какой формат домов лучше всего сдается в аренду?",
+    answer: "Статистика показывает, что A-Frame (дом-шалаш) является абсолютным лидером по визуальной привлекательности для соцсетей (Instagram), что обеспечивает высокий поток пар. Barnhouse чаще выбирают для длительного семейного отдыха из-за большей эргономики."
+  },
+  {
+    question: "С какого дома выгоднее начать (минимальный бюджет)?",
+    answer: "Каркасная технология — самая доступная точка входа. (Но есть еще вариант использовать газосиликатный блок 30см) A-Frame площадью 40-50 м² требует меньше материалов на фасад (так как кровля выполняет роль стен) и фундамент, что делает его оптимальным для старта бизнеса."
+  },
+  {
+    question: "Какой интерьер сейчас наиболее востребован?",
+    answer: "Тренд последних лет — «Eco-Minimalism» и «Scandi». Натуральное дерево, панорамные окна, отсутствие визуального шума. Туристы едут за единением с природой, поэтому интерьер должен быть продолжением пейзажа за окном."
+  },
+  {
+    question: "Можно ли строить на склоне или в лесу без вырубки?",
+    answer: "Да. На склонах используем свайно-винтовой фундамент. Это позволяет сохранить корневую систему деревьев и вписать дом в ландшафт с любым перепадом высот, не загоняя на участок тяжелую технику."
+  },
+  {
+    question: "Сколько времени занимает строительство «под ключ»?",
+    answer: "Полный цикл производства — от заезда на участок до сдачи готового объекта с отделкой и коммуникациями — занимает в среднем 3 месяца. Это позволяет запустить проект к началу сезона."
+  }
+];
+
+// --- SEO Schema ---
 const schema = {
   "@context": "https://schema.org",
   "@graph": [
@@ -22,48 +46,14 @@ const schema = {
     },
     {
       "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Какой формат домов лучше всего сдается в аренду?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Статистика показывает, что A-Frame (дом-шалаш) является абсолютным лидером по визуальной привлекательности для соцсетей (Instagram), что обеспечивает высокий поток пар. Barnhouse чаще выбирают для длительного семейного отдыха из-за большей эргономики."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "С какого дома выгоднее начать (минимальный бюджет)?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Каркасная технология — самая доступная точка входа. A-Frame площадью 40-50 м² требует меньше материалов на фасад (так как кровля выполняет роль стен) и фундамент, что делает его оптимальным для старта бизнеса."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Какой интерьер сейчас наиболее востребован?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Тренд последних лет — «Eco-Minimalism» и «Scandi». Натуральное дерево, панорамные окна, отсутствие визуального шума. Туристы едут за единением с природой, поэтому интерьер должен быть продолжением пейзажа за окном."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Можно ли строить на склоне или в лесу без вырубки?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Да. Мы используем свайно-винтовой фундамент. Это позволяет сохранить корневую систему деревьев и вписать дом в ландшафт с любым перепадом высот, не загоняя на участок тяжелую технику."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Сколько времени занимает строительство «под ключ»?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Полный цикл производства — от заезда на участок до сдачи готового объекта с отделкой и коммуникациями — занимает в среднем 3 месяца. Это позволяет запустить проект к началу сезона."
-          }
+      "mainEntity": faqData.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer
         }
-      ]
+      }))
     }
   ]
 };
@@ -98,6 +88,7 @@ const schema = {
                     </div>
 
                     <h1 class="text-5xl md:text-7xl lg:text-8xl font-sans font-bold text-white mb-8 leading-[1.0] tracking-tight opacity-0 animate-fade-in-up" style="animation-delay: 0.3s;">
+                        <span class="block text-lg md:text-xl text-marmol-gold font-normal mb-4 tracking-normal">Строительство A-Frame и Барнхаусов в Гродно и Беларуси</span>
                         Недвижимость <br />
                         для арендного <br />
                         <span class="text-transparent bg-clip-text bg-gradient-to-r from-marmol-gold via-white/80 to-white/40">бизнеса</span>
@@ -367,68 +358,21 @@ const schema = {
             </div>
             
             <div class="space-y-4">
-                
-                <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
-                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
-                        <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">Какой формат домов лучше всего сдается?</span>
-                        <span class="relative w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
-                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
-                        </span>
-                    </summary>
-                    <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
-                        A-Frame (дом-шалаш) — абсолютный лидер по визуальной привлекательности для Instagram, что обеспечивает высокий поток пар и романтических заездов. Barnhouse чаще выбирают для длительного и комфортного семейного отдыха из-за вертикальных стен и эргономики.
-                    </div>
-                </details>
-
-                <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
-                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
-                        <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">С какого дома выгоднее начать (бюджет)?</span>
-                        <span class="relative w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
-                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
-                        </span>
-                    </summary>
-                    <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
-                        Каркасная технология — самая доступная точка входа. A-Frame небольшой площади (40-60 м²) часто требует меньше вложений на старте, так как кровля выполняет роль стен, а свайный фундамент дешевле плиты. Это оптимальный вариант для первого объекта.
-                    </div>
-                </details>
-
-                <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
-                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
-                        <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">Какой интерьер сейчас в тренде?</span>
-                        <span class="relative w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
-                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
-                        </span>
-                    </summary>
-                    <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
-                        Туристы едут за "визуальной тишиной". Сейчас наиболее востребован скандинавский минимализм и эко-стиль: много натурального дерева, панорамные окна, спокойные тона и качественный текстиль. Интерьер должен быть продолжением природы за окном.
-                    </div>
-                </details>
-
-                <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
-                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
-                        <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">Можно ли строить в лесу без вырубки?</span>
-                        <span class="relative w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
-                             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
-                        </span>
-                    </summary>
-                    <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
-                        Да, это наш профиль. Мы используем свайно-винтовой фундамент, который монтируется точечно. Это позволяет сохранить корневую систему деревьев и вписать дом в сложный ландшафт (склон, берег) без использования тяжелой техники.
-                    </div>
-                </details>
-
-                <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
-                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
-                        <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">Какой реальный срок запуска объекта?</span>
-                        <span class="relative w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
-                             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
-                        </span>
-                    </summary>
-                    <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
-                        При наличии готового домокомплекта полный цикл работ — от фундамента до сдачи ключей с внутренней отделкой и разводкой сетей — занимает <strong class="text-white">3 месяца</strong>. Это позволяет вам быстро запустить бизнес и начать окупать вложения.
-                    </div>
-                </details>
-
+                {faqData.map((faq) => (
+                    <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
+                        <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
+                            <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors pr-8">
+                                {faq.question}
+                            </span>
+                            <span class="relative shrink-0 w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
+                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                            </span>
+                        </summary>
+                        <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base" set:html={faq.answer}></div>
+                    </details>
+                ))}
             </div>
+            
             <div class="mt-16 text-center">
                  <p class="text-gray-500 text-sm mb-4">Нужна детальная консультация?</p>
                  <a href="/contact" class="inline-block px-10 py-4 border border-marmol-gold text-marmol-gold font-bold uppercase tracking-widest text-xs hover:bg-marmol-gold hover:text-marmol-navy transition-all rounded duration-300">
@@ -461,25 +405,15 @@ const schema = {
 <script>
     import { isModalOpen, formComment } from '../../store/modalStore';
     
-    // Обернуто в функцию для поддержки Astro View Transitions
-    const setupModals = () => {
-        const setupBtn = (id) => {
-            const btn = document.getElementById(id);
-            if (btn) {
-                // Предотвращение дублирования
-                const newBtn = btn.cloneNode(true);
-                if (btn.parentNode) btn.parentNode.replaceChild(newBtn, btn);
-                
-                newBtn.addEventListener('click', () => {
-                    formComment.set(`Интересует строительство для бизнеса (Под ключ).`);
-                    isModalOpen.set(true);
-                });
-            }
-        };
-        setupBtn('biz-consult-btn-desk');
-        setupBtn('biz-consult-btn-mob');
-    };
-
-    document.addEventListener('astro:page-load', setupModals);
-    setupModals();
+    // Делегирование событий - вешаем ОДИН раз, работает для всех кнопок и не ломается при переходах Astro
+    document.addEventListener('click', (e) => {
+        // Проверяем, кликнули ли мы по кнопке с нужным ID (или внутри нее)
+        const target = e.target as HTMLElement;
+        const isBizBtn = target.closest('#biz-consult-btn-desk') || target.closest('#biz-consult-btn-mob');
+        
+        if (isBizBtn) {
+            formComment.set(`Интересует строительство для бизнеса (Под ключ).`);
+            isModalOpen.set(true);
+        }
+    });
 </script>

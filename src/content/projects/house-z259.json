@@ -13,10 +13,11 @@
   "mainImage": "/projects/house-100/z259/1.webp",
   "gallery": [
     "/projects/house-100/z259/1.webp",
-    "/projects/house-100/z259/2.webp"
+    "/projects/house-100/z259/2.webp",
+    "/projects/house-100/z259/plan.webp"
   ],
   "plans": [
-    "/projects/house-100/z259/plan.webp"
+    "/projects/house-100/z259/visual-plan.webp"
   ],
   "description": "Практичный проект дома Z259 (85м²) со встроенным гаражом. Это очень удобное решение, которое защитит ваш автомобиль от непогоды и обеспечит прямой доступ из дома в гараж. Две спальни и просторная гостиная делают его отличным выбором для семьи.",
   "features": [

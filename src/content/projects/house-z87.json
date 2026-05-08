@@ -13,10 +13,11 @@
   "mainImage": "/projects/house-100/z87/1.webp",
   "gallery": [
     "/projects/house-100/z87/1.webp",
-    "/projects/house-100/z87/2.webp"
+    "/projects/house-100/z87/2.webp",
+    "/projects/house-100/z87/plan.webp"
   ],
   "plans": [
-    "/projects/house-100/z87/plan.webp"
+    "/projects/house-100/z87/visual-plan.webp"
   ],
   "description": "Эффективный и экономичный проект дома Z87 на 70м² с двумя спальнями и котельной. Благодаря продуманной планировке, каждый квадратный метр используется с максимальной пользой. Отличный вариант для небольшой семьи, ищущей комфортное жилье для постоянного проживания.",
   "features": [
@@ -72,7 +73,7 @@
     "bedrooms": 2,
     "bathrooms": 1
   },
-  "area": 70,
+  "area": 71.5,
   "livingArea": 70,
   "dims": "9x12 м"
 }

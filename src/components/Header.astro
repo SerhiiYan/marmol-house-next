@@ -9,11 +9,7 @@ const links = [
   { name: 'Контакты', href: '/contact' }, 
   { name: 'О компании', href: '/about' },
 ];
-// Ссылки для простых пунктов (чтобы не дублировать код, если нужно)
-// Но Услуги мы пропишем отдельно
 ---
-
-<!-- z-50 чтобы меню было поверх всего -->
 <header class="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-100/50 transition-all duration-300">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-24">
@@ -36,9 +32,8 @@ const links = [
           Портфолио
         </a>
 
-        <!-- REAL ESTATE (ПРОДАЖА) - Выделен цветом -->
         <a href="/real-estate" class="font-sans text-xs lg:text-sm font-bold uppercase tracking-wider text-marmol-gold hover:text-marmol-navy transition-colors duration-300">
-          Real Estate
+          Готовые дома
         </a>
 
         <!-- === ВЫПАДАЮЩЕЕ МЕНЮ: УСЛУГИ === -->
@@ -118,27 +113,18 @@ const links = [
       </nav>
 
       <!-- 3. Контакты и кнопка -->
-      <div class="hidden md:flex items-center space-x-6">
+     <div class="hidden md:flex items-center space-x-6">
         
-        <!-- Блок телефона и адреса (Вертикально) -->
         <div class="flex flex-col items-end">
             <a href="tel:+375291845481" class="font-body font-bold text-marmol-navy hover:text-marmol-gold transition-colors text-sm whitespace-nowrap leading-none">
               +375 (29) 184-54-81
             </a>
-            <!-- Адрес (Мелко) -->
             <a href="/contact" class="text-[10px] text-gray-400 font-medium mt-1 hover:text-marmol-gold transition-colors">
                 г. Гродно, ул. Лелевеля, 12A
             </a>
         </div>
         
-        <!-- Кнопка -->
-        <button 
-          id="header-discuss-btn"
-          class="bg-marmol-navy text-white px-5 lg:px-7 py-3 text-[10px] lg:text-xs font-bold uppercase tracking-widest hover:bg-marmol-gold hover:text-marmol-navy transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 cursor-pointer whitespace-nowrap"
-        >
-          Обсудить
-        </button>
-      </div>
+    </div>
 
       <!-- 4. Мобильная кнопка (Гамбургер) -->
       <button id="mobile-menu-btn" class="md:hidden text-marmol-navy p-2 focus:outline-none cursor-pointer">
@@ -150,7 +136,7 @@ const links = [
   </div>
 
   <!-- 5. Мобильное меню -->
-  <div id="mobile-menu" class="hidden md:hidden absolute top-24 left-0 w-full bg-white border-b border-gray-100 shadow-xl max-h-[calc(100vh-6rem)] overflow-y-auto pb-10">
+  <div id="mobile-menu" class="hidden md:hidden fixed top-24 left-0 w-full h-[calc(100dvh-6rem)] bg-white border-b border-gray-100 shadow-xl overflow-y-auto pb-10">
     <div class="flex flex-col p-6 space-y-5">
         
         <!-- Основные разделы -->
@@ -161,7 +147,7 @@ const links = [
             Портфолио
         </a>
         <a href="/real-estate" class="text-xl font-sans font-bold text-marmol-gold border-b border-gray-50 pb-2">
-            Real Estate
+            Готовые дома
         </a>
         
         <!-- Блок УСЛУГИ -->
@@ -208,33 +194,56 @@ const links = [
 </header>
 
 <script>
-  import { isModalOpen, formComment } from '../store/modalStore';
+    import { isModalOpen, formComment } from '../store/modalStore';
 
-  // 1. Логика мобильного меню
-  const btn = document.getElementById('mobile-menu-btn');
-  const menu = document.getElementById('mobile-menu');
+    function initHeader() {
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
 
-  btn?.addEventListener('click', () => {
-    menu?.classList.toggle('hidden');
-  });
+        // Очищаем старые слушатели
+        const newBtn = btn?.cloneNode(true);
+        if (btn && btn.parentNode && newBtn) {
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', () => {
+                // 1. Показываем/скрываем меню
+                menu?.classList.toggle('hidden');
+                // 2. Блокируем/разблокируем скролл страницы под меню
+                document.body.classList.toggle('overflow-hidden');
+            });
+        }
 
-  // 2. Логика главной кнопки "Обсудить проект" (справа)
-  const discussBtn = document.getElementById('header-discuss-btn');
-  
-  discussBtn?.addEventListener('click', () => {
-      formComment.set('Здравствуйте! Хочу обсудить свой будущий проект дома.');
-      isModalOpen.set(true);
-  });
+        // Закрываем мобильное меню при клике на любую ссылку внутри него
+        const mobileLinks = menu?.querySelectorAll('a');
+        mobileLinks?.forEach(link => {
+            link.addEventListener('click', () => {
+                menu?.classList.add('hidden');
+                // ОБЯЗАТЕЛЬНО возвращаем скролл странице при переходе по ссылке!
+                document.body.classList.remove('overflow-hidden');
+            });
+        });
 
-  // 3. НОВОЕ: Логика кнопки "Записаться на встречу" (в меню Услуги)
-  const meetingBtn = document.getElementById('menu-meeting-btn');
-  
-  meetingBtn?.addEventListener('click', () => {
-      // Ставим конкретный текст, чтобы менеджер знал, что клиент хочет приехать
-      formComment.set('Здравствуйте! Хочу записаться на встречу в офисе для консультации.');
-      isModalOpen.set(true);
-      
-      // (Опционально) Закрываем меню после клика, если нужно, 
-      // но так как это hover-меню на CSS, оно закроется само, когда мышка уйдет.
-  });
+        // Делегирование для кнопок модалки
+        document.removeEventListener('click', handleModalClicks);
+        document.addEventListener('click', handleModalClicks);
+    }
+
+    function handleModalClicks(e: Event) {
+        // @ts-ignore
+        const target = e.target.closest('#menu-meeting-btn');
+        
+        if (target) {
+            formComment.set('Здравствуйте! Хочу записаться на встречу в офисе для консультации.');
+            isModalOpen.set(true);
+            
+            // Если модалка вызвана с мобильного устройства, закрываем меню и возвращаем скролл
+            const menu = document.getElementById('mobile-menu');
+            if (menu && !menu.classList.contains('hidden')) {
+                menu.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }
+        }
+    }
+
+    document.addEventListener('astro:page-load', initHeader);
+    initHeader();
 </script>

@@ -1,7 +1,7 @@
 {
   "title": "Дом PO",
   "order": 56,
-  "hit": false,
+  "hit": true,
   "category": "house",
   "purpose": "living",
   "style": "Сканди",
@@ -14,10 +14,11 @@
   "gallery": [
     "/projects/house-150/po/1.webp",
     "/projects/house-150/po/2.webp",
-    "/projects/house-150/po/3.webp"
+    "/projects/house-150/po/3.webp",
+    "/projects/house-150/po/plan.webp"
   ],
   "plans": [
-    "/projects/house-150/po/plan.webp"
+    "/projects/house-150/po/visual-plan.webp"
   ],
   "description": "Проект PO — это эффектный дом в современном скандинавском стиле с динамичной архитектурой кровли. Панорамные окна в пол объединяют гостиную с участком и наполняют дом светом. Планировка включает три спальни, одна из которых — мастер-спальня с личным санузлом. Уютная крытая терраса площадью почти 29 м² станет идеальным местом для семейных ужинов.",
   "features": [

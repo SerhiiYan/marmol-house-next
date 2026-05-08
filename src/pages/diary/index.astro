@@ -1,11 +1,13 @@
 ---
 // src/pages/diary/index.astro
 import Layout from '../../layouts/Layout.astro';
-import DiaryList from '../../components/diary/DiaryList.jsx'; // Импортируем наш новый компонент
+import DiaryList from '../../components/diary/DiaryList.jsx'; 
 import rawDiaryData from '../../data/diary.json';
 
 const pageTitle = "Ход строительства | Marmol House";
 const pageDescription = "Следите за ходом строительства объектов Marmol House в реальном времени. Хроника скрытых работ, фундаментов и фасадов.";
+
+// Безопасное копирование и разворот массива (молодец, что использовал spread оператор [...])
 const diaryEntries = [...rawDiaryData].reverse();
 
 const schema = {
@@ -16,8 +18,8 @@ const schema = {
 };
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
-  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
+{/* Передаем схему элегантно через Props */}
+<Layout title={pageTitle} description={pageDescription} schema={schema}>
 
   <main class="bg-gray-50 min-h-screen pt-28 pb-24 relative overflow-hidden">
     <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-marmol-gold/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/3"></div>
@@ -26,10 +28,11 @@ const schema = {
         
         <div class="mb-10 max-w-3xl animate-fade-in text-center md:text-left mx-auto md:mx-0">
             <h1 class="text-4xl md:text-5xl font-sans font-bold text-marmol-navy mb-6">
-                Наши работы
+                <span class="block text-lg text-marmol-gold font-normal mb-2 tracking-normal">Прозрачный процесс</span>
+                Ход строительства
             </h1>
             <p class="text-gray-500 text-lg leading-relaxed font-light">
-                Взгляните на готовые фасады наших домов или переключитесь в хронику объектов, чтобы увидеть процессы скрытых работ прямо сейчас.
+                Мы показываем процессы, которые обычно скрыты от глаз заказчика. Фундаменты, утепление, инженерия — следите за объектами в реальном времени.
             </p>
         </div>
 

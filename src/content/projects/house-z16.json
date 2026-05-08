@@ -4,6 +4,7 @@
   "hit": false,
   "category": "house",
   "purpose": "living",
+  "fixPrice": 98000,
   "style": "Скандинавский",
   "priceCategory": "economy",
   "availableTech": [
@@ -13,10 +14,11 @@
   "mainImage": "/projects/house-100/z16/1.webp",
   "gallery": [
     "/projects/house-100/z16/1.webp",
-    "/projects/house-100/z16/2.webp"
+    "/projects/house-100/z16/2.webp",
+    "/projects/house-100/z16/plan.webp"
   ],
   "plans": [
-    "/projects/house-100/z16/plan.webp"
+    "/projects/house-100/z16/visual-plan.webp"
   ],
   "description": "Проект Z16 — это очаровательный одноэтажный дом в уютном деревенском стиле, идеально подходящий для ценителей загородного комфорта. Несмотря на компактную площадь в 65 м², дом вмещает три спальни и отдельную кухню. Изюминкой проекта является большая крытая терраса с внешним камином, которая станет центром притяжения для всей семьи в теплые вечера.",
   "features": [
@@ -56,6 +58,10 @@
     {
       "name": "Прихожая",
       "area": 2
+    },
+    {
+      "name": "Терраса",
+      "area": 31
     }
   ],
   "specs": {

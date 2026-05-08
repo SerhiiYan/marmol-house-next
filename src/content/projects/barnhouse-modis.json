@@ -3,6 +3,7 @@
   "order": 28,
   "hit": false,
   "category": "barnhouse",
+  "fixPrice": 107150,
   "purpose": "living",
   "style": "Сканди барнхаус",
   "priceCategory": "economy",
@@ -14,10 +15,11 @@
   "gallery": [
     "/projects/barnhouse/modis/1.webp",
     "/projects/barnhouse/modis/2.webp",
-    "/projects/barnhouse/modis/3.webp"
+    "/projects/barnhouse/modis/3.webp",
+    "/projects/barnhouse/modis/plan.webp"
   ],
   "plans": [
-    "/projects/barnhouse/modis/plan.webp"
+    "/projects/barnhouse/modis/visual-plan.webp"
   ],
   "description": "Проект 'Модис' на 65м² — это квинтэссенция стиля барнхаус. Открытая планировка кухни-гостиной, панорамные окна и лаконичные формы создают ощущение простора и света. Две уютные спальни делают его идеальным для современной семьи, ценящей стиль и функциональность.",
   "features": [

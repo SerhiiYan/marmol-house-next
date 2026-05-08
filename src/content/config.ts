@@ -30,6 +30,7 @@ const projectsCollection = defineCollection({
     mainImage: z.string(), // <--- Теперь это обязательное поле для обложки
     gallery: z.array(z.string()).optional(),
     plans: z.array(z.string()).optional(),
+    plan: z.array(z.string()).optional(),
 
     // ТЕКСТЫ
     description: z.string(),
@@ -152,10 +153,6 @@ const blogCollection = defineCollection({
     
     // Категории для будущих фильтров
     category: z.enum(['technology', 'review', 'tips', 'news']).default('news'),
-    
-    // === ТОТ САМЫЙ ЗАДЕЛ ПОД YOUTUBE ===
-    // Храним только ID видео (например, 'dQw4w9WgXcQ'), так будет гораздо проще 
-    // встраивать стандартный плеер YouTube прямо на страницу
     youtubeVideoId: z.string().optional(), 
     
     // Дополнительные фишки для красивой карточки

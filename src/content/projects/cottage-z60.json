@@ -14,10 +14,11 @@
   "mainImage": "/projects/cottage/z60/1.webp",
   "gallery": [
     "/projects/cottage/z60/1.webp",
-    "/projects/cottage/z60/2.webp"
+    "/projects/cottage/z60/2.webp",
+    "/projects/cottage/z60/plan.webp"
   ],
   "plans": [
-    "/projects/cottage/z60/plan.webp"
+    "/projects/cottage/z60/visual-plan.webp"
   ],
   "description": "Проект дачного дома Z60 — это воплощение уюта на площади 43м². Идеален для летнего отдыха, он включает в себя спальню, гостиную и кухню. Возможность добавления террасы позволит наслаждаться свежим воздухом. Экономичное и быстрое в возведении решение для вашего участка.",
   "features": [

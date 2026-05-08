@@ -13,10 +13,11 @@
   "mainImage": "/projects/house-100/z141/1.webp",
   "gallery": [
     "/projects/house-100/z141/1.webp",
-    "/projects/house-100/z141/2.webp"
+    "/projects/house-100/z141/2.webp",
+    "/projects/house-100/z141/plan.webp"
   ],
   "plans": [
-    "/projects/house-100/z141/plan.webp"
+    "/projects/house-100/z141/visual-plan.webp"
   ],
   "description": "Проект Z141 91 м² — это элегантный одноэтажный дом с огромной гостиной-столовой, которая станет центром жизни вашей семьи. Две большие спальни и наличие хозяйственного помещения делают этот проект очень практичным и удобным для постоянного проживания.",
   "features": [

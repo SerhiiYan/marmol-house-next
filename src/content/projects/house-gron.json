@@ -15,10 +15,11 @@
     "/projects/house-150/gron/1.webp",
     "/projects/house-150/gron/2.webp",
     "/projects/house-150/gron/3.webp",
-    "/projects/house-150/gron/4.webp"
+    "/projects/house-150/gron/4.webp",
+    "/projects/house-150/gron/plan.webp"
   ],
   "plans": [
-    "/projects/house-150/gron/plan.webp"
+    "/projects/house-150/gron/visual-plan.webp"
   ],
   "description": "Проект Грон — это современный одноэтажный дом в скандинавском стиле, сочетающий уют и функциональность. Высокие панорамные окна в гостиной наполняют дом светом и визуально расширяют пространство. Планировка включает три спальни (одна из которых — мастер-спальня с личным пространством), два санузла и впечатляющую террасу площадью 33 м².",
   "features": [

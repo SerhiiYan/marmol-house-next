@@ -6,7 +6,6 @@ import Layout from '../../layouts/Layout.astro';
 // Компоненты
 import ProjectGallery from '../../components/project/ProjectGallery.jsx';
 import PlanViewer from '../../components/project/PlanViewer.jsx';
-import ConsultationModal from '../../components/ui/ConsultationModal.jsx';
 
 export async function getStaticPaths() {
   const items = await getCollection('real-estate');
@@ -193,7 +192,7 @@ const schema = {
                                 scrolling="no" 
                                 marginheight="0" 
                                 marginwidth="0" 
-                                src={`https://maps.google.com/maps?q=${data.location.coords[0]},${data.location.coords[1]}&t=m&z=15&output=embed&hl=ru`}
+                                src={`https://maps.google.com/maps?q=${data.location.coords[0]},${data.location.coords[1]}&z=15&output=embed`}
                                 title={`Расположение: ${data.location.city}, ${data.location.address}`}
                             ></iframe>
                         </div>
@@ -256,7 +255,7 @@ const schema = {
     
     <div class="lg:hidden fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 p-4 shadow-2xl z-40 flex justify-between items-center">
         <div>
-            <p class="text-xl font-bold text-marmol-navy">{formatPrice(data.price)} {data.currency}</p>
+            <p class="text-xl font-bold text-marmol-navy">{formatPrice(data.price)} {data.currency || 'BYN'}</p>
             <p class="text-[10px] text-gray-400 uppercase">{statusInfo.text}</p>
         </div>
         {data.status === 'available' ? (
@@ -269,40 +268,23 @@ const schema = {
     </div>
 
   </main>
-  
-  <ConsultationModal client:load />
 
 </Layout>
 
 <script>
     import { isModalOpen, formComment } from '../../store/modalStore';
 
-    function setupButtons() {
-        const titleElement = document.querySelector('h1');
-        const title = titleElement ? titleElement.innerText : 'Объект';
-        const btns = ['sidebar-cta-btn', 'mobile-cta-btn'];
-
-        btns.forEach(id => {
-            const btn = document.getElementById(id);
-            if (btn) {
-                // Клонируем кнопку
-                const newBtn = btn.cloneNode(true);
-                
-                // Добавляем проверку на parentNode, чтобы редактор кода не ругался
-                if (btn.parentNode) {
-                    btn.parentNode.replaceChild(newBtn, btn);
-                }
-                
-                // Вешаем слушатель на новую, чистую кнопку
-                newBtn.addEventListener('click', () => {
-                    formComment.set(`Здравствуйте! Хочу записаться на просмотр объекта: "${title}".`);
-                    isModalOpen.set(true);
-                });
-            }
-        });
-    }
-    
-    // Запускаем при инициализации страницы
-    document.addEventListener('astro:page-load', setupButtons);
-    setupButtons();
+    // Вешаем один глобальный слушатель
+    document.addEventListener('click', (e) => {
+        // @ts-ignore - игнорируем ошибку TS для простоты
+        const target = e.target.closest('#sidebar-cta-btn, #mobile-cta-btn');
+        
+        if (target) {
+            const titleElement = document.querySelector('h1');
+            const title = titleElement ? titleElement.innerText : 'Объект';
+            
+            formComment.set(`Здравствуйте! Хочу записаться на просмотр объекта: "${title}".`);
+            isModalOpen.set(true);
+        }
+    });
 </script>

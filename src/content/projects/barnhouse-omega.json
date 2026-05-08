@@ -14,10 +14,11 @@
   "gallery": [
     "/projects/barnhouse/omega/1.png",
     "/projects/barnhouse/omega/2.png",
-    "/projects/barnhouse/omega/3.png"
+    "/projects/barnhouse/omega/3.png",
+    "/projects/barnhouse/omega/plan.webp"
   ],
   "plans": [
-    "/projects/barnhouse/omega/plan.webp"
+    "/projects/barnhouse/omega/visual-plan.webp"
   ],
   "description": "Проект 'Омега' (88м²) — это просторный и комфортабельный семейный барнхаус. Три спальни, большая кухня-гостиная с выходом на террасу и продуманная планировка делают его идеальным для постоянного проживания. Современная архитектура и качественные материалы гарантируют комфорт на долгие годы.",
   "features": [

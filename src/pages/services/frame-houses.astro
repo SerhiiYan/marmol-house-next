@@ -19,6 +19,25 @@ const frameProjects = allProjects.filter(p =>
 const pageTitle = "Каркасные дома под ключ: Скандинавская технология | Marmol House";
 const pageDescription = "Строительство каркасных домов под ключ по скандинавской технологии в Гродно и области. Фиксированная смета, энергоэффективность А+, помощь с кредитами (указы 240, 95).";
 
+const faqData = [
+  {
+    question: "Сколько времени занимает строительство?",
+    answer: "Каркасная технология — самая быстрая. В среднем монтаж «теплого контура» (фундамент, стены, кровля, окна) занимает 1.5 - 2 месяца. Полный цикл с внешней и внутренней отделкой («под ключ») занимает от 3 до 4 месяцев. Вы сможете заехать в дом в тот же сезон, когда начали стройку."
+  },
+  {
+    question: "Фиксируется ли цена в договоре?",
+    answer: "Да, стоимость работ и материалов фиксируется в смете при подписании договора. Мы не меняем цену в процессе строительства, если вы сами не решите внести изменения в проект или выбрать более дорогие отделочные материалы."
+  },
+  {
+    question: "Можно ли строить зимой?",
+    answer: "Да, каркасный дом — это «сухая» технология сборки. Мы можем возводить силовой каркас, монтировать кровлю и утепление при отрицательных температурах. Зимняя древесина часто даже лучше, так как в ней меньше влаги. Единственное ограничение — фундамент, но современные присадки позволяют заливать бетон и зимой."
+  },
+  {
+    question: "Работаете ли вы по 240 и 95 указу?",
+    answer: "Да. Мы предоставляем полный пакет документов (смета, договор строительного подряда, акты выполненных работ), необходимых для строительства с привлечением льготных кредитов и субсидий (Указы №240, №95/13)."
+  }
+];
+
 // 3. SEO Schema
 const schema = {
   "@context": "https://schema.org",
@@ -40,40 +59,14 @@ const schema = {
     },
     {
       "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Сколько времени занимает строительство дома?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "В среднем строительство 'теплого контура' занимает 1.5 - 2 месяца. Полный цикл с отделкой и инженерией ('под ключ') — от 3 до 4 месяцев, в зависимости от площади."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Меняется ли стоимость в процессе стройки?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Нет. Мы фиксируем стоимость в договоре. Цена может измениться только если вы сами решите внести правки в проект или материалы в ходе работ."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Можно ли строить каркасный дом зимой?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Да, это всесезонная технология. Отсутствие 'мокрых' процессов (бетон, раствор) позволяет вести сборку каркаса при отрицательных температурах без потери качества."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Работаете ли по указу 240 и 95?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Да. Мы предоставляем полный пакет документов (смета, договор строительного подряда, акты выполненных работ), необходимых для строительства с привлечением льготных кредитов и субсидий (Указы №240, №95)."
-          }
+      "mainEntity": faqData.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer
         }
-      ]
+      }))
     }
   ]
 };
@@ -382,7 +375,7 @@ const schema = {
                                 <h3 class="text-2xl font-bold text-white mb-4 font-serif">{data.title}</h3>
                                 
                                 <div class="flex items-center gap-4 text-white/70 text-sm border-t border-white/10 pt-4 opacity-0 group-hover:opacity-100 transition-opacity delay-100">
-                                    <span>~ {totalPrice.toLocaleString()} BYN</span>
+                                    <span>~ {totalPrice.toLocaleString()} {currency}</span>
                                     <span class="w-1 h-1 bg-marmol-gold rounded-full"></span>
                                     <span>Подробнее &rarr;</span>
                                 </div>
@@ -408,55 +401,21 @@ const schema = {
             </div>
             
             <div class="space-y-4">
-                
-                <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
-                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
-                        <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">Сколько времени занимает строительство?</span>
-                        <span class="relative w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
-                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
-                        </span>
-                    </summary>
-                    <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
-                        Каркасная технология — самая быстрая. В среднем монтаж "теплого контура" (фундамент, стены, кровля, окна) занимает <strong class="text-white">1.5 - 2 месяца</strong>. Полный цикл с внешней и внутренней отделкой ("под ключ") занимает от 3 до 4 месяцев. Вы сможете заехать в дом в тот же сезон, когда начали стройку.
-                    </div>
-                </details>
-
-                <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
-                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
-                        <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">Фиксируется ли цена в договоре?</span>
-                        <span class="relative w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
-                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
-                        </span>
-                    </summary>
-                    <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
-                        Да, стоимость работ и материалов фиксируется в смете при подписании договора. Мы не меняем цену в процессе строительства, если вы сами не решите внести изменения в проект или выбрать более дорогие отделочные материалы.
-                    </div>
-                </details>
-
-                <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
-                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
-                        <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">Можно ли строить зимой?</span>
-                        <span class="relative w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
-                             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
-                        </span>
-                    </summary>
-                    <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
-                        Да, каркасный дом — это "сухая" технология сборки. Мы можем возводить силовой каркас, монтировать кровлю и утепление при отрицательных температурах. Зимняя древесина часто даже лучше, так как в ней меньше влаги. Единственное ограничение — фундамент, но современные присадки позволяют заливать бетон и зимой.
-                    </div>
-                </details>
-
-                <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
-                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
-                        <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">Работаете ли вы по 240 и 95 указу?</span>
-                        <span class="relative w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
-                             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
-                        </span>
-                    </summary>
-                    <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
-                        Да. Мы предоставляем полный пакет документов (смета, договор строительного подряда, акты выполненных работ), необходимых для строительства с привлечением льготных кредитов и субсидий (Указы №240, №95/13).
-                    </div>
-                </details>
-
+                {faqData.map((faq) => (
+                    <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
+                        <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
+                            <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">
+                                {faq.question}
+                            </span>
+                            <span class="relative shrink-0 w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45 ml-4">
+                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                            </span>
+                        </summary>
+                        <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
+                            {faq.answer}
+                        </div>
+                    </details>
+                ))}
             </div>
             
             <div class="mt-16 text-center">
@@ -492,7 +451,6 @@ const schema = {
 </style>
 
 <script>
-    // Обернули в функцию для работы с Astro View Transitions (если включены)
     const initTabs = () => {
         const btnEco = document.getElementById('btn-eco');
         const btnPrem = document.getElementById('btn-prem');
@@ -506,36 +464,29 @@ const schema = {
                 
                 btnEco?.classList.add('text-white');
                 btnEco?.classList.remove('text-gray-500', 'hover:text-marmol-navy');
-                
                 btnPrem?.classList.remove('text-white');
                 btnPrem?.classList.add('text-gray-500', 'hover:text-marmol-navy');
                 
                 contentEco?.classList.remove('hidden');
                 setTimeout(() => contentEco?.classList.remove('opacity-0'), 10);
-                
                 contentPrem?.classList.add('hidden', 'opacity-0');
             } else {
                 if (tabBg) tabBg.style.transform = 'translateX(100%)';
                 
                 btnPrem?.classList.add('text-white');
                 btnPrem?.classList.remove('text-gray-500', 'hover:text-marmol-navy');
-                
                 btnEco?.classList.remove('text-white');
                 btnEco?.classList.add('text-gray-500', 'hover:text-marmol-navy');
                 
                 contentPrem?.classList.remove('hidden');
                 setTimeout(() => contentPrem?.classList.remove('opacity-0'), 10);
-                
                 contentEco?.classList.add('hidden', 'opacity-0');
             }
         }
 
-        // Предотвращение дублирования слушателей
-        btnEco?.removeEventListener('click', () => switchTab('eco'));
-        btnPrem?.removeEventListener('click', () => switchTab('prem'));
-
-        btnEco?.addEventListener('click', () => switchTab('eco'));
-        btnPrem?.addEventListener('click', () => switchTab('prem'));
+        // ПРАВИЛЬНОЕ ПРИСВОЕНИЕ
+        if (btnEco) btnEco.onclick = () => switchTab('eco');
+        if (btnPrem) btnPrem.onclick = () => switchTab('prem');
     };
 
     document.addEventListener('astro:page-load', initTabs);

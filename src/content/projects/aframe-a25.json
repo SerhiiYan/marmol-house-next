@@ -12,7 +12,9 @@
   "mainImage": "/projects/aframe/a25/1.jpg",
   "gallery": [
     "/projects/aframe/a25/1.jpg",
-    "/projects/aframe/a25/2.jpg"
+    "/projects/aframe/a25/2.jpg",
+    "/projects/aframe/a25/visual-plan2.webp",
+    "/projects/aframe/a25/visual-plan.webp"
   ],
   "plans": [
     "/projects/aframe/a25/plan1.jpg",

@@ -5,17 +5,55 @@ import Layout from '../../layouts/Layout.astro';
 // SEO Мета-данные
 const pageTitle = "Премиум фасады: Клинкер, Камень, Керамика | Marmol House";
 const pageDescription = "Проектирование и монтаж вентилируемых фасадов премиум-класса. Облицовка клинкерным кирпичом, натуральным камнем и крупноформатной керамикой в Гродно и Минске.";
-
+const faqData = [
+  {
+    question: "Выдержит ли стена из газосиликата тяжелый каменный или кирпичный фасад?",
+    answer: "Да, выдержит, потому что мы не крепим тяжелый фасад напрямую к слабому блоку. Для клинкера мы заливаем специальную полку на фундаменте (или используем стартовые консоли из нержавеющей стали). Для крупноформатной керамики и камня применяется алюминиевая или стальная подсистема, которая равномерно распределяет вес по несущим конструкциям."
+  },
+  {
+    question: "Появятся ли белые пятна (высолы) на клинкере со временем?",
+    answer: "Нет. Высолы — это результат использования дешевого цементного раствора и некачественного кирпича. Мы применяем специальные цветные кладочные смеси без водорастворимых солей, а сам клинкер имеет минимальное водопоглощение (менее 5%). Ваш фасад останется чистым."
+  },
+  {
+    question: "В чем реальное преимущество вентфасада перед штукатуркой?",
+    answer: "В долговечности и микроклимате. Штукатурный фасад («мокрый») требует обновления, покраски или ремонта каждые 10-15 лет. Вентилируемый фасад из клинкера или керамики служит более 100 лет без обслуживания. Кроме того, вентзазор позволяет утеплителю всегда оставаться сухим, что повышает энергоэффективность дома."
+  },
+  {
+    question: "Можно ли комбинировать разные материалы на одном фасаде?",
+    answer: "Да, это самый актуальный тренд в архитектуре. Мы часто комбинируем монументальный натуральный камень на первом этаже с высокотехнологичной широкоформатной керамикой на втором, делая акценты вставками из термодерева. Посмотреть, как эти решения выглядят в жизни, можно в нашем <a href='/projects' class='text-white border-b border-white/30 hover:text-marmol-gold hover:border-marmol-gold transition-colors'>каталоге проектов</a>."
+  }
+];
+// 3. SEO Schema
 const schema = {
   "@context": "https://schema.org",
-  "@type": "Service",
-  "serviceType": "Премиальная облицовка фасадов",
-  "provider": {
-    "@type": "ConstructionBusiness",
-    "name": "Marmol House"
-  },
-  "areaServed": ["Гродно", "Минск"],
-  "description": pageDescription
+  "@graph": [
+    {
+      "@type": "Service",
+      "serviceType": "Премиальная облицовка фасадов",
+      "provider": {
+        "@type": "ConstructionBusiness",
+        "name": "Marmol House"
+      },
+      "areaServed": ["Гродно", "Минск", "Гродненская область"],
+      "description": pageDescription,
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "BYN",
+        "price": "150" // ЗАМЕНИ НА СВОЮ МИНИМАЛЬНУЮ ЦЕНУ ЗА М2 (или возьми из конфига)
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": faqData.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer
+        }
+      }))
+    }
+  ]
 };
 ---
 
@@ -53,6 +91,7 @@ const schema = {
                     </div>
 
                     <h1 class="text-5xl md:text-7xl lg:text-8xl font-sans font-bold text-white mb-8 leading-[1.0] tracking-tight opacity-0 animate-fade-in-up" style="animation-delay: 0.3s;">
+                        <span class="block text-lg md:text-xl text-marmol-gold font-normal mb-4 tracking-normal">Монтаж фасадов в Гродно и Минске</span>
                         Премиум <br />
                         отделка <br />
                         <span class="text-transparent bg-clip-text bg-gradient-to-r from-marmol-gold via-white/80 to-white/40">фасадов</span>
@@ -87,7 +126,7 @@ const schema = {
 
                 <div class="md:col-span-7">
                     <p class="text-xl text-gray-800 font-light leading-relaxed mb-6">
-                        «Фасад — это инвестиция в будущее вашего дома. Наша ключевая компетенция — сложные инженерные решения: клинкер, натуральный камень и крупноформатная керамика. Такие фасады служат более 100 лет без <strong>необходимости ремонта.</strong>
+                        Фасад — это инвестиция в будущее вашего дома. Наша ключевая компетенция — <a href="/services/design" class="text-marmol-navy border-b border-gray-300 hover:border-marmol-gold hover:text-marmol-gold transition-colors font-normal">сложные инженерные решения</a>: клинкер, натуральный камень и крупноформатная керамика. Такие фасады служат более 100 лет без <strong>необходимости ремонта.</strong>
                     </p>
                     <p class="text-gray-500 leading-relaxed">
                         Однако главным для нас остается видение заказчика. Мы работаем с любыми видами отделки, включая декоративные штукатурки («корник», «американка»), обеспечивая безупречное исполнение вне зависимости от выбранного материала.
@@ -276,7 +315,37 @@ const schema = {
             </div>
         </div>
     </section>
-
+    <section class="py-24 bg-marmol-navy relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <span class="text-marmol-gold text-xs font-bold uppercase tracking-widest">FAQ</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mt-3">Технические вопросы</h2>
+            </div>
+            
+            <div class="space-y-4">
+                {faqData.map((faq) => (
+                    <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
+                        <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
+                            <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors pr-8">
+                                {faq.question}
+                            </span>
+                            <span class="relative shrink-0 w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
+                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                            </span>
+                        </summary>
+                        <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base" set:html={faq.answer}></div>
+                    </details>
+                ))}
+            </div>
+            
+            <div class="mt-16 text-center">
+                 <p class="text-gray-500 text-sm mb-4">Остались вопросы по реализации вашего проекта?</p>
+                 <a href="/contact" class="inline-block px-10 py-4 border border-marmol-gold text-marmol-gold font-bold uppercase tracking-widest text-xs hover:bg-marmol-gold hover:text-marmol-navy transition-all rounded duration-300">
+                    Заказать расчет фасада
+                </a>
+            </div>
+        </div>
+    </section>
   </main>
 </Layout>
 

@@ -13,10 +13,11 @@
   "mainImage": "/projects/house-100/z64/1.webp",
   "gallery": [
     "/projects/house-100/z64/1.webp",
-    "/projects/house-100/z64/2.webp"
+    "/projects/house-100/z64/2.webp",
+    "/projects/house-100/z64/plan.webp"
   ],
   "plans": [
-    "/projects/house-100/z64/plan.webp"
+    "/projects/house-100/z64/visual-plan.webp"
   ],
   "description": "Несмотря на площадь в 84м², проект Z64 относится к категории домов повышенного комфорта. Просторная гостиная, большая кухня и две равноценные спальни создают ощущение дома большей площади. Наличие котельной подчеркивает его статус жилья для постоянного проживания.",
   "features": [

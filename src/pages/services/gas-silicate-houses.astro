@@ -5,7 +5,7 @@ import { getCollection } from 'astro:content';
 import { globalPricing } from '../../data/pricingConfig';
 
 // 1. ДИНАМИЧЕСКИЕ ЦЕНЫ
-const priceBase = Math.round(globalPricing.packages.premium.basePricePerMeter * 0.80); 
+const priceBase = globalPricing.packages.box.basePricePerMeter; 
 const priceFull = globalPricing.packages.premiumPlus.basePricePerMeter;
 const currency = globalPricing.currency;
 
@@ -18,6 +18,29 @@ const blockProjects = allProjects.filter(p =>
 // --- ЧИСТОЕ SEO ---
 const pageTitle = "Дома из газосиликатных блоков под ключ: Капитальное строительство | Marmol House";
 const pageDescription = "Строительство капитальных домов из газосиликатных блоков под ключ в Гродно и Минске. Монолитные перекрытия, фасады из клинкера, гарантия 5 лет.";
+
+const faqData = [
+  {
+    question: "Нужно ли дополнительно утеплять дом из газосиликата?",
+    answer: "Для климата Беларуси блок толщиной 400 мм (марки D500) проходит по нормам теплосопротивления. Однако мы настоятельно рекомендуем добавлять 50 мм паропроницаемой каменной ваты. Это смещает точку росы наружу, перекрывает мостики холода (швы, монолитные пояса) и существенно снижает будущие затраты на отопление."
+  },
+  {
+    question: "Правда ли, что газосиликатные стены дают трещины?",
+    answer: "Трещины появляются только при нарушении технологии или экономии на фундаменте. Газосиликат хрупок на изгиб, поэтому мы делаем жесткий монолитный фундамент, обязательно армируем каждый третий ряд кладки, а также усиливаем специальной арматурой зоны под окнами и дверными проемами."
+  },
+  {
+    question: "Выдержат ли такие стены тяжелые кухонные шкафы или бойлер?",
+    answer: "Да, без проблем. Главное правило — не использовать обычные дюбели. Для газосиликата мы применяем специальные дюбели для ячеистого бетона (шнековые) или химические анкеры. Один такой крепеж спокойно выдерживает нагрузку более 100 кг на точку вырыва."
+  },
+  {
+      question: "Можно ли сразу облицевать дом клинкерным кирпичом?",
+      answer: "Да. В отличие от дешевых «мокрых» фасадов (штукатурки), которые требуют долгой сушки газосиликата, фасад из клинкерного кирпича мы делаем с вентиляционным зазором. Это позволяет влаге свободно выходить из блоков, поэтому дом можно облицовывать сразу после возведения коробки, экономя месяцы времени."
+    },
+  {
+      question: "Можно ли строить дом из газосиликата зимой?",
+      answer: "Да, мы строим круглый год без потери качества. Зимой используется специальный зимний клей для блоков, который сохраняет свойства до -15°C. При заливке монолитного фундамента в холодное время мы применяем противоморозные добавки и станции прогрева бетона для набора 100% проектной прочности."
+    }
+];
 
 // 3. SEO Schema
 const schema = {
@@ -40,40 +63,14 @@ const schema = {
     },
     {
       "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Нужно ли утеплять газосиликат?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Для норм Беларуси (R=3.2) стена 400мм D500 проходит впритык. Мы рекомендуем утепление каменной ватой 50-100мм для перекрытия мостиков холода и экономии на отоплении."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Когда можно штукатурить стены?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Газосиликат должен высохнуть. Мы рекомендуем приступать к внутренней отделке через 3-4 месяца после возведения коробки, а к фасаду — после окончания мокрых работ внутри."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Какой фундамент лучше?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Блочный дом тяжелый и хрупкий, он не прощает подвижек грунта. Лучший вариант — монолитный ленточный фундамент на глубину промерзания (1.2м) или свайно-ростверковый (если позволяет геология)."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Работаете ли вы с кредитами (240 указ)?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Да. Мы предоставляем сметы, договоры и акты выполненных работ по формам, которые требуют банки (Беларусбанк, Белагропромбанк и др.) для выдачи кредитов на строительство, включая льготные (Указ 240, 95) и материнский капитал."
-          }
+      "mainEntity": faqData.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer
         }
-      ]
+      }))
     }
   ]
 };
@@ -374,7 +371,7 @@ const schema = {
                                 <h3 class="text-2xl font-bold text-white mb-4 font-serif">{data.title}</h3>
                                 
                                 <div class="flex items-center gap-4 text-white/70 text-sm border-t border-white/10 pt-4 opacity-0 group-hover:opacity-100 transition-opacity delay-100">
-                                    <span>~ {totalPrice.toLocaleString()} BYN</span>
+                                    <span>~ {totalPrice.toLocaleString()} {currency}</span>
                                     <span class="w-1 h-1 bg-marmol-gold rounded-full"></span>
                                     <span>Подробнее &rarr;</span>
                                 </div>
@@ -400,55 +397,21 @@ const schema = {
             </div>
             
             <div class="space-y-4">
-                
-                <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
-                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
-                        <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">Нужно ли утеплять газосиликат?</span>
-                        <span class="relative w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
-                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
-                        </span>
-                    </summary>
-                    <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
-                        Для климата Беларуси (требуемое сопротивление теплопередаче R=3.2) стена из блока 400мм D500 проходит нормы "впритык". Мы настоятельно рекомендуем утепление каменной ватой 50мм. Это не только повышает энергоэффективность, но и закрывает "мостики холода" (швы, перемычки, армопояс), защищая несущие стены от промерзания.
-                    </div>
-                </details>
-
-                <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
-                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
-                        <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">Когда можно начинать отделку?</span>
-                        <span class="relative w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
-                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
-                        </span>
-                    </summary>
-                    <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
-                        Газосиликатный блок приходит с завода влажным. Ему нужно время, чтобы отдать влагу. Мы рекомендуем выждать минимум 3-4 месяца после возведения коробки и крыши перед началом внутренних штукатурных работ. Фасад лучше делать в последнюю очередь, когда влага выйдет из дома.
-                    </div>
-                </details>
-
-                <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
-                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
-                        <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">Какой фундамент лучше?</span>
-                        <span class="relative w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
-                             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
-                        </span>
-                    </summary>
-                    <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
-                        Блочный дом тяжелый и хрупкий, он не прощает подвижек грунта. Лучший вариант — монолитный ленточный фундамент на глубину промерзания (1.2м) или свайно-ростверковый (если позволяет геология).
-                    </div>
-                </details>
-
-                <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
-                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
-                        <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">Работаете ли вы с кредитами (240 указ)?</span>
-                        <span class="relative w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45">
-                             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
-                        </span>
-                    </summary>
-                    <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
-                        Да. Мы предоставляем сметы, договоры и акты выполненных работ по формам, которые требуют банки (Беларусбанк, Белагропромбанк и др.) для выдачи кредитов на строительство, включая льготные (Указ 240, 95) и материнский капитал.
-                    </div>
-                </details>
-
+                {faqData.map((faq) => (
+                    <details class="group bg-white/5 rounded-lg border border-white/10 overflow-hidden transition-all duration-300 hover:border-marmol-gold/30 hover:bg-white/10">
+                        <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none">
+                            <span class="font-bold text-lg text-white group-hover:text-marmol-gold transition-colors">
+                                {faq.question}
+                            </span>
+                            <span class="relative shrink-0 w-6 h-6 flex items-center justify-center text-marmol-gold transition-transform duration-300 group-open:rotate-45 ml-4">
+                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                            </span>
+                        </summary>
+                        <div class="px-6 pb-8 text-gray-300 leading-relaxed border-t border-white/5 pt-4 text-sm md:text-base">
+                            {faq.answer}
+                        </div>
+                    </details>
+                ))}
             </div>
             
             <div class="mt-16 text-center">

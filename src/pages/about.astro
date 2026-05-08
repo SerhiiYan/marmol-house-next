@@ -1,7 +1,6 @@
 ---
 // src/pages/about.astro
 import Layout from '../layouts/Layout.astro';
-import ConsultationModal from '../components/ui/ConsultationModal.jsx';
 // Header и Footer не импортируем, они должны быть внутри Layout
 
 // SEO Мета-данные
@@ -16,7 +15,10 @@ const schema = {
     "@type": "ConstructionBusiness",
     "name": "Marmol House",
     "url": "https://marmolhouse.by",
-    "foundingDate": "2010",
+    "logo": "https://marmolhouse.by/logo-bg.png", 
+    "telephone": "+375(29)184-54-81",
+    "taxID": "591536542",
+    "foundingDate": "2025",
     "description": pageDescription,
     "areaServed": ["Гродно", "Минская область", "Гродненская область"]
   }
@@ -43,29 +45,27 @@ const schema = {
             <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-white opacity-90"></div>
         </div>
     
-        <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 relative z-10 h-full flex flex-col justify-center min-h-screen">
+        <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 relative z-10 h-full flex flex-col justify-center min-h-screen pb-32 md:pb-0">
+            <div class="max-w-4xl lg:w-[65%]">
+    
+                <h1 class="text-marmol-gold font-bold uppercase tracking-[0.2em] text-xs md:text-sm mb-6 animate-fade-in">
+                    Строительство домов в Гродно от Marmol House
+                </h1>
             
-            <div class="max-w-4xl lg:w-[65%]"> 
-                <p class="text-marmol-gold font-bold uppercase tracking-[0.2em] text-xs md:text-sm mb-8 animate-fade-in">
-                    Философия Marmol House
-                </p>
-            
-                <h1 class="text-4xl md:text-6xl xl:text-7xl font-sans font-bold text-marmol-navy leading-[1.1] mb-12 animate-fade-in-up">
+                <p class="text-4xl md:text-6xl xl:text-7xl font-sans font-bold text-marmol-navy leading-[1.1] mb-10 animate-fade-in-up">
                     Мы не запускаем <br class="hidden md:block" /> 
                     громкую рекламу — <br/>
                     <span class="text-gray-400 font-light italic">нас советуют друзьям.</span>
-                </h1>
+                </p>
             
                 <div class="flex flex-col md:flex-row items-start gap-6 md:gap-10 animate-fade-in-up" style="animation-delay: 0.2s;">
+                    <div class="h-1 w-16 md:w-24 bg-marmol-gold mt-3 shrink-0"></div>
                     
-                    <div class="h-1 w-24 bg-marmol-gold mt-3 shrink-0"></div>
-                    
-                    <p class="text-lg text-gray-600 font-light leading-relaxed max-w-lg">
+                    <div class="text-base md:text-lg text-gray-600 font-light leading-relaxed max-w-lg">
                         Строительство — это баланс между инженерной точностью и архитектурной эстетикой. 
                         Мы объединяем надежность каменных стен с красотой премиальных фасадов.
-                    </p>
+                    </div>
                 </div>
-            
             </div>
         </div>
     
@@ -116,7 +116,7 @@ const schema = {
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-20 border-t border-white/10 pt-12">
                 <div class="text-center">
-                    <div class="text-4xl font-bold text-white mb-1">50+</div>
+                    <div class="text-4xl font-bold text-white mb-1">20+</div>
                     <div class="text-[10px] uppercase tracking-[0.2em] text-marmol-gold">Построенных домов</div>
                 </div>
                 <div class="text-center border-l border-white/10">
@@ -214,8 +214,6 @@ const schema = {
     </section>
 
   </main>
-  
-  <ConsultationModal client:load />
 
 </Layout>
 

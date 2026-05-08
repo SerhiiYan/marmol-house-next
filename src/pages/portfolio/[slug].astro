@@ -3,7 +3,6 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import ProjectGallery from '../../components/project/ProjectGallery.jsx';
-import ConsultationModal from '../../components/ui/ConsultationModal.jsx';
 
 // 1. ИМПОРТЫ ДЛЯ ДНЕВНИКА СТРОЙКИ
 import DiaryList from '../../components/diary/DiaryList.jsx';
@@ -246,30 +245,22 @@ const schema = {
     </a>
 
   </main>
-  
-  <ConsultationModal client:load />
 
 </Layout>
 
 <script>
     import { isModalOpen, formComment } from '../../store/modalStore';
 
-    function setupPortfolioButton() {
-        const btn = document.getElementById('btn-want-house');
-        const titleElement = document.querySelector('h1');
-        const title = titleElement ? titleElement.innerText : 'Проект из портфолио';
-
-        if (btn) {
-            const newBtn = btn.cloneNode(true);
-            if(btn.parentNode) btn.parentNode.replaceChild(newBtn, btn);
+    document.addEventListener('click', (e) => {
+        // @ts-ignore
+        const target = e.target.closest('#btn-want-house');
+        
+        if (target) {
+            const titleElement = document.querySelector('h1');
+            const title = titleElement ? titleElement.innerText : 'Проект из портфолио';
             
-            newBtn.addEventListener('click', () => {
-                formComment.set(`Здравствуйте! Мне понравился реализованный проект: "${title}". Хочу узнать стоимость строительства такого дома.`);
-                isModalOpen.set(true);
-            });
+            formComment.set(`Здравствуйте! Мне понравился реализованный проект: "${title}". Хочу узнать стоимость строительства такого дома.`);
+            isModalOpen.set(true);
         }
-    }
-
-    document.addEventListener('astro:page-load', setupPortfolioButton);
-    setupPortfolioButton();
+    });
 </script>

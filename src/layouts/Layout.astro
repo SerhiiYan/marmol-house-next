@@ -11,6 +11,7 @@ interface Props {
     description?: string;
     image?: string;
     canonicalURL?: string;
+    schema?: any;
 }
 
 const siteDomain = Astro.site ?? 'https://marmolhouse.by';
@@ -21,10 +22,9 @@ const {
     // Сделал путь относительным по умолчанию, мы его превратим в абсолютный ниже
     image = "/og-image.png", 
     canonicalURL = new URL(Astro.url.pathname, siteDomain).href,
+    schema
 } = Astro.props;
 
-// === НОВОЕ: Железобетонная генерация абсолютного пути для картинки ===
-// new URL() автоматически подклеит домен, если image - это относительный путь (например, /images/dom.jpg)
 const ogImageURL = new URL(image, siteDomain).href;
 ---
 
@@ -61,7 +61,11 @@ const ogImageURL = new URL(image, siteDomain).href;
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        {schema && (
+            <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+        )}
         <slot name="head" />
+        
     </head>
     <body class="bg-marmol-bg text-marmol-navy font-body antialiased">
         <Header />

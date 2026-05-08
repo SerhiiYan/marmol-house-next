@@ -14,10 +14,11 @@
   "gallery": [
     "/projects/barnhouse/barni/1.png",
     "/projects/barnhouse/barni/2.png",
-    "/projects/barnhouse/barni/3.png"
+    "/projects/barnhouse/barni/3.png",
+    "/projects/barnhouse/barni/plan.webp"
   ],
   "plans": [
-    "/projects/barnhouse/barni/plan.webp"
+    "/projects/barnhouse/barni/visual-plan.webp"
   ],
   "description": "Проект 'Барни' (63м²) — это мечта для ценителей спа-отдыха. Помимо двух спален и гостиной, этот барнхаус включает собственную сауну для максимального расслабления. Идеальный вариант для тех, кто хочет совместить дом и личный спа-курорт.",
   "features": [

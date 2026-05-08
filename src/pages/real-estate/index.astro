@@ -31,7 +31,7 @@ const getReadinessText = (type) => {
 };
 
 // SEO Данные
-const pageTitle = "Купить готовый дом в Гродно | Недвижимость Marmol House";
+const pageTitle = "Готовые дома от застройщика | Недвижимость Marmol House";
 const pageDescription = "Продажа готовых коттеджей и домов с участком от застройщика Marmol House. Лучшие локации в Гродно и пригороде. Ключи в день сделки, без ожидания строительства.";
 
 // Микроразметка Schema.org
@@ -65,7 +65,7 @@ const schema = {
             <p class="text-xs font-bold uppercase tracking-widest text-gray-400">Marmol Real Estate</p>
         </div>
         <h1 class="text-4xl md:text-5xl font-sans font-bold text-marmol-navy mb-4">
-            Готовые дома в наличии
+            Готовые дома от застройщика
         </h1>
         <p class="text-gray-500 max-w-2xl text-lg font-light">
             Объекты с участками в лучших локациях. Без ожидания строительства — получаете ключи в день сделки.
@@ -152,11 +152,11 @@ const schema = {
                             <div class="flex flex-col">
                                 {data.oldPrice && (
                                     <span class="text-xs text-gray-400 line-through mb-0.5">
-                                        {data.oldPrice.toLocaleString('ru-RU')} {data.currency}
+                                        {data.oldPrice.toLocaleString('ru-RU')} {data.currency || 'BYN'}
                                     </span>
                                 )}
                                 <p class="text-2xl font-bold text-marmol-navy leading-none">
-                                    {data.price.toLocaleString('ru-RU')} <span class="text-sm font-normal text-gray-500">{data.currency}</span>
+                                    {data.price.toLocaleString('ru-RU')} <span class="text-sm font-normal text-gray-500">{data.currency || 'BYN'}</span>
                                 </p>
                             </div>
                             

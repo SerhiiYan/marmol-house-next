@@ -13,10 +13,11 @@
   "mainImage": "/projects/house-150/z191/1.webp",
   "gallery": [
     "/projects/house-150/z191/1.webp",
-    "/projects/house-150/z191/2.webp"
+    "/projects/house-150/z191/2.webp",
+    "/projects/house-150/z191/plan.webp"
   ],
   "plans": [
-    "/projects/house-150/z191/plan.webp"
+    "/projects/house-150/z191/visual-plan.webp"
   ],
   "description": "Многофункциональный проект Z191 (101м²) с двумя спальнями и отдельным кабинетом. Это идеальное решение для семьи, где один из членов работает из дома. Продуманная планировка четко разделяет рабочее и личное пространство.",
   "features": [

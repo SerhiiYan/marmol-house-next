@@ -12,10 +12,11 @@
   "mainImage": "/projects/aframe/a30/1.jpg",
   "gallery": [
     "/projects/aframe/a30/1.jpg",
-    "/projects/aframe/a30/2.jpg"
+    "/projects/aframe/a30/2.jpg",
+    "/projects/aframe/a30/plan.jpg"
   ],
   "plans": [
-    "/projects/aframe/a30/plan.jpg"
+    "/projects/aframe/a30/visual-plan.webp"
   ],
   "description": "Проект А30 — это просторный A-frame размером 6х10 метров с общей площадью по полу 104 м². Увеличенная длина дома позволила создать на первом этаже огромную гостиную, изолированную спальню и полноценную гардеробную. Второй этаж (антресоль) имеет значительную площадь, что позволяет с комфортом разместить спальные места. Отличный вариант для большой семьи.",
   "features": [

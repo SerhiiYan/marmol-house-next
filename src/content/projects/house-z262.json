@@ -13,10 +13,11 @@
   "mainImage": "/projects/house-100/z262/1.webp",
   "gallery": [
     "/projects/house-100/z262/1.webp",
-    "/projects/house-100/z262/2.webp"
+    "/projects/house-100/z262/2.webp",
+    "/projects/house-100/z262/plan.webp"
   ],
   "plans": [
-    "/projects/house-100/z262/plan.webp"
+    "/projects/house-100/z262/visual-plan.webp"
   ],
   "description": "Практичный проект одноэтажного дома Z262 на 65м² с двумя спальнями и удобной кухней, совмещенной с кладовой. Простая форма и двускатная крыша делают его экономичным в строительстве, а продуманная планировка обеспечивает высокий уровень комфорта для проживания.",
   "features": [

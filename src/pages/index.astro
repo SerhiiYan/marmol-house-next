@@ -1,4 +1,5 @@
 ---
+// src/pages/index.astro
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro'; 
 import FeaturedProjects from '../components/FeaturedProjects.astro';
@@ -58,19 +59,19 @@ const combinedSchema = {
     }
   ]
 };
+
+// SEO-данные конкретно для главной
+const pageTitle = "Строительство домов в Гродно и Минске под ключ | Marmol House";
+const pageDescription = "Архитектурное проектирование и строительство современных каркасных и блочных домов. Фиксированная смета, гарантия качества, помощь с кредитами (Указы 240 и 95).";
 ---
 
-<Layout title="Строительство домов в Гродно и Минске под ключ | Marmol House">
-    
-    <Fragment slot="head">
-        <script type="application/ld+json" set:html={JSON.stringify(combinedSchema)} />
-    </Fragment>
-
+{/* Передаем всё красиво через параметры нашего умного Layout */}
+<Layout title={pageTitle} description={pageDescription} schema={combinedSchema}>
     <main>
         <Hero /> 
         <FeaturedProjects />
         <WhyUsGrid />
         <GeneralPricing client:visible />
         <GoogleReviews />
-        </main>
+    </main>
 </Layout>

@@ -81,8 +81,7 @@ const schema = {
 };
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
-  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
+<Layout title={pageTitle} description={pageDescription} schema={schema}>
   
   <main class="bg-gray-50 pb-24">
     
@@ -185,8 +184,12 @@ const schema = {
                                 </ul>
                             </div>
 
-                            <PlanViewer image={data.plans?.[0]} client:visible />
-                            
+                            <PlanViewer 
+                               image={data.plan}  
+                               images={data.plans}
+                               client:load 
+                            />
+
                         </div>
                     </section>
                 )}
@@ -255,7 +258,7 @@ const schema = {
     <div class="lg:hidden fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 p-4 shadow-[0_-5px_20px_rgba(0,0,0,0.1)] z-40 flex justify-between items-center">
         <div>
             <p class="text-xs text-gray-400 uppercase">Цена от</p>
-            <p class="text-xl font-bold text-marmol-navy">{formatPrice(totalPrice)} BYN</p>
+            <p class="text-xl font-bold text-marmol-navy">{formatPrice(totalPrice)} {globalPricing.currency}</p>
         </div>
         <button 
             id="mobile-cta-btn" 
@@ -271,29 +274,17 @@ const schema = {
 <script>
     import { isModalOpen, formComment } from '../../store/modalStore';
 
-    // Функция обернута для безопасности при переходах страниц (astro:page-load)
-    const setupProjectButtons = () => {
-        const titleElement = document.querySelector('h1');
-        const projectTitle = titleElement ? titleElement.innerText : 'Проект';
-
-        const sidebarBtn = document.getElementById('sidebar-cta-btn');
-        const mobileBtn = document.getElementById('mobile-cta-btn');
-
-        const handleClick = () => {
-            formComment.set(`Здравствуйте! Меня интересует проект "${projectTitle}". Хочу узнать стоимость.`);
+    // Единый глобальный слушатель (паттерн делегирования)
+    document.addEventListener('click', (e) => {
+        // @ts-ignore
+        const target = e.target.closest('#sidebar-cta-btn, #mobile-cta-btn');
+        
+        if (target) {
+            const titleElement = document.querySelector('h1');
+            const projectTitle = titleElement ? titleElement.innerText : 'Проект';
+            
+            formComment.set(`Здравствуйте! Меня интересует проект "${projectTitle}".`);
             isModalOpen.set(true);
-        };
-
-        if (sidebarBtn) {
-            sidebarBtn.onclick = handleClick; 
         }
-
-        if (mobileBtn) {
-            mobileBtn.onclick = handleClick;
-        }
-    };
-
-    // Запускаем и сразу, и при навигации (на всякий случай)
-    document.addEventListener('astro:page-load', setupProjectButtons);
-    setupProjectButtons();
+    });
 </script>

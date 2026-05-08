@@ -19,21 +19,35 @@ const categoryLabels = {
     'news': 'Новости'
 };
 
-// Функция форматирования даты
-const formatDate = (date) => {
-    return new Intl.DateTimeFormat('ru-RU', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-    }).format(date);
-};
+// МИКРООПТИМИЗАЦИЯ: Создаем форматтер один раз, а не на каждый пост в цикле
+const dateFormatter = new Intl.DateTimeFormat('ru-RU', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+});
 
-// SEO
+const formatDate = (date) => dateFormatter.format(date);
+
+// SEO Мета-данные
 const pageTitle = "Блог и видео | Marmol House";
 const pageDescription = "Журнал о строительстве домов в Беларуси. Полезные статьи, обзоры технологий, видео с объектов и советы архитектора.";
+
+// 3. ИСПРАВЛЕНИЕ БАГА: Добавляем саму Schema.org
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": pageTitle,
+  "description": pageDescription,
+  "publisher": {
+    "@type": "ConstructionBusiness",
+    "name": "Marmol House"
+  }
+};
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
+
     <main class="bg-gray-50 min-h-screen pt-28 pb-24">
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
