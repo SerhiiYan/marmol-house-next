@@ -1,0 +1,36 @@
+name: 🚀 Авто-деплой Marmol House
+on:
+  push:
+    branches:
+      - main # Запуск при пуше в ветку main
+
+jobs:
+  web-deploy:
+    name: 🏗️ Сборка и загрузка
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Получение кода
+        uses: actions/checkout@v4
+
+      - name: 🟢 Установка Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 🔨 Сборка проекта
+        run: |
+          npm ci
+          npm run build
+
+      - name: 📂 Загрузка на Hoster.by
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: ./ 
+          # Команда роботу: "Никогда не удаляй и не трогай эти папки на сервере!"
+          exclude: |
+            api/**
+            cgi-bin/**
