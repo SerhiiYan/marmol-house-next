@@ -9,10 +9,10 @@
   "availableTech": [
     "frame"
   ],
-  "mainImage": "/projects/aframe/a30/1.jpg",
+  "mainImage": "/projects/aframe/a30/1.webp",
   "gallery": [
-    "/projects/aframe/a30/1.jpg",
-    "/projects/aframe/a30/2.jpg",
+    "/projects/aframe/a30/1.webp",
+    "/projects/aframe/a30/2.webp",
     "/projects/aframe/a30/plan.jpg"
   ],
   "plans": [
