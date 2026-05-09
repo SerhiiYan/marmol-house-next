@@ -2,7 +2,7 @@ name: 🚀 Авто-деплой Marmol House
 on:
   push:
     branches:
-      - main # Запуск при пуше в ветку main
+      - master # Запуск при пуше в ветку master
 
 jobs:
   web-deploy:
