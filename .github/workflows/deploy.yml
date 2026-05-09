@@ -1,4 +1,9 @@
 name: 🚀 Авто-деплой Marmol House
+
+# 1. ДОБАВЛЕНО: Принудительный перевод внутренних скриптов GitHub на новую версию
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 on:
   push:
     branches:
@@ -23,7 +28,8 @@ jobs:
           npm run build
 
       - name: 📂 Загрузка на Hoster.by
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        # 2. ИЗМЕНЕНО: Убрана жесткая привязка к версии 4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}

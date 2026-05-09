@@ -8,7 +8,6 @@ export default function ConsultationModal() {
   const $isOpen = useStore(isModalOpen);
   const $initialComment = useStore(formComment);
   
-  // Состояния
   const [formData, setFormData] = useState({ name: '', phone: '', comment: '' });
   const [agreed, setAgreed] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -26,9 +25,7 @@ export default function ConsultationModal() {
     }
   }, [$isOpen, $initialComment]);
 
-  // Закрытие при клике на фон
   const handleBackdropClick = (e) => {
-    // Если кликнули именно по фону (а не по контенту внутри)
     if (e.target === e.currentTarget) {
         isModalOpen.set(false);
     }
@@ -36,9 +33,8 @@ export default function ConsultationModal() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (honeypot) return isModalOpen.set(false); // Защита от ботов (Honeypot)
+    if (honeypot) return isModalOpen.set(false); 
 
-    // Валидация: проверяем, что телефон достаточно длинный (в formData.phone попадает только чистый номер без +375 при unmask)
     if (!formData.name.trim() || !formData.phone || formData.phone.length < 9) {
         setError('Пожалуйста, заполните имя и телефон корректно.');
         return;
@@ -51,7 +47,7 @@ export default function ConsultationModal() {
         name: formData.name,
         phone: `+375${formData.phone}`,
         message: formData.comment,
-        honeypot: honeypot // Отправляем honeypot на сервер для двойной проверки
+        honeypot: honeypot 
     };
 
     try {
@@ -68,7 +64,6 @@ export default function ConsultationModal() {
         try { 
             result = await response.json(); 
         } catch(e) {
-            // Если сервер вернул не JSON
         } 
 
         if (!response.ok || !result.success) {
@@ -78,14 +73,13 @@ export default function ConsultationModal() {
         setSuccess(true);
         if (window.ym) window.ym(104396711, 'reachGoal', 'form_submit');
 
-        // Автоматическое закрытие модалки после успеха (опционально)
         setTimeout(() => {
              isModalOpen.set(false);
         }, 5000);
 
     } catch (err) {
         console.error(err);
-        // Выводим конкретную ошибку от сервера (например, "Подождите 1 минуту") или общую
+
         setError(err.message === 'Failed to fetch' ? 'Ошибка сети. Проверьте интернет.' : err.message);
     } finally {
         setLoading(false);
@@ -95,23 +89,20 @@ export default function ConsultationModal() {
   if (!$isOpen) return null;
 
   return (
-    // ФОН: Вместо черного делаем глубокий синий (фирменный) + блюр
-    // Добавили onClick={handleBackdropClick} для закрытия
+
     <div 
         onClick={handleBackdropClick}
         className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-marmol-navy/80 backdrop-blur-md transition-all duration-300 cursor-pointer"
     >
-      
-      {/* КАРТОЧКА: cursor-default, чтобы клики внутри не закрывали окно */}
-      {/* border-marmol-gold/30 - тот самый люксовый бортик */}
+
       <div 
         onClick={(e) => e.stopPropagation()}
         className="relative w-full max-w-[480px] bg-white rounded-xl shadow-2xl p-8 md:p-10 cursor-default border border-marmol-gold/30 animate-scale-in"
       >
-        
-        {/* КНОПКА ЗАКРЫТЬ */}
+
         <button 
             onClick={() => isModalOpen.set(false)}
+            aria-label="Закрыть"
             className="absolute top-4 right-4 text-gray-300 hover:text-marmol-navy transition-colors p-2"
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
@@ -120,7 +111,6 @@ export default function ConsultationModal() {
         </button>
 
         {success ? (
-            // ЭКРАН УСПЕХА
             <div className="text-center py-6">
                 <div className="w-20 h-20 bg-marmol-bg border border-marmol-gold/20 rounded-full flex items-center justify-center mx-auto mb-6">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#FBBF24" className="w-10 h-10">
@@ -139,7 +129,7 @@ export default function ConsultationModal() {
                 </button>
             </div>
         ) : (
-            // ОСНОВНАЯ ФОРМА
+            
             <>
                 <div className="mb-8">
                     <h2 className="text-3xl font-sans font-bold text-marmol-navy mb-2">
@@ -152,10 +142,8 @@ export default function ConsultationModal() {
 
                 <form onSubmit={handleSubmit} className="space-y-5 relative">
                     
-                    {/* Honeypot: Важно для защиты от спама. Скрыто стилями Tailwind (hidden) */}
                     <input type="text" name="honeypot" className="hidden" tabIndex="-1" autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
 
-                    {/* Имя */}
                     <div className="group">
                         <input 
                             type="text" 
@@ -167,12 +155,11 @@ export default function ConsultationModal() {
                         />
                     </div>
 
-                    {/* Телефон */}
                     <div className="group">
                         <IMaskInput
                             mask="+{375} (00) 000-00-00"
                             radix="."
-                            lazy={false}  // <--- ВОТ ЭТО ДЕЛАЕТ МАСКУ ВИДИМОЙ СРАЗУ
+                            lazy={false}  
                             unmask={true} 
                             value={formData.phone}
                             onAccept={(value) => setFormData({...formData, phone: value})}
@@ -187,7 +174,6 @@ export default function ConsultationModal() {
                         </div>
                     </div>
 
-                    {/* Комментарий */}
                     <div>
                         <textarea 
                             rows="3"
@@ -197,14 +183,12 @@ export default function ConsultationModal() {
                         ></textarea>
                     </div>
 
-                    {/* Ошибки */}
                     {error && (
                         <div className="text-red-500 text-sm bg-red-50 p-3 rounded border border-red-100">
                             {error}
                         </div>
                     )}
 
-                    {/* Согласие */}
                     <label className="flex items-start space-x-3 cursor-pointer group">
                         <input 
                             type="checkbox" 
@@ -226,12 +210,10 @@ export default function ConsultationModal() {
                         </span>
                     </label>
 
-                    {/* Кнопка */}
                     <button 
                         type="submit"
+                        aria-label="Отправить"
                         disabled={!agreed || loading}
-                        // Добавили класс cursor-pointer (палец при наведении)
-                        // И класс disabled:cursor-not-allowed (знак "стоп", если галочка не нажата)
                         className="w-full bg-marmol-navy text-white font-bold uppercase tracking-[0.15em] py-4 hover:bg-marmol-gold hover:text-marmol-navy transition-all duration-300 shadow-xl disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                     >
                         {loading ? 'Отправка...' : 'Отправить'}
@@ -245,7 +227,6 @@ export default function ConsultationModal() {
         )}
       </div>
 
-      {/* Анимация появления */}
       <style>{`
         @keyframes scaleIn {
             from { opacity: 0; transform: scale(0.95); }

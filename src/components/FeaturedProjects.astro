@@ -1,12 +1,12 @@
 ---
 // src/components/FeaturedProjects.astro
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets'; 
 import { globalPricing } from '../data/pricingConfig';
 
-// 1. ЗАПРОС К БАЗЕ
+
 const allProjects = await getCollection('projects');
 
-// 2. ФИЛЬТРАЦИЯ (Оставляем хиты)
 const featuredProjects = allProjects
   .filter(project => project.data.hit === true)
   // @ts-ignore
@@ -14,9 +14,9 @@ const featuredProjects = allProjects
 
 // Helper для перевода категорий цен
 const priceCategoryLabels = {
-  economy: 'Эконом',
-  premium: 'Премиум',
-  premiumPlus: 'Премиум+',
+  economy: 'Базовая',
+  premium: 'Стандарт',
+  premiumPlus: 'Под ключ',
   box: 'Коробка'
 };
 ---
@@ -46,12 +46,11 @@ const priceCategoryLabels = {
         {featuredProjects.map(project => {
             const data = project.data;
             
-            // --- ЛОГИКА ЦЕНЫ ---
             const categoryKey = data.priceCategory || 'economy';
-            // @ts-ignore
+
             const pricePerMeter = globalPricing.packages[categoryKey]?.basePricePerMeter || 0;
             const totalPrice = data.fixPrice || (data.area * pricePerMeter);
-            // @ts-ignore
+
             const categoryLabel = priceCategoryLabels[categoryKey] || 'Базовая';
 
             return (
@@ -69,10 +68,11 @@ const priceCategoryLabels = {
                             ))}
                         </div>
                         
-                        <img 
+                        <Image 
                             src={data.mainImage} 
                             alt={`Проект дома ${data.title} - ${data.area} м²`}
-                            loading="lazy" 
+                            width={871}
+                            height={490}
                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         />
                         <div class="absolute inset-0 bg-marmol-navy/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
