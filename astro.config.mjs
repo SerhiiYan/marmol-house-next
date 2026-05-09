@@ -80,6 +80,10 @@ export default defineConfig({
     '/projects/dom-z253': '/projects/', 
   },
 
+  build: {
+    inlineStylesheets: 'always',
+  },
+
   vite: {
     plugins: [tailwindcss()]
   },

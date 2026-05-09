@@ -3,10 +3,10 @@
   "isHero": true,
   "relatedProjectSlug": "", 
   
-  "mainImage": "/portfolio/baranovichy180/1.jpg",
+  "mainImage": "/portfolio/baranovichy180/1.webp",
   "gallery": [
-    "/portfolio/baranovichy180/2.jpg",
-    "/portfolio/baranovichy180/3.jpg"
+    "/portfolio/baranovichy180/2.webp",
+    "/portfolio/baranovichy180/3.webp"
   ],
   
   "technology": "block",

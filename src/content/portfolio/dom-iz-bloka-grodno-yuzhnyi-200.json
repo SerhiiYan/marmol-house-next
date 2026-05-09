@@ -1,9 +1,9 @@
 {
   "title": "Дом из блока в мкр. Южный-4, Гродно",
-  "mainImage": "/portfolio/yuzhnyi200/1.jpg",
+  "mainImage": "/portfolio/yuzhnyi200/1.webp",
   "gallery": [
-    "/portfolio/yuzhnyi200/2.jpg",
-    "/portfolio/yuzhnyi200/3.jpg"
+    "/portfolio/yuzhnyi200/2.webp",
+    "/portfolio/yuzhnyi200/3.webp"
   ],
   "technology": "block",
   "isHero": true,

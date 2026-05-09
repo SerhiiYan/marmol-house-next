@@ -1,10 +1,10 @@
 {
   "title": "Дом из блока с гаражом в Тарусичах",
-  "mainImage": "/portfolio/tarusichy152/1.jpg",
+  "mainImage": "/portfolio/tarusichy152/1.webp",
   "gallery": [
-    "/portfolio/tarusichy152/2.jpg",
-    "/portfolio/tarusichy152/3.jpg",
-    "/portfolio/tarusichy152/4.jpg"
+    "/portfolio/tarusichy152/2.webp",
+    "/portfolio/tarusichy152/3.webp",
+    "/portfolio/tarusichy152/4.webp"
   ],
   "technology": "block",
   "status": "completed",

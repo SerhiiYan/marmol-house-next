@@ -1,11 +1,11 @@
 {
   "title": "Дом из блока в Погоранах",
   "isHero": true,
-  "mainImage": "/portfolio/pogorany200/1.jpg",
+  "mainImage": "/portfolio/pogorany200/1.webp",
   "gallery": [
-    "/portfolio/pogorany200/2.jpg",
-    "/portfolio/pogorany200/3.jpg",
-    "/portfolio/pogorany200/4.jpg"
+    "/portfolio/pogorany200/2.webp",
+    "/portfolio/pogorany200/3.webp",
+    "/portfolio/pogorany200/4.webp"
   ],
   "technology": "block",
   "specs": {

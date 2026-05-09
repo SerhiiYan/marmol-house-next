@@ -1,9 +1,9 @@
 {
   "title": "Реконструкция дома в д. Ивановцы",
-  "mainImage": "/portfolio/ivanovci120/1.jpg",
+  "mainImage": "/portfolio/ivanovci120/1.webp",
   "gallery": [
-    "/portfolio/ivanovci120/2.jpg",
-    "/portfolio/ivanovci120/3.jpg"
+    "/portfolio/ivanovci120/2.webp",
+    "/portfolio/ivanovci120/3.webp"
   ],
   "technology": "reconstruction",
   "status": "completed",
