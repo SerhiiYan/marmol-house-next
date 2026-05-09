@@ -10,11 +10,10 @@
     "frame",
     "block"
   ],
-  "mainImage": "/projects/barnhouse/brain/1.png",
+  "mainImage": "/projects/barnhouse/brain/1.webp",
   "gallery": [
-    "/projects/barnhouse/brain/1.png",
-    "/projects/barnhouse/brain/2.png",
-    "/projects/barnhouse/brain/3.png",
+    "/projects/barnhouse/brain/1.webp",
+    "/projects/barnhouse/brain/2.webp",
     "/projects/barnhouse/brain/plan.webp"
   ],
   "plans": [

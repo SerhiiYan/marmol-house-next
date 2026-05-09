@@ -10,11 +10,10 @@
     "frame",
     "block"
   ],
-  "mainImage": "/projects/barnhouse/venta/1.png",
+  "mainImage": "/projects/barnhouse/venta/1.webp",
   "gallery": [
-    "/projects/barnhouse/venta/1.png",
-    "/projects/barnhouse/venta/2.png",
-    "/projects/barnhouse/venta/3.png"
+    "/projects/barnhouse/venta/1.webp",
+    "/projects/barnhouse/venta/2.webp"
   ],
   "plans": [
     "/projects/barnhouse/venta/plan.webp"
@@ -23,6 +22,7 @@
   "features": [
     "Металлопрофиль",
     "Бетон",
+    "Второй свет",
     "Кирпич"
   ],
   "layout": [

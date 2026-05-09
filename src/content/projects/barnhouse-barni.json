@@ -10,11 +10,10 @@
     "frame",
     "block"
   ],
-  "mainImage": "/projects/barnhouse/barni/1.png",
+  "mainImage": "/projects/barnhouse/barni/1.webp",
   "gallery": [
-    "/projects/barnhouse/barni/1.png",
-    "/projects/barnhouse/barni/2.png",
-    "/projects/barnhouse/barni/3.png",
+    "/projects/barnhouse/barni/1.webp",
+    "/projects/barnhouse/barni/2.webp",
     "/projects/barnhouse/barni/plan.webp"
   ],
   "plans": [
