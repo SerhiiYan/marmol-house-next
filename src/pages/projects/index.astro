@@ -4,10 +4,8 @@ import Layout from '../../layouts/Layout.astro';
 import ProjectCatalog from '../../components/catalog/ProjectCatalog.jsx'; 
 import { getCollection } from 'astro:content';
 
-// 1. ПОЛУЧАЕМ И СОРТИРУЕМ ПРОЕКТЫ НА СЕРВЕРЕ
 const allProjects = await getCollection('projects');
 
-// Логика: сначала выводим хиты (hit: true), затем сортируем по порядку (order)
 const sortedProjects = allProjects.sort((a, b) => {
   if (a.data.hit && !b.data.hit) return -1;
   if (!a.data.hit && b.data.hit) return 1;
@@ -24,18 +22,18 @@ const schema = {
   "itemListElement": sortedProjects.map((p, index) => ({
     "@type": "ListItem",
     "position": index + 1,
-    "url": `https://marmolhouse.by/projects/${p.slug}`, // Заменил p.id на p.slug для надежности маршрутизации
+    "url": `https://marmolhouse.by/projects/${p.slug}`,
     "name": p.data.title
   }))
 };
 
 // Мета-теги
+const pageImage = "/individual-design/completed.webp";
 const pageTitle = "Каталог проектов домов и коттеджей под ключ | Marmol House";
 const pageDescription = "Выбирайте готовые проекты каркасных и блочных домов с продуманными планировками. Строительство под ключ в Гродно, Минске и по всей Беларуси. Фиксированная цена.";
 ---
 
-{/* Передаем схему элегантно через Props */}
-<Layout title={pageTitle} description={pageDescription} schema={schema}>
+<Layout title={pageTitle} description={pageDescription} schema={schema} image={pageImage}>
 
   <main class="bg-gray-50 min-h-screen pt-28 pb-24 relative overflow-hidden">
     
@@ -59,7 +57,6 @@ const pageDescription = "Выбирайте готовые проекты кар
         </p>
       </div>
 
-      {/* Передаем уже отсортированный массив */}
       <ProjectCatalog allProjects={sortedProjects} client:load />
 
     </div>

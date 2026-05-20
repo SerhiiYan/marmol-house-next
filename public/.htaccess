@@ -3,3 +3,16 @@ ErrorDocument 404 /404.html
 
 # Глобальный запрет на просмотр папок
 Options -Indexes
+
+# --- БЛОК SEO-РЕДИРЕКТОВ ---
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# 1. Принудительный редирект с HTTP на HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# 2. Принудительный редирект с WWW на без-WWW
+RewriteCond %{HTTP_HOST} ^www\.marmolhouse\.by [NC]
+RewriteRule ^(.*)$ https://marmolhouse.by/$1 [L,R=301]
+</IfModule>
