@@ -76,6 +76,7 @@ export default defineConfig({
     '/projects/dom-po': '/projects/house-po/',
     '/projects/dom-vinger': '/projects/house-vinger/',
     '/projects/dom-fonster': '/projects/house-foster/',
+    '/blog/ukaz-240-instrukciya/': '/blog/gos-podderzhka-240/',
     //старый
     '/projects/dom-z253': '/projects/', 
   },
