@@ -152,7 +152,7 @@ const blogCollection = defineCollection({
     mainImage: z.string(), // Обложка карточки
     
     // Категории для будущих фильтров
-    category: z.enum(['technology', 'review', 'tips', 'news']).default('news'),
+    category: z.enum(['technology', 'review', 'tips', 'news', 'finance']).default('news'),
     youtubeVideoId: z.string().optional(), 
     
     // Дополнительные фишки для красивой карточки

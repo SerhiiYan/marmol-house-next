@@ -6,31 +6,26 @@ import { isModalOpen, formComment } from '../../store/modalStore';
 export default function ProjectPricing({ 
   area, 
   projectTitle = "этот проект", 
-  fixPrice = null,       // Фиксированная цена (если есть)
-  priceCategory = 'economy' // Какому тарифу соответствует фикс. цена
+  fixPrice = null,
+  priceCategory = 'economy'
 }) {
   const { packages, currency } = globalPricing;
 
+  // Форматирование цены
   const formatPrice = (price) => {
     return new Intl.NumberFormat('ru-RU').format(Math.round(price));
   };
 
-  // --- 1. ЛОГИКА КОЭФФИЦИЕНТА ---
+  // --- ЛОГИКА КОЭФФИЦИЕНТА ---
   let multiplier = 1;
-
   if (fixPrice && area > 0) {
-    // Считаем, сколько этот пакет стоил бы "по стандарту"
-    // (Если priceCategory не найдена, берем economy как базу)
     const baseRate = packages[priceCategory]?.basePricePerMeter || packages['economy'].basePricePerMeter;
     const standardPrice = area * baseRate;
-
-    // Вычисляем, во сколько раз реальная цена выше стандартной
     if (standardPrice > 0) {
         multiplier = fixPrice / standardPrice;
     }
   }
 
-  // Превращаем объект пакетов в массив [ключ, данные], чтобы проверять категорию
   const packagesList = Object.entries(packages);
 
   const handleCalculate = (packageName, price) => {
@@ -47,18 +42,27 @@ export default function ProjectPricing({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {packagesList.map(([key, pkg], index) => {
           
-          // --- 2. РАСЧЕТ ЦЕНЫ ---
-          let finalPrice;
-
-          if (fixPrice && key === priceCategory) {
-              // Если это та самая категория, ставим жесткую цену (чтобы цифра была красивой, как в админке)
-              finalPrice = fixPrice;
+          // --- УМНАЯ ССЫЛКА ДЛЯ КАЖДОГО ПАКЕТА ---
+          // Проверяем системный ключ пакета и назначаем правильный URL
+          let detailLink = '';
+          if (key === 'box' || key === 'premiumPlus') {
+              // Пакеты блочной технологии
+              detailLink = '/services/gas-silicate-houses#packages';
+          } else if (key === 'economy' || key === 'premium') {
+              // Пакеты каркасной технологии
+              detailLink = '/services/frame-houses#packages';
           } else {
-              // Остальные пакеты умножаем на коэффициент (чтобы они тоже выросли пропорционально)
-              finalPrice = (area * pkg.basePricePerMeter) * multiplier;
+              // Заглушка на случай добавления новых пакетов
+              detailLink = '/services/frame-houses#packages';
           }
 
-          // Пересчитываем цену за метр (для отображения в скобках)
+          // Расчет итоговой цены
+          let finalPrice;
+          if (fixPrice && key === priceCategory) {
+              finalPrice = fixPrice;
+          } else {
+              finalPrice = (area * pkg.basePricePerMeter) * multiplier;
+          }
           const realMeterPrice = Math.round(finalPrice / area);
 
           return (
@@ -81,13 +85,12 @@ export default function ProjectPricing({
                     <span className="text-sm font-bold text-marmol-navy">{currency}</span>
                 </div>
                 
-                {/* Показываем РЕАЛЬНУЮ цену метра для этого дома */}
                 <p className="text-xs text-gray-300 mt-1">
                     ({formatPrice(realMeterPrice)} {currency}/м²)
                 </p>
               </div>
 
-              <ul className="space-y-3 mb-8 flex-grow">
+              <ul className="space-y-3 mb-4">
                 {pkg.features.map((feature, idx) => (
                   <li key={idx} className="flex items-start text-sm text-gray-600">
                     <svg className="w-5 h-5 text-marmol-gold mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
@@ -95,6 +98,22 @@ export default function ProjectPricing({
                   </li>
                 ))}
               </ul>
+
+              {/* --- ССЫЛКА НА ПОДРОБНОЕ ОПИСАНИЕ --- */}
+              <div className="flex-grow flex flex-col justify-end mb-6">
+                <a 
+                  href={detailLink} 
+                  rel="noopener noreferrer"
+                  className="text-left text-xs font-medium text-gray-400 hover:text-marmol-navy transition-colors inline-flex items-center group mt-2 w-fit"
+                >
+                  <span className="border-b border-dashed border-gray-300 group-hover:border-marmol-navy pb-0.5 transition-colors">
+                    Подробный состав комплектации
+                  </span>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 ml-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all">
+                    <path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clipRule="evenodd" />
+                  </svg>
+                </a>
+              </div>
 
               <button 
                 className="w-full py-3 border border-marmol-navy text-marmol-navy font-bold text-xs uppercase tracking-widest rounded hover:bg-marmol-navy hover:text-white transition-all cursor-pointer"

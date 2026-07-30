@@ -19,6 +19,7 @@ export async function getStaticPaths() {
   }));
 }
 
+
 const { project } = Astro.props;
 const data = project.data;
 
@@ -79,6 +80,7 @@ const schema = {
     "url": `https://marmolhouse.by/projects/${project.id}`
   }
 };
+
 ---
 
 <Layout title={pageTitle} description={pageDescription} schema={schema} image={data.mainImage}>
@@ -205,7 +207,8 @@ const schema = {
                         area={data.area} 
                         projectTitle={data.title} 
                         fixPrice={data.fixPrice} 
-                        priceCategory={data.priceCategory}  
+                        priceCategory={data.priceCategory}
+                        tech={data.availableTech}  
                         client:visible 
                     />
                 </section>

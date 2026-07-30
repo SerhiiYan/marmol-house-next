@@ -2,7 +2,7 @@
 title: "Строительство дома по Указам №240 и №95: кто имеет право и с чего начать"
 date: 2026-04-12
 mainImage: "/blog/gos-podderzhka/main.webp"
-category: "technology"
+category: "finance"
 readTime: 6
 seo:
   title: "Строительство дома по Указу 240 и 95 в Беларуси | Marmol House"
