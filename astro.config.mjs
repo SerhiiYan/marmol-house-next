@@ -10,8 +10,6 @@ export default defineConfig({
   
   // === БЛОК С РЕДИРЕКТАМИ ===
   redirects: {
-    // Базовый синтаксис (по умолчанию Astro делает 301 "Постоянный" редирект)
-    // 'Старая ссылка': 'Новая ссылка'
     '/gallery': '/projects',
     '/completed': '/portfolio',
     // --- Бани ---
