@@ -10,7 +10,7 @@ export const globalPricing = {
       title: "Базовая коробка",
       subTitle: "Блочная коробка",
       shortDesc: "Монолитный фундамент + Стены (ГС) + Крыша",
-      basePricePerMeter: 1300, // Цена за м²
+      basePricePerMeter: 1350, // Цена за м²
       features: [
         "Монолитный ленточный фундамент",
         "Стены из газосиликатных блоков",
@@ -23,7 +23,7 @@ export const globalPricing = {
     economy: {
       title: "Эконом",
       subTitle: "Каркасная технология",
-      basePricePerMeter: 1550,
+      basePricePerMeter: 1600,
       features: [
         "Свайно-ростверковый фундамент",
         "Силовой каркас",
@@ -37,7 +37,7 @@ export const globalPricing = {
     premium: {
       title: "Премиум",
       subTitle: "Каркас + Инженерия",
-      basePricePerMeter: 1850,
+      basePricePerMeter: 1950,
       features: [
         "Усиленный фундамент",
         "Утепление 200 мм + Ветрозащита",
@@ -51,7 +51,7 @@ export const globalPricing = {
     premiumPlus: {
       title: "Премиум +",
       subTitle: "Каменный дом под ключ",
-      basePricePerMeter: 2230,
+      basePricePerMeter: 2350,
       isPopular: true,
       features: [
         "Монолитная плита / Лента",
