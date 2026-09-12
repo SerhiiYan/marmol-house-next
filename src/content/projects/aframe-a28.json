@@ -6,6 +6,7 @@
   "purpose": "business",
   "style": "Классический A-frame",
   "priceCategory": "economy",
+  "terraceArea": 11,
   "availableTech": [
     "frame"
   ],
@@ -27,7 +28,7 @@
   "layout": [
     {
       "name": "Гостиная + кухня",
-      "area": 30
+      "area": 31
     },
     {
       "name": "Санузел",
@@ -35,7 +36,7 @@
     },
     {
       "name": "Антресоль (спальня)",
-      "area": 7
+      "area": 9
     },
     {
       "name": "Терраса",
@@ -48,7 +49,7 @@
     "bedrooms": 1,
     "bathrooms": 1
   },
-  "area": 50,
-  "livingArea": 50,
+  "area": 46,
+  "livingArea": 46,
   "dims": "6x7 м"
 }

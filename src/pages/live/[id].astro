@@ -1,0 +1,298 @@
+---
+// src/pages/live/[id].astro
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import rawDiaryData from '../../data/diary.json';
+import LiveDiaryGallery from '../../components/project/LiveDiaryGallery.jsx';
+
+// 1. Указываем Astro, какие именно страницы нужно сгенерировать
+export async function getStaticPaths() {
+  const activeProjects = await getCollection('active_projects');
+  return activeProjects.map(project => ({
+    params: { id: project.id },
+    props: { project },
+  }));
+}
+
+// 2. Получаем данные конкретного проекта из пропсов
+const { project } = Astro.props;
+const { data } = project;
+
+const projectPhotos = rawDiaryData
+    .filter(entry => entry.projectId === project.id)
+    .reverse();
+
+const pageTitle = `${data.title} - Ход строительства | Marmol House`;
+const pageDescription = `Технический паспорт и журнал производства работ по объекту ${data.title} (${data.location}). Этап: ${data.globalProgress}% готовности.`;
+
+// Находим текущий активный этап
+const activeStageIndex = data.stages.findIndex(s => s.status === 'active');
+
+// НОВОЕ: Генерируем даты для SEO (берем из первого и последнего лога, если они есть)
+const allLogs = data.stages.flatMap(stage => stage.logs || []);
+const datePublished = allLogs.length > 0 ? allLogs[allLogs.length - 1].date : new Date().toISOString().split('T')[0];
+const dateModified = allLogs.length > 0 ? allLogs[0].date : new Date().toISOString().split('T')[0];
+
+// НОВОЕ: Формируем жесткую SEO-схему
+const schema = [
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Live-карта строек",
+                "item": "https://marmolhouse.by/live"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": data.title,
+                "item": `https://marmolhouse.by/live/${project.id}`
+            }
+        ]
+    },
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": `https://marmolhouse.by/live/${project.id}`
+        },
+        "headline": `Ход строительства: ${data.title}`,
+        "description": pageDescription,
+        "image": `https://marmolhouse.by${data.heroImage}`,
+        "author": {
+            "@type": "Organization",
+            "name": "Marmol House",
+            "url": "https://marmolhouse.by"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Marmol House",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://marmolhouse.by/logo-bg.png" // Убедись, что путь к лого верный
+            }
+        },
+        "datePublished": datePublished,
+        "dateModified": dateModified
+    }
+];
+---
+
+<Layout title={pageTitle} description={pageDescription} schema={schema}>
+    
+    <section class="bg-marmol-navy pt-32 pb-16 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#d4af37 1px, transparent 1px); background-size: 32px 32px;"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            
+            <a href="/live" class="inline-flex items-center text-gray-400 hover:text-marmol-gold transition-colors text-xs font-bold uppercase tracking-widest mb-8">
+                ← Назад к карте строек
+            </a>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
+                <div class="lg:col-span-8">
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <div class="inline-block bg-marmol-gold/20 text-marmol-gold text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded border border-marmol-gold/30">
+                            {data.tech === 'frame' ? 'Каркасная технология' : 'Блочная технология'}
+                        </div>
+                        {data.status === 'completed' && (
+                            <div class="inline-block bg-white/10 text-gray-300 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded border border-white/20">
+                                Объект сдан
+                            </div>
+                        )}
+                        {data.status === 'paused' && (
+                            <div class="inline-block bg-gray-800 text-gray-400 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded border border-gray-700">
+                                На паузе
+                            </div>
+                        )}
+                    </div>
+
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-sans font-bold text-white mb-4 leading-tight">
+                        {data.title}
+                    </h1>
+                    <p class="text-xl text-gray-400 flex items-center gap-2">
+                        📍 {data.location}
+                    </p>
+                </div>
+
+                <div class="lg:col-span-4 bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10">
+                    <span class="text-xs text-gray-400 uppercase tracking-widest block mb-2 font-bold">Общая готовность</span>
+                    <div class="flex items-end gap-4 mb-4">
+                        <span class="text-5xl font-bold text-marmol-gold leading-none">{data.globalProgress}%</span>
+                    </div>
+                    <div class="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                        <div class="h-full bg-marmol-gold rounded-full" style={`width: ${data.globalProgress}%`}></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-gray-50 min-h-screen py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                
+                <div class="lg:col-span-8">
+                    <h2 class="text-2xl font-bold text-marmol-navy mb-8 border-b border-gray-200 pb-4">Журнал производства работ</h2>
+                    
+                    <div class="space-y-8">
+                        {data.stages.map((stage, index) => (
+                            <div class={`bg-white rounded-2xl border transition-all ${stage.status === 'active' ? 'border-marmol-gold shadow-md' : 'border-gray-100 shadow-sm'}`}>
+                                
+                                <div class="p-6 md:p-8 flex flex-wrap gap-4 items-center justify-between border-b border-gray-50">
+                                    <div class="flex items-center gap-4">
+                                        <div class={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm shrink-0
+                                            ${stage.status === 'completed' ? 'bg-green-100 text-green-700' : 
+                                              stage.status === 'active' ? 'bg-marmol-navy text-marmol-gold' : 
+                                              'bg-gray-100 text-gray-400'}`}
+                                        >
+                                            {stage.status === 'completed' ? '✓' : index + 1}
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-bold text-marmol-navy">{stage.name}</h3>
+                                            <span class={`text-xs uppercase tracking-widest font-bold block mt-1
+                                                ${stage.status === 'completed' ? 'text-green-600' : 
+                                                  stage.status === 'active' ? 'text-marmol-gold' : 
+                                                  'text-gray-400'}`}
+                                            >
+                                                {stage.status === 'completed' ? 'Завершено' : 
+                                                 stage.status === 'active' ? 'В работе' : 
+                                                 'Ожидает'}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="text-right shrink-0">
+                                        <span class="text-2xl font-bold text-gray-300">{stage.progress}%</span>
+                                    </div>
+                                </div>
+
+                                {stage.status !== 'pending' && stage.logs.length > 0 && (
+                                    <div class="p-6 md:p-8 bg-gray-50/50 rounded-b-2xl">
+                                        <div class="relative border-l-2 border-gray-200 ml-3 pl-6 space-y-6">
+                                            {stage.logs.map((log) => (
+                                                <div class="relative">
+                                                    <div class="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full border-2 border-white bg-gray-300"></div>
+                                                    
+                                                    <span class="text-[11px] font-bold text-gray-400 uppercase tracking-widest font-mono">
+                                                        [{log.date}]
+                                                    </span>
+                                                    <p class="mt-1 text-sm text-gray-600 leading-relaxed">
+                                                        {log.message}
+                                                    </p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+
+                    {projectPhotos.length > 0 && (
+                        <div class="mt-16">
+                            <h3 class="text-xl font-bold text-marmol-navy mb-6">Фотоотчет с площадки</h3>
+                            <LiveDiaryGallery client:load photos={projectPhotos} />
+                        </div>
+                    )}
+
+                    <div class="mt-12 bg-gray-50 border border-gray-200 rounded-2xl p-8 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
+                        <div>
+                            <h4 class="text-lg font-bold text-marmol-navy mb-2">Интересуют другие объекты?</h4>
+                            <p class="text-sm text-gray-500">
+                                Посмотрите общую ленту фотографий с процессов строительства всех наших текущих проектов.
+                            </p>
+                        </div>
+                        <a href="/diary" class="shrink-0 bg-white border border-gray-200 text-marmol-navy hover:text-marmol-gold transition-colors px-6 py-3 text-xs font-bold uppercase tracking-widest rounded-sm shadow-sm">
+                            Общий дневник →
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-4">
+                    <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 mb-8 sticky top-32">
+                        <div class="h-64 overflow-hidden relative">
+                            <img 
+                                src={data.heroImage} 
+                                alt={data.title} 
+                                class="w-full h-full object-cover" 
+                                fetchpriority="high" 
+                                decoding="sync"
+                                class="w-full h-full object-cover" />
+                            <div class="absolute top-4 right-4 bg-white/90 backdrop-blur text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded text-marmol-navy">
+                                Статус-кадр
+                            </div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <h4 class="font-sans font-bold text-marmol-navy text-sm uppercase tracking-widest mb-4">Спецификация объекта</h4>
+                            <ul class="space-y-4">
+                                {data.currentSpecs.map(spec => (
+                                    <li class="flex justify-between items-start border-b border-gray-50 pb-3 last:border-0 last:pb-0">
+                                        <span class="text-xs text-gray-500">{spec.label}</span>
+                                        <span class="text-xs font-bold text-marmol-navy text-right max-w-[60%]">{spec.value}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        
+                        {data.status === 'active' && (
+                            <div class="p-6 bg-gray-50 border-t border-gray-100 text-center">
+                                <p class="text-xs text-gray-500 mb-4">Хотите посмотреть на качество кладки вживую?</p>
+                                <button id="visit-object-btn" data-project={data.title} data-action="visit" class="w-full block bg-marmol-navy hover:bg-marmol-gold text-white transition-colors py-4 text-xs font-bold uppercase tracking-widest rounded-sm cursor-pointer">
+                                    Записаться на просмотр
+                                </button>
+                            </div>
+                        )}
+                        
+                        {data.status === 'completed' && (
+                            <div class="p-6 bg-gray-50 border-t border-gray-100 text-center">
+                                <p class="text-xs text-gray-500 mb-4">Нравится этот проект? Давайте обсудим строительство вашего дома.</p>
+                                <button id="visit-object-btn" data-project={data.title} data-action="consult" class="w-full block bg-marmol-navy hover:bg-marmol-gold text-white transition-colors py-4 text-xs font-bold uppercase tracking-widest rounded-sm cursor-pointer">
+                                    Обсудить проект
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</Layout>
+
+<script>
+    import { isModalOpen, formComment } from '../../store/modalStore';
+
+    function initVisitButton() {
+        const btn = document.getElementById('visit-object-btn');
+        
+        if (btn) {
+            btn.replaceWith(btn.cloneNode(true));
+            const newBtn = document.getElementById('visit-object-btn');
+            
+            newBtn?.addEventListener('click', (e) => {
+                // @ts-ignore
+                const projectName = e.currentTarget.getAttribute('data-project');
+                // @ts-ignore
+                const actionType = e.currentTarget.getAttribute('data-action');
+                
+                // Формируем текст сообщения в зависимости от типа действия
+                let message = `Здравствуйте! Хочу посмотреть качество работ вживую, объект: ${projectName}.`;
+                
+                if (actionType === 'consult') {
+                    message = `Здравствуйте! Меня заинтересовал завершенный проект "${projectName}". Хочу обсудить строительство похожего дома.`;
+                }
+                
+                formComment.set(message);
+                isModalOpen.set(true);
+            });
+        }
+    }
+
+    document.addEventListener('astro:page-load', initVisitButton);
+    initVisitButton();
+</script>

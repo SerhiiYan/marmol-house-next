@@ -51,11 +51,9 @@ const pageDescription = "Страница не найдена или была у
 
 <style>
     h1 {
-        /* Добавили фоллбэк: если сборщик не найдет переменную, он возьмет HEX, и билд не упадет */
-        -webkit-text-stroke: 2px theme('colors.marmol-gold', #D4AF37);
-        
-        /* Для тени то же самое */
-        text-shadow: 0 0 20px theme('colors.marmol-gold / 30%', rgba(212, 175, 55, 0.3));
+        /* Используем чистые цвета, браузер это гарантированно прочитает */
+        -webkit-text-stroke: 2px #D4AF37;
+        text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
     }
     
     @keyframes pulseSlow {

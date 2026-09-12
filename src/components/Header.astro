@@ -83,15 +83,21 @@ const links = [
                     </div>
 
                     <div class="col-span-4 flex flex-col justify-between">
-                        <div class="mt-6 bg-gray-50 border border-gray-100 rounded-lg p-4">
-                            <h4 class="font-sans font-bold text-marmol-navy text-sm mb-1">Консультация</h4>
-                            <p class="text-gray-500 text-[11px] mb-3 leading-tight">Подберем решения под ваш участок и бюджет.</p>
-                            <button id="menu-meeting-btn" class="text-marmol-gold font-bold uppercase tracking-wider text-[10px] border-b border-marmol-gold/30 hover:border-marmol-gold pb-0.5 transition-colors cursor-pointer text-left">
-                                Записаться в офис →
-                            </button>
+                        <div class="mt-6 bg-gray-50 border border-gray-100 rounded-lg p-4 hover:shadow-md transition-shadow">
+                            <div class="flex items-center justify-between mb-1">
+                                <h4 class="font-sans font-bold text-marmol-navy text-sm">Карта строек</h4>
+                                <!-- Пульсирующий индикатор Live -->
+                                <span class="relative flex h-2 w-2">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                                </span>
+                            </div>
+                            <p class="text-gray-500 text-[11px] mb-3 leading-tight">Следите за этапами строительства на наших объектах в реальном времени.</p>
+                            <a href="/live" class="text-marmol-gold font-bold uppercase tracking-wider text-[10px] border-b border-marmol-gold/30 hover:border-marmol-gold pb-0.5 transition-colors inline-block">
+                                Смотреть объекты →
+                            </a>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -149,16 +155,34 @@ const links = [
 
             <!-- Процесс (Live-стройка) -->
             <div class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 mt-6">Процесс</div>
-            <div class="flex flex-col space-y-3 pl-4 border-l-2 border-gray-100">
+
+            <!-- 1. Твоя оригинальная ссылка никуда не девается -->
+            <div class="flex flex-col space-y-3 pl-4 border-l-2 border-gray-100 mb-4">
                 <a href="/diary" class="text-base text-gray-700 font-medium flex items-center gap-2">
-                    Live-стройка
-                    <!-- Пульсирующий индикатор -->
-                    <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-                    </span>
+                    Дневник стройки
                 </a>
             </div>
+
+            <!-- 2. И под ней добавляем новую страницу с картой -->
+            <a href="/live" class="relative bg-gray-50 border border-gray-100 rounded-xl p-4 flex items-center justify-between overflow-hidden">
+                <div class="absolute inset-0 opacity-[0.04]" 
+                     style="background-image: radial-gradient(#1e293b 1px, transparent 1px); background-size: 16px 16px;">
+                </div>
+
+                <div class="relative z-10">
+                    <span class="text-base font-bold text-marmol-navy block mb-0.5">Карта строек</span>
+                    <span class="text-[11px] text-gray-500 block">Объекты в реальном времени</span>
+                </div>
+
+                <div class="relative z-10 flex flex-col items-center gap-1">
+                    <div class="flex items-center justify-center bg-white border border-gray-100 w-8 h-8 rounded-full shadow-sm">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                        </span>
+                    </div>
+                </div>
+            </a>
 
         </div>
         

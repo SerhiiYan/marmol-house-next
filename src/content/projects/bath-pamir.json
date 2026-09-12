@@ -7,6 +7,7 @@
   "style": "Скандинавский",
   "priceCategory": "economy",
   "fixPrice": 94000,
+  "terraceArea": 10,
   "availableTech": [
     "frame",
     "block"
@@ -75,7 +76,7 @@
     "bedrooms": 1,
     "bathrooms": 1
   },
-  "area": 65,
-  "livingArea": 65,
+  "area": 54,
+  "livingArea": 54,
   "dims": "8,5x8,5 м"
 }

@@ -1,6 +1,7 @@
 ---
 // src/pages/real-estate/[slug].astro
 import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content'; // Импортируем тип!
 import Layout from '../../layouts/Layout.astro';
 
 // Компоненты
@@ -15,17 +16,24 @@ export async function getStaticPaths() {
   }));
 }
 
-const { item } = Astro.props;
+// Типизируем пропсы, чтобы редактор знал структуру item
+interface Props {
+  item: CollectionEntry<'real-estate'>;
+}
+
+const { item } = Astro.props as Props;
 const data = item.data;
 
-// Хелперы
-const formatPrice = (p) => p.toLocaleString('ru-RU');
-const getStatusText = (status) => {
+// Хелперы: явно указываем типы
+const formatPrice = (p: number) => p.toLocaleString('ru-RU');
+
+type StatusType = 'available' | 'reserved' | 'sold';
+
+const getStatusText = (status: StatusType) => {
     switch (status) {
         case 'available': return { text: 'В продаже', color: 'bg-green-500' };
         case 'reserved': return { text: 'Забронирован', color: 'bg-orange-400' };
         case 'sold': return { text: 'Продан', color: 'bg-gray-400' };
-        default: return { text: 'В продаже', color: 'bg-green-500' };
     }
 };
 const statusInfo = getStatusText(data.status);
@@ -49,17 +57,14 @@ const schema = {
     "@type": "Offer",
     "price": data.price,
     "priceCurrency": data.currency || "BYN",
-    "availability": data.status === "available" ? "https://schema.org/InStock" : "https://schema.org/SoldOut",
+    "availability": data.status === "sold" ? "https://schema.org/SoldOut" : "https://schema.org/InStock",
     "url": `https://marmolhouse.by/real-estate/${item.id}`
   }
 };
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
-  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
-
+<Layout title={pageTitle} description={pageDescription} schema={schema}>
   <main class="bg-gray-50 pb-24">
-    
     <div class="relative h-[60vh] min-h-[400px] w-full overflow-hidden">
         <img 
             src={data.mainImage} 
@@ -152,7 +157,7 @@ const schema = {
                                     </li>
                                 </ul>
                             </div>
-                            <PlanViewer image={data.plans?.[0]} client:visible />
+                            <PlanViewer image={data.plans?.[0]} images={data.plans || []} client:visible />
                         </div>
                     </section>
                 )}
@@ -276,8 +281,8 @@ const schema = {
 
     // Вешаем один глобальный слушатель
     document.addEventListener('click', (e) => {
-        // @ts-ignore - игнорируем ошибку TS для простоты
-        const target = e.target.closest('#sidebar-cta-btn, #mobile-cta-btn');
+        // Честно говорим TS, что e.target - это элемент
+        const target = (e.target as HTMLElement).closest('#sidebar-cta-btn, #mobile-cta-btn');
         
         if (target) {
             const titleElement = document.querySelector('h1');

@@ -6,6 +6,7 @@
   "purpose": "business",
   "style": "Классический A-frame",
   "priceCategory": "economy",
+  "terraceArea": 12,
   "availableTech": [
     "frame"
   ],
@@ -38,6 +39,10 @@
       "area": 13
     },
     {
+      "name": "Терраса",
+      "area": 12
+    },
+    {
       "name": "Гардеробная",
       "area": 5
     },
@@ -52,7 +57,7 @@
     "bedrooms": 2,
     "bathrooms": 1
   },
-  "area": 104,
-  "livingArea": 104,
+  "area": 75,
+  "livingArea": 75,
   "dims": "6x10 м"
 }

@@ -25,7 +25,7 @@ const projectsCollection = defineCollection({
     area: z.number(),
     livingArea: z.number().optional(),
     dims: z.string().optional(),
-    
+    terracePrice: z.number().optional(),
     // МЕДИА (Важное изменение тут!)
     mainImage: z.string(), // <--- Теперь это обязательное поле для обложки
     gallery: z.array(z.string()).optional(),
@@ -36,7 +36,9 @@ const projectsCollection = defineCollection({
     description: z.string(),
     fullDescription: z.string().optional(),
     features: z.array(z.string()).optional(),
-    
+    terraceArea: z.number().optional(),
+    balconyArea: z.number().optional(),
+    tech: z.string().optional(),
     specs: z.object({
       floors: z.number().default(1),
       rooms: z.number().default(1),
@@ -142,6 +144,41 @@ const portfolioCollection = defineCollection({
   }),
 });
 
+const activeProjectsCollection = defineCollection({
+  type: 'data', // Это JSON
+  schema: z.object({
+    title: z.string(),
+    location: z.string(),
+    coordinates: z.array(z.number()).length(2),
+    globalProgress: z.number().min(0).max(100),
+    status: z.enum(['active', 'completed', 'paused']).default('active'),
+    tech: z.enum(['frame', 'block']),
+    heroImage: z.string(),
+    startDate: z.string(),
+    estimatedCompletion: z.string(),
+    stages: z.array(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+        status: z.enum(['completed', 'active', 'pending']),
+        progress: z.number().min(0).max(100),
+        logs: z.array(
+          z.object({
+            date: z.string(),
+            message: z.string(),
+          })
+        ),
+      })
+    ),
+    currentSpecs: z.array(
+      z.object({
+        label: z.string(),
+        value: z.string(),
+      })
+    ),
+  })
+});
+
 // 4. НОВАЯ коллекция: БЛОГ / СТАТЬИ / ВИДЕО
 const blogCollection = defineCollection({
   type: 'content', // ВАЖНО! Для блога используем 'content' (MD/MDX файлы), а не 'data'
@@ -170,5 +207,6 @@ export const collections = {
   'projects': projectsCollection,
   'real-estate': realEstateCollection,
   'portfolio': portfolioCollection,
+  'active_projects': activeProjectsCollection,
   'blog': blogCollection,
 };

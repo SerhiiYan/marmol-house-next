@@ -7,14 +7,24 @@ import rawDiaryData from '../../data/diary.json';
 const pageTitle = "Ход строительства | Marmol House";
 const pageDescription = "Следите за ходом строительства объектов Marmol House в реальном времени. Хроника скрытых работ, фундаментов и фасадов.";
 
-// Безопасное копирование и разворот массива (молодец, что использовал spread оператор [...])
 const diaryEntries = [...rawDiaryData].reverse();
 
 const schema = {
   "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  "name": "Ход строительства Marmol House",
-  "description": pageDescription
+  "@type": "Blog",
+  "name": "Дневник строительства Marmol House",
+  "description": pageDescription,
+  "blogPost": diaryEntries.slice(0, 10).map((entry) => ({
+    "@type": "BlogPosting",
+    "headline": `${entry.location}: работы от ${entry.date}`,
+    "articleBody": entry.text,
+    "datePublished": entry.date,
+    "image": entry.image ? `https://marmolhouse.by${entry.image}` : undefined,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Marmol House"
+    }
+  }))
 };
 ---
 
@@ -56,7 +66,7 @@ const schema = {
 
         {/* Вызываем наш интерактивный компонент */}
         <div class="animate-fade-in">
-            <DiaryList items={diaryEntries} client:load />
+            <DiaryList items={diaryEntries} client:visible />
         </div>
 
     </section>

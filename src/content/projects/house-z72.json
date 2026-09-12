@@ -6,6 +6,7 @@
   "purpose": "living",
   "style": "Скандинавский",
   "priceCategory": "economy",
+  "terraceArea": 14,
   "availableTech": [
     "frame",
     "block"
@@ -45,6 +46,10 @@
     {
       "name": "Ванная комната",
       "area": 7
+    },
+    {
+      "name": "Терраса",
+      "area": 14
     },
     {
       "name": "Спальня",

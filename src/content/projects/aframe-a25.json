@@ -6,13 +6,15 @@
   "purpose": "business",
   "style": "Современный A-frame",
   "priceCategory": "economy",
+  "terraceArea": 14,
+  "balconyArea": 12,
   "availableTech": [
     "frame"
   ],
-  "mainImage": "/projects/aframe/a25/1.jpg",
+  "mainImage": "/projects/aframe/a25/1.webp",
   "gallery": [
-    "/projects/aframe/a25/1.jpg",
-    "/projects/aframe/a25/2.jpg",
+    "/projects/aframe/a25/1.webp",
+    "/projects/aframe/a25/2.webp",
     "/projects/aframe/a25/visual-plan2.webp",
     "/projects/aframe/a25/visual-plan.webp"
   ],
@@ -64,7 +66,7 @@
       "area": 2
     },
     {
-      "name": "Большая терраса",
+      "name": "Терраса",
       "area": 14
     }
   ],
@@ -74,7 +76,7 @@
     "bedrooms": 4,
     "bathrooms": 3
   },
-  "area": 133,
-  "livingArea": 133,
+  "area": 122,
+  "livingArea": 122,
   "dims": "12x11 м"
 }

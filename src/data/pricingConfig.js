@@ -2,7 +2,11 @@
 
 export const globalPricing = {
   currency: 'BYN',
-  
+  terracePrices: {
+    coveredTerracePricePerMeter: 852, 
+    openTerracePricePerMeter: 495,     
+  },
+  balconyPricePerMeter: 1645,
   // Пакеты услуг (Описание + Базовая цена за м²)
   packages: {
     // Пакет 1: Только коробка (Блоки)

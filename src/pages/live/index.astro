@@ -1,0 +1,187 @@
+---
+// src/pages/live.astro
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import LiveMap from '../../components/project/LiveMap.jsx';
+
+// ИМПОРТИРУЕМ ТОЛЬКО НОВЫЙ КОМПОНЕНТ (карточки импортируются уже внутри него)
+import ExpandableProjectList from '../../components/project/ExpandableProjectList.jsx';
+
+// 1. Получаем ВСЕ проекты
+const allProjects = await getCollection('active_projects');
+
+// 2. СОРТИРОВКА: Новые проекты всегда сверху (сравниваем даты старта)
+const sortedProjects = [...allProjects].sort((a, b) => {
+    const dateA = a.data.startDate ? new Date(a.data.startDate).getTime() : 0;
+    const dateB = b.data.startDate ? new Date(b.data.startDate).getTime() : 0;
+    return dateB - dateA;
+});
+
+// 3. ФИЛЬТРАЦИЯ НА ГРУППЫ
+const inProgressProjects = sortedProjects.filter(p => p.data.status === 'active' || p.data.status === 'paused');
+const completedProjects = sortedProjects.filter(p => p.data.status === 'completed');
+
+const pageTitle = "Live-стройка: Карта объектов в реальном времени | Marmol House";
+const pageDescription = "Следите за процессом возведения домов в Гродно и районе. Карта текущих площадок, процент готовности и технический надзор.";
+
+// ДАННЫЕ ДЛЯ FAQ (SEO блок)
+const faqItems = [
+    {
+        question: "Можно ли посетить строящийся объект в Гродно?",
+        answer: "Да, мы проводим показы текущих объектов. Вы сможете вживую оценить качество кладки газосиликатных блоков и сборку каркаса, а главное — прямо на стройплощадке задать любые интересующие вас вопросы по технологиям, материалам или срокам и получить на них развернутые ответы. Для записи просто выберите активный объект на карте и оставьте заявку."
+    },
+    {
+        question: "Как часто обновляется журнал производства работ?",
+        answer: "Фотоотчеты и статус готовности обновляются регулярно, по мере завершения строительных этапов. Мы ведем этот раздел сайта, чтобы вы всегда видели честную и максимально актуальную картину возведения каждого дома."
+    },
+    {
+        question: "В каких районах вы ведете строительство?",
+        answer: "Мы возводим дома по всей территории Республики Беларусь. Наша основная производственная база и большинство текущих объектов (представленных на карте) находятся в Гродно и области. В связи с расширением географии, в ближайшее время мы открываем официальное представительство в Минске и активно принимаем заказы на строительство в столичном регионе и других областях."
+    }
+];
+
+const schema = [
+    {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "Строящиеся объекты Marmol House",
+        "description": pageDescription,
+        "itemListElement": sortedProjects.map((project, index) => {
+            const activeStage = project.data.stages.find(stage => stage.status === 'active');
+            const stageName = activeStage ? activeStage.name : (project.data.status === 'completed' ? 'Объект сдан' : 'Строительство');
+
+            return {
+                "@type": "ListItem",
+                "position": index + 1,
+                "item": {
+                    "@type": "Place",
+                    "name": project.data.title,
+                    "description": `Текущий этап: ${stageName}. Готовность: ${project.data.globalProgress}%`,
+                    "url": `https://marmolhouse.by/live/${project.id}`,
+                    "geo": {
+                        "@type": "GeoCoordinates",
+                        "latitude": project.data.coordinates[0],
+                        "longitude": project.data.coordinates[1]
+                    },
+                    "address": {
+                        "@type": "PostalAddress",
+                        "addressLocality": "Гродненский район",
+                        "streetAddress": project.data.location,
+                        "addressCountry": "BY"
+                    }
+                }
+            };
+        })
+    },
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": faqItems.map(item => ({
+            "@type": "Question",
+            "name": item.question,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": item.answer
+            }
+        }))
+    }
+];
+---
+
+<Layout title={pageTitle} description={pageDescription} schema={schema}>
+    <main class="bg-gray-50 min-h-screen pt-32 pb-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            
+            <div class="mb-10 max-w-3xl animate-fade-in">
+                <h1 class="text-4xl md:text-5xl font-sans font-bold text-marmol-navy mb-6">
+                    <span class="block text-lg text-marmol-gold font-normal mb-2 tracking-normal uppercase">Live-режим</span>
+                    Карта строек
+                </h1>
+                <p class="text-gray-500 text-lg leading-relaxed font-light">
+                    Следите за архитектурными проектами в процессе их реализации. Мы показываем реальную географию наших работ и этапы возведения.
+                </p>
+            </div>
+
+            <!-- Интерактивная карта -->
+            <div class="mb-16 animate-fade-in">
+                <LiveMap projects={sortedProjects} client:only="react" />
+            </div>
+
+            <!-- СЕКЦИЯ 1: Объекты в работе -->
+            <div class="mt-12">
+                <h2 class="text-2xl font-bold text-marmol-navy mb-8 border-b border-gray-200 pb-4 flex items-center gap-3">
+                    <span class="w-2.5 h-2.5 rounded-full bg-marmol-gold animate-pulse"></span>
+                    Объекты в работе
+                    <span class="text-sm font-normal text-gray-400 bg-gray-100 px-3 py-1 rounded-full ml-2">
+                        {inProgressProjects.length}
+                    </span>
+                </h2>
+                
+                {/* 
+                  ЗДЕСЬ МАГИЯ: Используем client:load, чтобы кнопка работала в браузере.
+                  type="active" отрисует большие карточки.
+                  initialCount={5} покажет 5 штук и кнопку для остальных.
+                */}
+                <ExpandableProjectList 
+                    client:load 
+                    projects={inProgressProjects} 
+                    type="active" 
+                    initialCount={5} 
+                />
+            </div>
+
+            <!-- СЕКЦИЯ 2: Сданные объекты -->
+            {completedProjects.length > 0 && (
+                <div class="mt-24">
+                    <h2 class="text-2xl font-bold text-gray-400 mb-8 border-b border-gray-200 pb-4 flex items-center gap-3">
+                        <span class="w-2.5 h-2.5 rounded-full bg-gray-300"></span>
+                        Успешно сданы в эксплуатацию
+                        <span class="text-sm font-normal text-gray-400 bg-gray-100 px-3 py-1 rounded-full ml-2">
+                            {completedProjects.length}
+                        </span>
+                    </h2>
+                    <ExpandableProjectList 
+                        client:load 
+                        projects={completedProjects} 
+                        type="completed" 
+                        initialCount={6} 
+                    />
+                </div>
+            )}
+            <!-- СЕКЦИЯ 3: SEO и FAQ (Вопросы и ответы) -->
+            <div class="mt-32 pt-16 border-t border-gray-200">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                    <div class="lg:col-span-5">
+                        <h2 class="text-3xl font-bold text-marmol-navy mb-6">Прозрачность на каждом этапе</h2>
+                        <div class="prose prose-slate text-gray-500 text-sm leading-relaxed">
+                            <p>
+                                Страница «Live-стройка» — это наш инструмент открытости. Мы не скрываем процессы за красивыми рендерами, а показываем реальную работу на земле. 
+                            </p>
+                            <p>
+                                Каждая карточка объекта содержит детализированный технический паспорт, процент общей готовности и хронологию производства работ. Это позволяет нашим клиентам осуществлять независимый контроль, а будущим заказчикам — убедиться в соблюдении строительных норм (СНиП) при возведении фундаментов, стен и кровельных систем в Гродненском и Минском регионе.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="lg:col-span-7">
+                        <div class="space-y-4">
+                            {faqItems.map((item) => (
+                                <details class="group bg-white border border-gray-100 rounded-xl shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                                    <summary class="flex items-center justify-between p-6 cursor-pointer text-marmol-navy font-bold hover:text-marmol-gold transition-colors">
+                                        <span>{item.question}</span>
+                                        <span class="transition group-open:rotate-180 text-gray-400">
+                                            <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
+                                        </span>
+                                    </summary>
+                                    <div class="px-6 pb-6 text-sm text-gray-500 leading-relaxed border-t border-gray-50 pt-4">
+                                        {item.answer}
+                                    </div>
+                                </details>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</Layout>

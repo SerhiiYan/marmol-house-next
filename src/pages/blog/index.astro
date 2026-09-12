@@ -3,16 +3,13 @@
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
-// 1. Получаем и сортируем посты
 const allPosts = await getCollection('blog');
 const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-// 2. Разделяем на Hero (первый пост) и остальные
 const heroPost = sortedPosts[0];
 const gridPosts = sortedPosts.slice(1);
 
-// Словарь для перевода категорий
-const categoryLabels = {
+const categoryLabels: Record<string, string> = {
     'technology': 'Технологии',
     'review': 'Обзор',
     'tips': 'Советы',
@@ -20,20 +17,19 @@ const categoryLabels = {
     'finance': 'Финансы'
 };
 
-// МИКРООПТИМИЗАЦИЯ: Создаем форматтер один раз, а не на каждый пост в цикле
 const dateFormatter = new Intl.DateTimeFormat('ru-RU', {
     day: 'numeric',
     month: 'long',
     year: 'numeric'
 });
 
-const formatDate = (date) => dateFormatter.format(date);
+const formatDate = (date: Date) => dateFormatter.format(date);
 
-// SEO Мета-данные
 const pageTitle = "Блог и видео | Marmol House";
 const pageDescription = "Журнал о строительстве домов в Беларуси. Полезные статьи, обзоры технологий, видео с объектов и советы архитектора.";
 
-// 3. ИСПРАВЛЕНИЕ БАГА: Добавляем саму Schema.org
+const siteUrl = Astro.site ?? 'https://marmolhouse.by';
+
 const schema = {
   "@context": "https://schema.org",
   "@type": "Blog",
@@ -42,18 +38,22 @@ const schema = {
   "publisher": {
     "@type": "ConstructionBusiness",
     "name": "Marmol House"
-  }
+  },
+  "blogPost": sortedPosts.map((post) => ({
+    "@type": "BlogPosting",
+    "headline": post.data.title,
+    "description": post.data.seo?.description || "",
+    "datePublished": post.data.date.toISOString(),
+    "url": new URL(`/blog/${post.slug}`, siteUrl).href,
+    "image": post.data.mainImage ? new URL(post.data.mainImage, siteUrl).href : undefined
+  }))
 };
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
-    <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
-
+<Layout title={pageTitle} description={pageDescription} schema={schema}>
     <main class="bg-gray-50 min-h-screen pt-28 pb-24">
-        
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            {/* ШАПКА СТРАНИЦЫ */}
             <div class="mb-12 md:mb-16">
                 <div class="inline-block bg-marmol-gold text-marmol-navy text-[10px] font-bold uppercase tracking-widest px-3 py-1 mb-4 rounded-sm shadow-sm">
                     Медиацентр
@@ -62,30 +62,28 @@ const schema = {
                     Блог о строительстве
                 </h1>
                 <p class="text-gray-500 text-lg max-w-2xl font-light">
-                    Делимся опытом, разбираем технологии и показываем процесс возведения надежных домов изнутри.
+                    Инженерный журнал Marmol House: практические разборы узлов, сметы на строительство каркасных и блочных домов в Гродненской и Минской областях, нормативная база СНБ и практический опыт авторского технадзора.
                 </p>
             </div>
 
-            {/* ЕСЛИ ПОСТОВ НЕТ ВООБЩЕ */}
             {sortedPosts.length === 0 && (
                 <div class="py-20 text-center border-2 border-dashed border-gray-200 rounded-2xl">
                     <p class="text-gray-400 text-lg">Здесь скоро появятся наши первые материалы.</p>
                 </div>
             )}
 
-            {/* 1. HERO БЛОК (Самый свежий пост) */}
             {heroPost && (
                 <a href={`/blog/${heroPost.slug}`} class="group block mb-16 md:mb-24">
                     <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col md:flex-row transition-shadow hover:shadow-lg">
                         
-                        {/* Картинка Hero */}
                         <div class="w-full md:w-3/5 relative aspect-video md:aspect-auto overflow-hidden">
                             <img 
                                 src={heroPost.data.mainImage} 
                                 alt={heroPost.data.title} 
+                                loading="eager"
+                                fetchpriority="high"
                                 class="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105"
                             />
-                            {/* Индикатор ВИДЕО для Hero */}
                             {heroPost.data.youtubeVideoId && (
                                 <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors flex items-center justify-center">
                                     <div class="w-16 h-16 bg-marmol-gold rounded-full flex items-center justify-center shadow-2xl scale-95 group-hover:scale-110 transition-transform">
@@ -95,11 +93,9 @@ const schema = {
                             )}
                         </div>
 
-                        {/* Текст Hero */}
                         <div class="w-full md:w-2/5 p-8 md:p-12 flex flex-col justify-center relative">
                             <div class="flex items-center gap-4 mb-4">
                                 <span class="text-xs font-bold uppercase tracking-widest text-marmol-gold">
-                                    {/* @ts-ignore */}
                                     {categoryLabels[heroPost.data.category] || heroPost.data.category}
                                 </span>
                                 <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
@@ -112,7 +108,6 @@ const schema = {
                                 {heroPost.data.title}
                             </h2>
                             
-                            {/* Выводим SEO description как превью текста */}
                             {heroPost.data.seo?.description && (
                                 <p class="text-gray-500 line-clamp-3 mb-8">
                                     {heroPost.data.seo.description}
@@ -128,20 +123,19 @@ const schema = {
                 </a>
             )}
 
-            {/* 2. СЕТКА ОСТАЛЬНЫХ ПОСТОВ */}
             {gridPosts.length > 0 && (
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {gridPosts.map((post) => (
                         <a href={`/blog/${post.slug}`} class="group bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col hover:shadow-md transition-shadow">
                             
-                            {/* Обложка */}
                             <div class="relative aspect-[4/3] overflow-hidden">
                                 <img 
                                     src={post.data.mainImage} 
                                     alt={post.data.title} 
+                                    loading="lazy"
+                                    decoding="async"
                                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                 />
-                                {/* Индикатор ВИДЕО для сетки */}
                                 {post.data.youtubeVideoId && (
                                     <div class="absolute top-4 left-4 bg-white/90 backdrop-blur text-marmol-navy text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-md shadow-sm flex items-center gap-2">
                                         <svg class="w-4 h-4 text-marmol-gold" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
@@ -150,11 +144,9 @@ const schema = {
                                 )}
                             </div>
 
-                            {/* Контент */}
                             <div class="p-6 flex flex-col flex-grow">
                                 <div class="flex items-center gap-3 mb-3">
                                     <span class="text-[10px] font-bold uppercase tracking-widest text-marmol-gold">
-                                        {/* @ts-ignore */}
                                         {categoryLabels[post.data.category] || post.data.category}
                                     </span>
                                     <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
@@ -182,7 +174,6 @@ const schema = {
                     ))}
                 </div>
             )}
-
         </div>
     </main>
 </Layout>

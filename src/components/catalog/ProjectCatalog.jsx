@@ -4,7 +4,8 @@ import { globalPricing } from '../../data/pricingConfig';
 
 const formatPrice = (p) => p.toLocaleString('ru-RU');
 
-export default function ProjectCatalog({ allProjects }) {
+/** @param {{ allProjects: any[] }} props */
+export default function ProjectCatalog({ allProjects = [] }) {
   
   // СОСТОЯНИЕ
   const [activeCategory, setActiveCategory] = useState('Все');
@@ -37,7 +38,7 @@ export default function ProjectCatalog({ allProjects }) {
     const newUrl = queryString 
         ? `${window.location.pathname}?${queryString}` 
         : window.location.pathname;
-    window.history.replaceState(null, '', newUrl);
+    window.history.replaceState(window.history.state, '', newUrl);
   }, [activeCategory, activeTech, activeArea, activeRooms]);
 
   // === ИСПРАВЛЕНИЕ СКРОЛЛА НА МОБИЛЬНЫХ ===
@@ -335,7 +336,7 @@ export default function ProjectCatalog({ allProjects }) {
 
       {/* --- СЕТКА РЕЗУЛЬТАТОВ --- */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12 mt-8">
-        {visibleProjects.map((project) => {
+        {visibleProjects.map((project, index) => {
             const data = project.data;
             const categoryKey = data.priceCategory || 'economy';
             const price = globalPricing.packages[categoryKey]?.basePricePerMeter || 0;
@@ -344,7 +345,7 @@ export default function ProjectCatalog({ allProjects }) {
             return (
                 <a key={project.id} href={`/projects/${project.id}`} className="group block bg-white rounded-xl overflow-hidden border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                     <div className="relative h-64 overflow-hidden bg-gray-200">
-                        <img src={data.mainImage} alt={data.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                        <img src={data.mainImage} alt={data.title} loading={index < 3 ? "eager" : "lazy"} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                         <div className="absolute top-3 left-3 flex flex-col gap-1">
                             {data.badges && data.badges.map(badge => (
                                 <span key={badge} className="bg-marmol-gold text-marmol-navy text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-sm shadow-sm">{badge}</span>

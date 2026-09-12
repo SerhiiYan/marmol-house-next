@@ -3,31 +3,34 @@
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
+// Вытаскиваем типы прямо из твоих значений Zod
+type StatusType = 'available' | 'reserved' | 'sold';
+type ReadinessType = 'box' | 'white-box' | 'turnkey';
+
 // 1. ПОЛУЧАЕМ ОБЪЕКТЫ
-// Сортируем: сначала 'available', потом 'reserved', в конце 'sold'
 const realEstateItems = (await getCollection('real-estate')).sort((a, b) => {
-  const statusOrder = { available: 1, reserved: 2, sold: 3 };
+  // Теперь TypeScript точно знает, что все ключи на месте
+  const statusOrder: Record<StatusType, number> = { available: 1, reserved: 2, sold: 3 };
   return statusOrder[a.data.status] - statusOrder[b.data.status];
 });
 
 // Хелперы для статусов (Цвета и Текст)
-const getStatusBadge = (status) => {
+const getStatusBadge = (status: StatusType) => {
   switch (status) {
     case 'available': return { text: 'В продаже', class: 'bg-green-500 text-white' };
     case 'reserved': return { text: 'Бронь', class: 'bg-orange-400 text-white' };
     case 'sold': return { text: 'Продано', class: 'bg-gray-400 text-white' };
-    default: return { text: 'В продаже', class: 'bg-green-500 text-white' };
   }
 };
 
 // Хелпер для готовности
-const getReadinessText = (type) => {
-    const map = {
+const getReadinessText = (type: ReadinessType) => {
+    const map: Record<ReadinessType, string> = {
         'box': 'Коробка (Черновая)',
         'white-box': 'Под чистовую',
         'turnkey': 'С ремонтом'
     };
-    return map[type] || type;
+    return map[type];
 };
 
 // SEO Данные
@@ -50,9 +53,7 @@ const schema = {
 };
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
-  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
-
+<Layout title={pageTitle} description={pageDescription} schema={schema}>
   <main class="bg-gray-50 min-h-screen pt-32 pb-24 relative overflow-hidden">
     
     <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-marmol-gold/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/3"></div>

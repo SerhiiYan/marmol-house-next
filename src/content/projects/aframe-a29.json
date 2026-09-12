@@ -6,6 +6,7 @@
   "purpose": "business",
   "style": "Классический A-frame",
   "priceCategory": "economy",
+  "terraceArea": 15,
   "availableTech": [
     "frame"
   ],
@@ -38,6 +39,10 @@
       "area": 12
     },
     {
+      "name": "Терраса",
+      "area": 15
+    },
+    {
       "name": "Второй этаж",
       "area": 32
     }
@@ -48,7 +53,7 @@
     "bedrooms": 2,
     "bathrooms": 1
   },
-  "area": 98,
-  "livingArea": 98,
+  "area": 89,
+  "livingArea": 89,
   "dims": "8x9 м"
 }

@@ -7,6 +7,7 @@
   "style": "Скандинавский",
   "priceCategory": "economy",
   "fixPrice": 78000,
+  "terraceArea": 17,
   "availableTech": [
     "frame",
     "block"
@@ -54,7 +55,7 @@
     },
     {
       "name": "Терраса",
-      "area": 5
+      "area": 17
     }
   ],
   "specs": {
@@ -63,7 +64,7 @@
     "bedrooms": 0,
     "bathrooms": 1
   },
-  "area": 46,
+  "area": 42,
   "livingArea": 42,
   "dims": "6.35x8.55 м"
 }

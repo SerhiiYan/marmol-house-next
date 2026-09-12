@@ -6,6 +6,7 @@
   "purpose": "living",
   "style": "Европейский",
   "priceCategory": "economy",
+  "terraceArea": 11,
   "availableTech": [
     "frame",
     "block"

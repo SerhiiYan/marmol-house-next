@@ -1,7 +1,6 @@
 ---
 // src/pages/contact.astro
 import Layout from '../layouts/Layout.astro';
-import Footer from '../components/Footer.astro';
 
 // Данные
 const contactInfo = {
@@ -12,7 +11,7 @@ const contactInfo = {
   unp: "591536542"
 };
 
-// SEO схемы (оставляем старые, они отличные)
+// SEO схемы
 const localBusinessSchema = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
@@ -31,11 +30,11 @@ const localBusinessSchema = {
     'longitude': 23.8208599
   }
 };
+
+const pageDescription = "Контакты строительной компании Marmol House. Офис в Гродно, работаем по всей Беларуси. Телефоны, email, мессенджеры и схема проезда.";
 ---
 
-<Layout title="Контакты Marmol House | Гродно, Беларусь">
-  <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} slot="head" />
-
+<Layout title="Контакты Marmol House | Гродно, Беларусь" description={pageDescription} schema={localBusinessSchema}>
   <main class="bg-gray-50 min-h-screen pt-32 pb-20">
     
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -105,7 +104,7 @@ const localBusinessSchema = {
         <div class="lg:w-3/5 bg-gray-200 relative min-h-[400px] lg:min-h-auto">
              <iframe
                 title="Карта офиса Marmol House"
-                src="https://maps.google.com/maps?q=г.%20Гродно,%20ул.%20Лелевеля,%2012&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                src={`https://maps.google.com/maps?q=${localBusinessSchema.geo.latitude},${localBusinessSchema.geo.longitude}&t=&z=16&ie=UTF8&iwloc=&output=embed`}
                 width="100%" 
                 height="100%" 
                 style="border:0;" 
@@ -113,7 +112,7 @@ const localBusinessSchema = {
                 loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"
                 class="absolute inset-0 w-full h-full grayscale hover:grayscale-0 transition-all duration-700"
-              />
+              ></iframe>
         </div>
       </div>
 
@@ -124,5 +123,4 @@ const localBusinessSchema = {
 
     </div>
   </main>
-
 </Layout>

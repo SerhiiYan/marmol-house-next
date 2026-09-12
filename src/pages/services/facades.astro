@@ -37,9 +37,11 @@ const schema = {
       "areaServed": ["Гродно", "Минск", "Гродненская область"],
       "description": pageDescription,
       "offers": {
-        "@type": "Offer",
+        "@type": "AggregateOffer",
         "priceCurrency": "BYN",
-        "price": "150" // ЗАМЕНИ НА СВОЮ МИНИМАЛЬНУЮ ЦЕНУ ЗА М2 (или возьми из конфига)
+        "lowPrice": "150", 
+        "offerCount": "1",
+        "description": "Стоимость монтажа премиум-фасада за 1 м²"
       }
     },
     {
@@ -57,11 +59,8 @@ const schema = {
 };
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
-  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
-
+<Layout title={pageTitle} description={pageDescription} schema={schema}>
   <main class="bg-white">
-
     <section class="relative h-screen flex items-center md:items-end pb-0 md:pb-48 bg-marmol-navy overflow-hidden">
         
         <div class="absolute inset-0 z-0 bg-marmol-navy">

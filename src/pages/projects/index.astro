@@ -22,11 +22,14 @@ const schema = {
   "itemListElement": sortedProjects.map((p, index) => ({
     "@type": "ListItem",
     "position": index + 1,
-    "url": `https://marmolhouse.by/projects/${p.slug}`,
+    "url": `https://marmolhouse.by/projects/${p.id}`,
     "name": p.data.title
   }))
 };
-
+const cleanProjects = sortedProjects.map(p => ({
+  id: p.id,
+  data: p.data
+}));
 // Мета-теги
 const pageImage = "/individual-design/completed.webp";
 const pageTitle = "Каталог проектов домов и коттеджей под ключ | Marmol House";
@@ -56,8 +59,7 @@ const pageDescription = "Выбирайте готовые проекты кар
             <strong class="font-medium text-marmol-navy">блоков или по каркасной технологии</strong>.
         </p>
       </div>
-
-      <ProjectCatalog allProjects={sortedProjects} client:load />
+      <ProjectCatalog allProjects={cleanProjects} client:load />
 
     </div>
   </main>

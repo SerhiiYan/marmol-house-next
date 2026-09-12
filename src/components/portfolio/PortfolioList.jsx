@@ -25,8 +25,9 @@ export default function PortfolioList({ items }) {
     'brick': 'Кирпичный дом'
   };
 
-  // 1. Сначала фильтруем массив по категории
-  const filteredItems = items.filter(item => {
+  const safeItems = Array.isArray(items) ? items : [];
+
+  const filteredItems = safeItems.filter(item => {
     if (filter === 'all') return true;
     return item.data.technology === filter;
   });
@@ -99,7 +100,7 @@ export default function PortfolioList({ items }) {
                     <img 
                         src={data.mainImage} 
                         alt={data.title}
-                        loading="lazy"
+                        loading={i === 0 ? "eager" : "lazy"}
                         className="w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-marmol-navy/0 group-hover:bg-marmol-navy/10 transition-colors duration-700"></div>

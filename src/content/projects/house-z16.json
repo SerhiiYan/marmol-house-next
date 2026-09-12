@@ -4,9 +4,10 @@
   "hit": false,
   "category": "house",
   "purpose": "living",
-  "fixPrice": 98000,
+  "fixPrice": 98500,
   "style": "Скандинавский",
   "priceCategory": "economy",
+  "terraceArea": 31,
   "availableTech": [
     "frame",
     "block"

@@ -56,10 +56,11 @@ const schema = {
       "areaServed": ["Гродно", "Минск", "Гродненская область"],
       "description": pageDescription,
       "offers": {
-        "@type": "Offer",
-        "priceCurrency": "BYN",
-        "price": priceBase
-      }
+          "@type": "AggregateOffer",
+          "priceCurrency": "BYN",
+          "lowPrice": priceBase,
+          "offerCount": "1"
+        }
     },
     {
       "@type": "FAQPage",
@@ -76,11 +77,8 @@ const schema = {
 };
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
-  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
-
+<Layout title={pageTitle} description={pageDescription} schema={schema}>
   <main class="bg-white">
-
     <section class="relative h-screen flex items-center md:items-end pb-0 md:pb-48 bg-marmol-navy overflow-hidden">
         
         <div class="absolute inset-0 z-0">
@@ -181,7 +179,7 @@ const schema = {
                                         Стены и Перегородки
                                     </h4>
                                     <ul class="text-sm text-gray-600 space-y-2">
-                                        <li>Стены из газосиликатных блоков</li>
+                                        <li>Стены: <strong>газосиликат 400мм</strong></li>
                                         <li>Перегородки из газоблоков и кирпича</li>
                                         <li>Железобетонные перемычки</li>
                                     </ul>
@@ -446,7 +444,6 @@ const schema = {
 </style>
 
 <script>
-    // Обернули логику в функцию для совместимости с Astro View Transitions
     const initBlockTabs = () => {
         const btnBase = document.getElementById('btn-base');
         const btnFull = document.getElementById('btn-full');
@@ -454,7 +451,7 @@ const schema = {
         const contentFull = document.getElementById('content-full');
         const tabBg = document.getElementById('tab-bg');
 
-        function switchTab(mode) {
+        function switchTab(mode: 'base' | 'full') {
             if (mode === 'base') {
                 if (tabBg) tabBg.style.transform = 'translateX(0)';
                 

@@ -7,6 +7,7 @@
   "style": "Скандинавский",
   "priceCategory": "economy",
   "fixPrice": 153000,
+  "terraceArea": 17,
   "availableTech": [
     "frame",
     "block"

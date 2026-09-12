@@ -6,6 +6,10 @@ import { getCollection } from 'astro:content';
 
 const allProjects = await getCollection('portfolio');
 const sortedProjects = allProjects.sort((a, b) => b.data.specs.year - a.data.specs.year);
+const cleanProjects = sortedProjects.map(project => ({
+    id: project.id,
+    data: project.data
+}));
 
 const pageTitle = "Портфолио построенных домов в Гродно | Marmol House";
 const pageDescription = "Галерея реализованных проектов Marmol House. Посмотрите наши готовые каркасные и блочные дома в Гродно и области.";
@@ -20,7 +24,7 @@ const schema = {
   "itemListElement": sortedProjects.map((item, index) => ({
     "@type": "ListItem",
     "position": index + 1,
-    "url": `https://marmolhouse.by/portfolio/${item.slug}`,
+    "url": `https://marmolhouse.by/portfolio/${item.id}`,
     "name": item.data.title
   }))
 };
@@ -66,8 +70,8 @@ const schema = {
 
         {/* Только готовые проекты */}
         <div class="animate-fade-in">
-            <PortfolioList items={sortedProjects} client:load />
-        </div>
+    <PortfolioList items={cleanProjects} client:visible />
+</div>
 
     </section>
   </main>

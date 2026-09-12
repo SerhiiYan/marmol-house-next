@@ -1,6 +1,6 @@
 ---
 // src/pages/projects/[slug].astro
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import { globalPricing } from '../../data/pricingConfig';
 import ProjectPricing from '../../components/project/ProjectPricing.jsx';
@@ -10,7 +10,10 @@ import ConsultationModal from '../../components/ui/ConsultationModal.jsx';
 import ProjectGallery from '../../components/project/ProjectGallery.jsx';
 import PlanViewer from '../../components/project/PlanViewer.jsx';
 
-// 1. ГЕНЕРАЦИЯ ПУТЕЙ
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
   return projects.map(project => ({
@@ -19,19 +22,16 @@ export async function getStaticPaths() {
   }));
 }
 
-
-const { project } = Astro.props;
+const { project } = Astro.props as Props;
 const data = project.data;
-
-// --- ЛОГИКА ЦЕНЫ ---
-// @ts-ignore
 const categoryKey = data.priceCategory || 'economy';
 const basePrice = globalPricing.packages[categoryKey]?.basePricePerMeter || 0;
 
-// Вот здесь магия: если в JSON есть fixPrice, берем его. Иначе считаем площадь * тариф.
-const totalPrice = data.fixPrice || (data.area * basePrice);
+const balconyCost = data.balconyArea ? (data.balconyArea * globalPricing.balconyPricePerMeter) : 0;
 
-const formatPrice = (p) => p.toLocaleString('ru-RU');
+const totalPrice = data.fixPrice || ((data.area * basePrice) + balconyCost);
+
+const formatPrice = (p: number) => p.toLocaleString('ru-RU');
 
 // --- ЧИСТОЕ SEO ---
 // 1. Формируем Title
@@ -80,7 +80,6 @@ const schema = {
     "url": `https://marmolhouse.by/projects/${project.id}`
   }
 };
-
 ---
 
 <Layout title={pageTitle} description={pageDescription} schema={schema} image={data.mainImage}>
@@ -179,11 +178,22 @@ const schema = {
                                             <span class="font-bold text-marmol-navy">{room.area} м²</span>
                                         </li>
                                     ))}
+                                    
                                     <li class="flex justify-between py-3 bg-gray-50 px-2 rounded mt-2 font-bold text-marmol-navy">
-                                        <span>Общая площадь</span>
+                                        <span>Теплый контур</span>
                                         <span>{data.area} м²</span>
                                     </li>
                                 </ul>
+                                {(data.terraceArea || 0) > 0 && (
+                                 <div class="mt-5 p-4 bg-marmol-gold/10 border border-marmol-gold/20 rounded-xl flex items-start gap-3">
+                                     <svg class="w-5 h-5 text-marmol-gold shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                     </svg>
+                                     <p class="text-xs text-marmol-navy leading-relaxed">
+                                         Площадь террасы <strong>{data.terraceArea} м²</strong> опциональна и зависит от материалов (лиственница, плитка, ДПК).
+                                     </p>
+                                 </div>
+                             )}
                             </div>
 
                             <PlanViewer 
@@ -204,11 +214,14 @@ const schema = {
                 <!-- Здесь мы передаем fixPrice внутрь компонента -->
                 <section id="pricing">
                     <ProjectPricing 
-                        area={data.area} 
+                        area={data.area}
+                        terraceArea={data.terraceArea || 0} 
+                        balconyArea={data.balconyArea || 0}
+                        terracePrice={data.terracePrice || null}
                         projectTitle={data.title} 
                         fixPrice={data.fixPrice} 
                         priceCategory={data.priceCategory}
-                        tech={data.availableTech}  
+                        tech={data.availableTech} 
                         client:visible 
                     />
                 </section>
@@ -222,7 +235,7 @@ const schema = {
                         <p class="text-gray-400 text-xs uppercase tracking-widest mb-2">Ориентировочная цена</p>
                         <div class="flex items-baseline gap-2 mb-1">
                             <span class="text-lg text-marmol-gold font-bold">от</span>
-                            <span class="text-4xl font-bold text-marmol-navy">{formatPrice(totalPrice)}</span>
+                            <span id="sidebar-price" class="text-4xl font-bold text-marmol-navy">{formatPrice(totalPrice)}</span>
                             <span class="text-sm font-bold text-gray-600">{globalPricing.currency}</span>
                         </div>
                         {/* @ts-ignore */}
@@ -260,9 +273,11 @@ const schema = {
     <!-- МОБИЛЬНАЯ ПЛАШКА -->
     <div class="lg:hidden fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 p-4 shadow-[0_-5px_20px_rgba(0,0,0,0.1)] z-40 flex justify-between items-center">
         <div>
-            <p class="text-xs text-gray-400 uppercase">Цена от</p>
-            <p class="text-xl font-bold text-marmol-navy">{formatPrice(totalPrice)} {globalPricing.currency}</p>
-        </div>
+        <p class="text-xs text-gray-400 uppercase">Цена от</p>
+        <p class="text-xl font-bold text-marmol-navy">
+            <span id="mobile-price">{formatPrice(totalPrice)}</span> {globalPricing.currency}
+        </p>
+    </div>
         <button 
             id="mobile-cta-btn" 
             class="bg-marmol-gold text-marmol-navy font-bold text-xs uppercase tracking-wider py-3 px-6 rounded hover:bg-white transition-all shadow-md cursor-pointer"
@@ -277,10 +292,9 @@ const schema = {
 <script>
     import { isModalOpen, formComment } from '../../store/modalStore';
 
-    // Единый глобальный слушатель (паттерн делегирования)
     document.addEventListener('click', (e) => {
-        // @ts-ignore
-        const target = e.target.closest('#sidebar-cta-btn, #mobile-cta-btn');
+        // Убрали @ts-ignore, добавили as HTMLElement
+        const target = (e.target as HTMLElement).closest('#sidebar-cta-btn, #mobile-cta-btn');
         
         if (target) {
             const titleElement = document.querySelector('h1');

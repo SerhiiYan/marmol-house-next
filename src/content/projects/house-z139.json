@@ -7,6 +7,7 @@
   "purpose": "living",
   "style": "Европейский",
   "priceCategory": "economy",
+  "terraceArea": 23,
   "availableTech": [
     "frame",
     "block"
@@ -70,7 +71,7 @@
     "bedrooms": 3,
     "bathrooms": 1
   },
-  "area": 60,
-  "livingArea": 60,
+  "area": 61,
+  "livingArea": 61,
   "dims": "7x15 м"
 }

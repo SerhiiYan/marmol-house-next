@@ -72,8 +72,7 @@ const schema = {
 };
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
-  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
+<Layout title={pageTitle} description={pageDescription} schema={schema}>
 
   <main class="bg-white">
 
@@ -458,7 +457,7 @@ const schema = {
         const contentPrem = document.getElementById('content-prem');
         const tabBg = document.getElementById('tab-bg');
 
-        function switchTab(mode) {
+        function switchTab(mode: 'eco' | 'prem') {
             if (mode === 'eco') {
                 if (tabBg) tabBg.style.transform = 'translateX(0)';
                 

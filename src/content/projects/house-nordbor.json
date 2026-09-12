@@ -6,6 +6,7 @@
   "purpose": "living",
   "style": "Сканди",
   "priceCategory": "economy",
+  "terraceArea": 33,
   "availableTech": [
     "frame",
     "block"
@@ -69,8 +70,12 @@
       "area": 31
     },
     {
-      "name": "Терраса/крыльцо",
-      "area": 49
+      "name": "Крыльцо",
+      "area": 16
+    },
+    {
+      "name": "Терраса",
+      "area": 33
     }
   ],
   "specs": {
@@ -79,7 +84,7 @@
     "bedrooms": 3,
     "bathrooms": 2
   },
-  "area": 153,
-  "livingArea": 104,
+  "area": 120,
+  "livingArea": 120,
   "dims": "13x15 м"
 }

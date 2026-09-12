@@ -1,13 +1,10 @@
 ---
 // src/pages/about.astro
 import Layout from '../layouts/Layout.astro';
-// Header и Footer не импортируем, они должны быть внутри Layout
 
-// SEO Мета-данные
 const pageTitle = "О компании Marmol House | Строительство домов в Гродно";
-const pageDescription = "Marmol House — строительная компания полного цикла. Более 10 лет строим надежные дома из блоков и по каркасной технологии в Гродно и области. Проектирование, честная смета, гарантия.";
+const pageDescription = "Marmol House — строительная компания полного цикла. Более 10 лет суммарного опыта в возведении каменных и каркасных домов. Честная смета, технический надзор, гарантия.";
 
-// Расширенная Schema.org для локального бизнеса
 const schema = {
   "@context": "https://schema.org",
   "@type": "AboutPage",
@@ -25,13 +22,12 @@ const schema = {
 };
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
-  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
+{/* Передаем схему правильно, как делали на других страницах */}
+<Layout title={pageTitle} description={pageDescription} schema={schema}>
 
   <main class="bg-white">
     
     <section class="relative min-h-screen flex items-center pt-20 bg-white overflow-hidden">
-
         <div class="hidden lg:block absolute top-0 right-0 w-[45%] h-full z-0">
             <img
                 src="/hero-mobile.webp"
@@ -40,20 +36,18 @@ const schema = {
                 fetchpriority="high"
                 class="w-full h-full object-cover object-center opacity-90 grayscale-[20%]"
             />
-            
             <div class="absolute inset-0 bg-gradient-to-r from-white via-white/60 to-transparent"></div>
             <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-white opacity-90"></div>
         </div>
     
         <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 relative z-10 h-full flex flex-col justify-center min-h-screen pb-32 md:pb-0">
             <div class="max-w-4xl lg:w-[65%]">
-    
                 <h1 class="text-marmol-gold font-bold uppercase tracking-[0.2em] text-xs md:text-sm mb-6 animate-fade-in">
                     Строительство домов в Гродно от Marmol House
                 </h1>
             
                 <p class="text-4xl md:text-6xl xl:text-7xl font-sans font-bold text-marmol-navy leading-[1.1] mb-10 animate-fade-in-up">
-                    Мы не запускаем <br class="hidden md:block" /> 
+                    Мы не запускаем <br class="hidden md:block" />
                     громкую рекламу — <br/>
                     <span class="text-gray-400 font-light italic">нас советуют друзьям.</span>
                 </p>
@@ -68,18 +62,16 @@ const schema = {
                 </div>
             </div>
         </div>
-    
     </section>
 
     <section class="py-24 bg-marmol-navy text-white relative overflow-hidden">
-
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 
                 <div class="lg:col-span-5">
                     <h2 class="text-3xl md:text-5xl font-bold leading-tight mb-6">
                         Более <span class="text-marmol-gold">10 лет</span> <br/> 
-                        создаем архитектурный облик Гродно
+                        инженерного опыта
                     </h2>
                     <p class="text-marmol-gold uppercase tracking-widest text-sm font-bold mb-8">
                         Marmol House — от идеи до ключа
@@ -92,24 +84,23 @@ const schema = {
                         <div>
                             <h3 class="text-marmol-gold font-bold mb-3 uppercase text-xs tracking-wider">Наш масштаб</h3>
                             <p class="text-gray-300 text-sm leading-relaxed">
-                                Marmol House — компания для комплексного возведения жилых домов. Более 10 лет мы совершенствуем технологию строительства полного цикла: от 
-                                <a href="/services/design" class="text-white border-b border-white/30 hover:border-marmol-gold hover:text-marmol-gold transition-colors">проектирования</a> 
-                                фундамента до ювелирной точности в финишной отделке 
-                                <a href="/services/facades" class="text-white border-b border-white/30 hover:border-marmol-gold hover:text-marmol-gold transition-colors">клинкером</a>.
+                                Marmol House — компания для комплексного возведения жилых домов. Мы совершенствуем технологию строительства полного цикла: от 
+                                <a href="/services/design" class="text-white border-b border-white/30 hover:border-marmol-gold hover:text-marmol-gold transition-colors">грамотного проектирования</a> 
+                                фундамента до ювелирной точности в финишной отделке фасадов.
                             </p>
                         </div>
                         <div>
                             <h3 class="text-marmol-gold font-bold mb-3 uppercase text-xs tracking-wider">Локальная экспертиза</h3>
                             <p class="text-gray-300 text-sm leading-relaxed">
-                                Мы специализируемся на строительстве в Гродно и области, досконально зная требования региональных норм и особенности местных площадок. Это позволяет нам гарантировать безупречное качество 
-                                <a href="/services/gas-silicate-houses" class="text-white border-b border-white/30 hover:border-marmol-gold hover:text-marmol-gold transition-colors">каменных домов</a>, 
-                                которые сохраняют свою геометрию и теплотехнические свойства в любом районе области.
+                                Мы специализируемся на строительстве в Гродно и области. Знание специфики местных грунтов позволяет нам гарантировать безупречное качество 
+                                <a href="/services/gas-silicate-houses" class="text-white border-b border-white/30 hover:border-marmol-gold hover:text-marmol-gold transition-colors">домов</a>, 
+                                которые сохраняют свою геометрию десятилетиями.
                             </p>
                         </div>
                     </div>
 
                     <blockquote class="bg-white/5 border-l-4 border-marmol-gold p-8 rounded-r-lg italic text-lg text-gray-200 font-light">
-                        "Дом считается построенным не в день сдачи ключей, а через десятилетия, когда он всё так же надежен и эстетичен. Мы строим для тех, кто любит качество."
+                        "Дом считается построенным не в день сдачи ключей, а через десятилетия, когда он всё так же надежен. Мы строим для тех, кто ценит капитальный подход."
                     </blockquote>
                 </div>
             </div>
@@ -120,8 +111,8 @@ const schema = {
                     <div class="text-[10px] uppercase tracking-[0.2em] text-marmol-gold">Построенных домов</div>
                 </div>
                 <div class="text-center border-l border-white/10">
-                    <div class="text-4xl font-bold text-white mb-1">100%</div>
-                    <div class="text-[10px] uppercase tracking-[0.2em] text-marmol-gold">Соблюдение сроков</div>
+                    <div class="text-4xl font-bold text-white mb-1">99%</div>
+                    <div class="text-[10px] uppercase tracking-[0.2em] text-marmol-gold">Фиксация сроков</div>
                 </div>
                 <div class="text-center border-l border-white/10">
                     <div class="text-4xl font-bold text-white mb-1">0</div>
@@ -147,9 +138,9 @@ const schema = {
                     <div class="mb-8 text-marmol-gold">
                         <svg aria-hidden="true" class="w-10 h-10 transition-transform duration-500 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-marmol-navy mb-4 uppercase tracking-wider text-sm">География качества</h3>
+                    <h3 class="text-xl font-bold text-marmol-navy mb-4 uppercase tracking-wider text-sm">Личный контроль</h3>
                     <p class="text-gray-500 text-sm leading-relaxed font-light">
-                        Начав свой путь в Гродно, мы сформировали команду экспертов для работы по всей области. Реализуем как <a href="/services/frame-houses" class="text-marmol-navy border-b border-gray-200 hover:text-marmol-gold hover:border-marmol-gold transition-colors">каркасные</a>, так и блочные проекты.
+                        Мы не перекладываем ответственность на субподрядчиков. Строительный процесс жестко контролируется сертифицированным инженером-прорабом напрямую на площадке.
                     </p>
                 </div>
 
@@ -167,9 +158,9 @@ const schema = {
                     <div class="mb-8 text-marmol-gold">
                         <svg aria-hidden="true" class="w-10 h-10 transition-transform duration-500 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-marmol-navy mb-4 uppercase tracking-wider text-sm">Авторский надзор</h3>
+                    <h3 class="text-xl font-bold text-marmol-navy mb-4 uppercase tracking-wider text-sm">Прозрачность процессов</h3>
                     <p class="text-gray-500 text-sm leading-relaxed font-light">
-                        Мы не просто строим, мы следим за тем, чтобы эстетика проекта была реализована на 100%, от шва кирпича до отлива.
+                        Основатели компании всегда на связи. От первых согласований до сдачи объекта — вы получаете сервис и решения напрямую от руководства.
                     </p>
                 </div>
             </div>
@@ -223,7 +214,6 @@ const schema = {
     const setupAboutBtn = () => {
         const btn = document.getElementById('about-consult-btn');
         if (btn) {
-            // Клонируем кнопку, чтобы избежать дублирования событий при переходах
             const newBtn = btn.cloneNode(true);
             if (btn.parentNode) btn.parentNode.replaceChild(newBtn, btn);
 
@@ -234,7 +224,6 @@ const schema = {
         }
     };
 
-    // Поддержка Astro View Transitions
     document.addEventListener('astro:page-load', setupAboutBtn);
     setupAboutBtn();
 </script>

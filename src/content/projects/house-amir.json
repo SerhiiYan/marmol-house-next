@@ -6,6 +6,7 @@
   "purpose": "living",
   "style": "Сканди барнхаус",
   "priceCategory": "economy",
+  "terraceArea": 23,
   "availableTech": [
     "frame",
     "block"
@@ -66,7 +67,7 @@
     },
     {
       "name": "Терраса",
-      "area": 22
+      "area": 23
     }
   ],
   "specs": {

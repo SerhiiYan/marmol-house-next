@@ -35,8 +35,8 @@ export default defineConfig({
     // --- A-Frame ---
     '/projects/dom-a25': '/projects/aframe-a25/',
     '/projects/dom-a26': '/projects/aframe-a26/',
-    '/projects/dom-a27': '/projects/aframe-z27/', 
-    '/projects/dom-a28': '/projects/aframe-z28/', 
+    '/projects/dom-a27': '/projects/aframe-a27/', 
+    '/projects/dom-a28': '/projects/aframe-a28/', 
     '/projects/dom-a29': '/projects/aframe-a29/',
     '/projects/dom-a30': '/projects/aframe-a30/',
     // --- Классические дома ---
@@ -76,7 +76,7 @@ export default defineConfig({
     '/projects/dom-fonster': '/projects/house-foster/',
     '/blog/ukaz-240-instrukciya/': '/blog/gos-podderzhka-240/',
     //старый
-    '/projects/dom-z253': '/projects/', 
+    '/projects/dom-z253': '/projects/house-z253', 
   },
 
   build: {

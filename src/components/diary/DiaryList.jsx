@@ -25,7 +25,6 @@ export default function DiaryList({ items }) {
   }
 
   // === ОПТИМИЗАЦИЯ ПАМЯТИ (useMemo) ===
-  // Кэшируем массив слайдов, чтобы он не пересоздавался при каждом клике по фото
   const slides = useMemo(() => {
     return items.map(item => ({
       src: item.image,
@@ -33,7 +32,6 @@ export default function DiaryList({ items }) {
     }));
   }, [items]);
 
-  // Кэшируем данные для пагинации
   const { featuredPost, gridPosts, hasMore } = useMemo(() => {
     const paginated = items.slice(0, visibleCount);
     return {
@@ -56,12 +54,15 @@ export default function DiaryList({ items }) {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="group relative mb-16 md:mb-24 cursor-pointer"
-        onClick={() => openLightbox(0)}
+        className="group relative mb-16 md:mb-24"
       >
         <div className="relative md:rounded-2xl md:overflow-hidden bg-white md:bg-gray-100 shadow-sm flex flex-col md:block">
           
-          <div className="relative overflow-hidden aspect-[4/3] md:aspect-[21/9] rounded-2xl md:rounded-none">
+          {/* ОБЕРТКА ДЛЯ ФОТО (КЛИКАБЕЛЬНАЯ) */}
+          <div 
+            className="relative overflow-hidden aspect-[4/3] md:aspect-[21/9] rounded-2xl md:rounded-none cursor-pointer"
+            onClick={() => openLightbox(0)}
+          >
             {featuredPost.image && (
               <img
                 fetchPriority="high" 
@@ -79,9 +80,17 @@ export default function DiaryList({ items }) {
                 </span>
                 Последнее обновление
             </div>
+            
+            {/* Иконка лупы при наведении на главное фото */}
+            <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-10">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="w-12 h-12 bg-white/20 p-2.5 rounded-full backdrop-blur-sm shadow-lg">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" />
+                </svg>
+            </div>
           </div>
 
-          <div className="w-full p-6 pb-2 md:p-10 lg:p-12 text-marmol-navy md:text-white md:absolute md:bottom-0 md:left-0 md:bg-transparent pointer-events-none z-10">
+          {/* ТЕКСТОВЫЙ БЛОК (НЕ КЛИКАБЕЛЬНЫЙ, БЕЗ pointer-events-none) */}
+          <div className="w-full p-6 pb-2 md:p-10 lg:p-12 text-marmol-navy md:text-white md:absolute md:bottom-0 md:left-0 md:bg-transparent z-20">
             <div className="flex flex-wrap items-center gap-3 md:gap-4 mb-3 md:mb-4 text-[10px] md:text-xs font-bold uppercase tracking-[0.15em] text-gray-400 md:text-gray-200 border-b border-gray-100 md:border-none pb-4 md:pb-0">
               <span>{featuredPost.date}</span>
               <span className="hidden md:block w-6 h-[1px] bg-gray-300 md:bg-marmol-gold"></span>
@@ -90,9 +99,18 @@ export default function DiaryList({ items }) {
                 {featuredPost.location}
               </span>
             </div>
-            <p className="text-sm md:text-lg lg:text-xl font-light leading-relaxed w-full drop-shadow-md">
+            
+            <p className="text-sm md:text-lg lg:text-xl font-light leading-relaxed w-full drop-shadow-md mb-6">
               {featuredPost.text}
             </p>
+
+            {/* НОВАЯ КНОПКА ПЕРЕХОДА */}
+            <a 
+              href={`/live/${featuredPost.projectId}`}
+              className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-marmol-gold md:hover:text-white hover:text-marmol-navy transition-colors bg-white/10 md:bg-black/20 md:backdrop-blur-sm md:px-5 md:py-2.5 rounded-sm md:border md:border-white/20"
+            >
+              Перейти к объекту →
+            </a>
           </div>
 
         </div>
@@ -108,26 +126,32 @@ export default function DiaryList({ items }) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.6, delay: (index % 6) * 0.1 }}
-              className="break-inside-avoid mb-8 md:mb-12 group cursor-pointer"
-              onClick={() => openLightbox(index + 1)}
+              className="break-inside-avoid mb-8 md:mb-12 group"
             >
               <div className="flex flex-col gap-4">
+                
+                {/* ОБЕРТКА ДЛЯ ФОТО (КЛИКАБЕЛЬНАЯ) */}
                 {entry.image && (
-                  <div className="relative overflow-hidden rounded-xl bg-gray-100">
+                  <div 
+                    className="relative overflow-hidden rounded-xl bg-gray-100 cursor-pointer"
+                    onClick={() => openLightbox(index + 1)}
+                  >
                     <img 
                       src={entry.image} 
                       alt={`Хроника ${entry.date}`} 
                       className="w-full h-auto object-cover transition-transform duration-[1.5s] group-hover:scale-105"
-                      loading="lazy" // Здесь ленивая загрузка нужна обязательно!
+                      loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-marmol-navy/0 group-hover:bg-marmol-navy/20 transition-colors duration-500 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10 text-white opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all duration-300 drop-shadow-md">
+                    <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors duration-500 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10 text-white opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all duration-300 drop-shadow-md bg-white/20 p-2 rounded-full backdrop-blur-sm">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" />
                         </svg>
                     </div>
                   </div>
                 )}
-                <div className="pt-2 pointer-events-none">
+                
+                {/* ТЕКСТОВЫЙ БЛОК (БЕЗ pointer-events-none) */}
+                <div className="pt-2">
                   <div className="flex items-center gap-3 mb-3">
                     <span className="text-[10px] font-bold uppercase tracking-widest text-marmol-gold">
                       {entry.date}
@@ -137,10 +161,20 @@ export default function DiaryList({ items }) {
                       {entry.location}
                     </span>
                   </div>
-                  <p className="text-gray-600 font-light leading-relaxed text-sm md:text-base group-hover:text-marmol-navy transition-colors duration-300">
+                  
+                  <p className="text-gray-600 font-light leading-relaxed text-sm md:text-base group-hover:text-marmol-navy transition-colors duration-300 mb-4">
                     {entry.text}
                   </p>
+
+                  {/* НОВАЯ КНОПКА ПЕРЕХОДА */}
+                  <a 
+                    href={`/live/${entry.projectId}`}
+                    className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-marmol-navy hover:text-marmol-gold transition-colors border border-gray-200 hover:border-marmol-gold px-4 py-2 rounded-sm"
+                  >
+                    Смотреть весь объект →
+                  </a>
                 </div>
+
               </div>
             </motion.div>
           ))}

@@ -6,15 +6,19 @@
   "purpose": "living",
   "style": "Сканди барнхаус",
   "priceCategory": "economy",
+  "terraceArea": 16,
   "availableTech": [
     "frame",
     "block"
   ],
-  "mainImage": "/projects/barnhouse/omega/1.webp",
+  "mainImage": "/projects/barnhouse/omega/3.webp",
   "gallery": [
     "/projects/barnhouse/omega/1.webp",
     "/projects/barnhouse/omega/2.webp",
     "/projects/barnhouse/omega/3.webp",
+    "/projects/barnhouse/omega/4.webp",
+    "/projects/barnhouse/omega/5.webp",
+    "/projects/barnhouse/omega/6.webp",
     "/projects/barnhouse/omega/plan.webp"
   ],
   "plans": [
@@ -25,7 +29,8 @@
     "Металлопрофиль",
     "Каркас",
     "Блок",
-    "Панорамные окна"
+    "Панорамные окна",
+    "Клинкер"
   ],
   "layout": [
     {

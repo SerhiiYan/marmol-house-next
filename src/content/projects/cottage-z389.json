@@ -7,6 +7,7 @@
   "style": "Современный барнхаус",
   "priceCategory": "economy",
   "fixPrice": 105000,
+  "terraceArea": 13,
   "availableTech": [
     "frame",
     "block"
@@ -42,6 +43,10 @@
     {
       "name": "Гостиная",
       "area": 22
+    },
+    {
+      "name": "Терраса",
+      "area": 13
     },
     {
       "name": "Прихожая",

@@ -6,6 +6,7 @@
   "purpose": "business",
   "style": "Классический A-frame",
   "priceCategory": "economy",
+  "terraceArea": 12,
   "availableTech": [
     "frame"
   ],
@@ -40,6 +41,10 @@
     {
       "name": "Санузел",
       "area": 5
+    },
+    {
+      "name": "Терраса",
+      "area": 12
     }
   ],
   "specs": {

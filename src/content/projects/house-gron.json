@@ -6,6 +6,7 @@
   "purpose": "living",
   "style": "Сканди барнхаус",
   "priceCategory": "economy",
+  "terraceArea": 33,
   "availableTech": [
     "frame",
     "block"
@@ -69,7 +70,7 @@
     "bedrooms": 3,
     "bathrooms": 2
   },
-  "area": 162,
-  "livingArea": 121,
+  "area": 118,
+  "livingArea": 118,
   "dims": "18x15 м"
 }

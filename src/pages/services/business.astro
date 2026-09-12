@@ -41,6 +41,12 @@ const schema = {
         "@type": "ConstructionBusiness",
         "name": "Marmol House"
       },
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "USD",
+        "lowPrice": "35000",
+        "description": "Строительство дома в стиле барнхаус для сдачи в аренду под ключ"
+    },
       "areaServed": ["Гродно", "Минск", "Беларусь"],
       "description": "Проектирование и строительство домиков для аренды (A-frame, Barnhouse) под ключ."
     },
@@ -59,9 +65,7 @@ const schema = {
 };
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
-  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
-
+<Layout description="{pageDescription}" schema="{schema}" title="{pageTitle}">
   <main class="bg-white">
 
     <section class="relative h-screen flex items-center md:items-end pb-0 md:pb-48 bg-marmol-navy overflow-hidden">
@@ -405,15 +409,20 @@ const schema = {
 <script>
     import { isModalOpen, formComment } from '../../store/modalStore';
     
-    // Делегирование событий - вешаем ОДИН раз, работает для всех кнопок и не ломается при переходах Astro
-    document.addEventListener('click', (e) => {
-        // Проверяем, кликнули ли мы по кнопке с нужным ID (или внутри нее)
-        const target = e.target as HTMLElement;
-        const isBizBtn = target.closest('#biz-consult-btn-desk') || target.closest('#biz-consult-btn-mob');
+    const setupBizBtns = () => {
+        const btns = document.querySelectorAll('#biz-consult-btn-desk, #biz-consult-btn-mob');
         
-        if (isBizBtn) {
-            formComment.set(`Интересует строительство для бизнеса (Под ключ).`);
-            isModalOpen.set(true);
-        }
-    });
+        btns.forEach(btn => {
+            const newBtn = btn.cloneNode(true);
+            if (btn.parentNode) btn.parentNode.replaceChild(newBtn, btn);
+            
+            newBtn.addEventListener('click', () => {
+                formComment.set(`Интересует строительство для бизнеса (Под ключ).`);
+                isModalOpen.set(true);
+            });
+        });
+    };
+
+    document.addEventListener('astro:page-load', setupBizBtns);
+    setupBizBtns();
 </script>

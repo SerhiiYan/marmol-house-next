@@ -6,6 +6,7 @@
   "purpose": "living",
   "style": "Скандинавский",
   "priceCategory": "economy",
+  "terraceArea": 15,
   "availableTech": [
     "frame",
     "block"
@@ -73,7 +74,7 @@
     "bedrooms": 2,
     "bathrooms": 1
   },
-  "area": 71.5,
+  "area": 70,
   "livingArea": 70,
   "dims": "9x12 м"
 }
