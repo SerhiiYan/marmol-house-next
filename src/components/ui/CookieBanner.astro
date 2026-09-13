@@ -45,6 +45,7 @@
         'ad_user_data': 'denied',
         'ad_personalization': 'denied'
     });
+    
     const GA_ID = 'G-KNB082B9WE';
     const gaScript = document.createElement('script');
     gaScript.async = true;
@@ -52,7 +53,12 @@
     document.head.appendChild(gaScript);
     
     gtag('js', new Date());
+    // Отправляем базовый хит при первой (жесткой) загрузке страницы
     gtag('config', GA_ID);
+    
+    // Флаг-предохранитель от двойного учета просмотров
+    let isInitialLoad = true;
+
     document.addEventListener('astro:page-load', () => {
         const banner = document.getElementById('cookie-banner');
         const btnAccept = document.getElementById('btn-accept-cookies');
@@ -90,12 +96,31 @@
 
         if (consent === 'accepted') {
             grantConsent();
+            
+            // --- ЛОГИКА ОТПРАВКИ ХИТОВ (Только для SPA-переходов) ---
+            if (!isInitialLoad) {
+                // Пинаем Метрику
+                if (window.ym) {
+                    ym(YM_ID, 'hit', window.location.href);
+                }
+                // Пинаем Google Analytics
+                if (typeof gtag === 'function') {
+                    gtag('config', GA_ID, {
+                        page_path: window.location.pathname + window.location.search,
+                        page_title: document.title
+                    });
+                }
+            }
+            
         } else if (consent === null && banner) {
             banner.classList.remove('hidden');
             setTimeout(() => {
                 banner.classList.remove('translate-y-10', 'opacity-0');
             }, 100);
         }
+
+        // После отработки первого события снимаем флаг
+        isInitialLoad = false;
 
         const closeBanner = () => {
             if (!banner) return;
