@@ -120,24 +120,39 @@ const featuredCases = allPortfolio
 <script>
     import { isModalOpen, formComment } from '../store/modalStore';
 
-    const btn = document.getElementById('hero-consult-btn');
-    btn?.addEventListener('click', () => {
-        formComment.set('Здравствуйте! Хочу получить бесплатную консультацию по строительству дома.');
-        isModalOpen.set(true);
-    });
+    let slideInterval: ReturnType<typeof setInterval> | undefined;
 
-    const slides = document.querySelectorAll('.hero-slide');
-    let currentSlide = 0;
-    
-    if (slides.length > 1) {
-        setInterval(() => {
-            slides[currentSlide].classList.remove('opacity-100', 'z-10', 'pointer-events-auto');
-            slides[currentSlide].classList.add('opacity-0', 'z-0', 'pointer-events-none');
-            
-            currentSlide = (currentSlide + 1) % slides.length;
-            
-            slides[currentSlide].classList.remove('opacity-0', 'z-0', 'pointer-events-none');
-            slides[currentSlide].classList.add('opacity-100', 'z-10', 'pointer-events-auto');
-        }, 5000); 
+    function initHero() {
+        const btn = document.getElementById('hero-consult-btn');
+        
+        const openModal = () => {
+            formComment.set('Здравствуйте! Хочу получить бесплатную консультацию по строительству дома.');
+            isModalOpen.set(true);
+        };
+
+        // Защита от дублей
+        btn?.removeEventListener('click', openModal);
+        btn?.addEventListener('click', openModal);
+
+        const slides = document.querySelectorAll('.hero-slide');
+        let currentSlide = 0;
+        
+        // Очищаем старый интервал, если мы вернулись на страницу из другой
+        if (slideInterval) clearInterval(slideInterval);
+        
+        if (slides.length > 1) {
+            slideInterval = setInterval(() => {
+                slides[currentSlide].classList.remove('opacity-100', 'z-10', 'pointer-events-auto');
+                slides[currentSlide].classList.add('opacity-0', 'z-0', 'pointer-events-none');
+                
+                currentSlide = (currentSlide + 1) % slides.length;
+                
+                slides[currentSlide].classList.remove('opacity-0', 'z-0', 'pointer-events-none');
+                slides[currentSlide].classList.add('opacity-100', 'z-10', 'pointer-events-auto');
+            }, 5000); 
+        }
     }
+
+    // Теперь скрипт героя будет надежно работать при переходах по SPA роутеру
+    document.addEventListener('astro:page-load', initHero);
 </script>

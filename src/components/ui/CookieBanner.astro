@@ -34,18 +34,34 @@
 </div>
 
 <script is:inline>
-    document.addEventListener('DOMContentLoaded', () => {
+    // 1. ИНИЦИАЛИЗАЦИЯ GOOGLE CONSENT MODE (Выполняется сразу!)
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    
+    // По умолчанию запрещаем куки до согласия
+    gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'analytics_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied'
+    });
+    const GA_ID = 'G-KNB082B9WE';
+    const gaScript = document.createElement('script');
+    gaScript.async = true;
+    gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+    document.head.appendChild(gaScript);
+    
+    gtag('js', new Date());
+    gtag('config', GA_ID);
+    document.addEventListener('astro:page-load', () => {
         const banner = document.getElementById('cookie-banner');
         const btnAccept = document.getElementById('btn-accept-cookies');
         const btnDecline = document.getElementById('btn-decline-cookies');
         const STORAGE_KEY = 'marmol_cookie_consent';
-        
-        // ID счетчиков
         const YM_ID = 104396711;
-        const GA_ID = 'G-KNB082B9WE';
 
-        // 1. Функция для Яндекс.Метрики
         const loadYandexMetrika = () => {
+            if (window.ym) return; // Защита от двойной загрузки
             (function(m,e,t,r,i,k,a){
                 m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
                 m[i].l=1*new Date();
@@ -54,66 +70,48 @@
             })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
 
             ym(YM_ID, 'init', {
-                ssr: true,
-                clickmap: true,
-                trackLinks: true,
-                accurateTrackBounce: true,
-                webvisor: true
+                clickmap: true, trackLinks: true, accurateTrackBounce: true, webvisor: true
             });
         };
 
-        // 2. Функция для Google Analytics
-        const loadGoogleAnalytics = () => {
-            // Создаем тег скрипта динамически
-            const gaScript = document.createElement('script');
-            gaScript.async = true;
-            gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
-            document.head.appendChild(gaScript);
-
-            // Инициализируем настройки
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){window.dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', GA_ID);
-        };
-
-        // Общая функция запуска всей аналитики
-        const loadAllAnalytics = () => {
+        const grantConsent = () => {
+            // Обновляем статус в Google Analytics (теперь можно использовать куки)
+            gtag('consent', 'update', {
+                'ad_storage': 'granted',
+                'analytics_storage': 'granted',
+                'ad_user_data': 'granted',
+                'ad_personalization': 'granted'
+            });
+            // Загружаем Яндекс.Метрику
             loadYandexMetrika();
-            loadGoogleAnalytics();
         };
 
-        // Логика проверки состояния
         const consent = localStorage.getItem(STORAGE_KEY);
 
         if (consent === 'accepted') {
-            loadAllAnalytics();
-        } else if (consent === null) {
+            grantConsent();
+        } else if (consent === null && banner) {
             banner.classList.remove('hidden');
             setTimeout(() => {
                 banner.classList.remove('translate-y-10', 'opacity-0');
             }, 100);
         }
 
-        // Обработчик кнопки "Принять"
+        const closeBanner = () => {
+            if (!banner) return;
+            banner.classList.add('translate-y-10', 'opacity-0');
+            setTimeout(() => banner.classList.add('hidden'), 500); 
+        };
+
         btnAccept?.addEventListener('click', () => {
             localStorage.setItem(STORAGE_KEY, 'accepted');
-            loadAllAnalytics();
+            grantConsent();
             closeBanner();
         });
 
-        // Обработчик кнопки "Отказаться"
         btnDecline?.addEventListener('click', () => {
             localStorage.setItem(STORAGE_KEY, 'declined');
             closeBanner();
         });
-
-        // Функция скрытия баннера
-        const closeBanner = () => {
-            banner.classList.add('translate-y-10', 'opacity-0');
-            setTimeout(() => {
-                banner.classList.add('hidden');
-            }, 500); 
-        };
     });
 </script>

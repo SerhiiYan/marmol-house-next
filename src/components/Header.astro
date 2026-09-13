@@ -208,55 +208,53 @@ const links = [
 <script>
     import { isModalOpen, formComment } from '../store/modalStore';
 
-    function initHeader() {
-        const btn = document.getElementById('mobile-menu-btn');
+    // 1. Выносим логику наружу, чтобы ссылки на функции были постоянными!
+    const toggleMenu = () => {
         const menu = document.getElementById('mobile-menu');
+        menu?.classList.toggle('hidden');
+        document.body.classList.toggle('overflow-hidden');
+    };
 
-        // Чистим слушатели правильным способом, без избыточного cloneNode,
-        // который может сломать привязки Astro
-        const toggleMenu = () => {
-            menu?.classList.toggle('hidden');
-            document.body.classList.toggle('overflow-hidden');
-        };
+    const handleModalClicks = (e: Event) => {
+        // Убеждаемся, что e.target существует и является HTML-элементом
+        if (!(e.target instanceof Element)) return;
 
-        // Удаляем старый обработчик, если он был (важно для Astro View Transitions)
-        btn?.removeEventListener('click', toggleMenu);
-        btn?.addEventListener('click', toggleMenu);
-
-        // Закрываем меню по клику на любую ссылку
-        const mobileLinks = menu?.querySelectorAll('a');
-        mobileLinks?.forEach(link => {
-            link.addEventListener('click', () => {
-                menu?.classList.add('hidden');
-                document.body.classList.remove('overflow-hidden');
-            });
-        });
-
-        // Единый обработчик для модалки (и для десктопа, и для мобилки)
-        document.removeEventListener('click', handleModalClicks);
-        document.addEventListener('click', handleModalClicks);
-    }
-
-    function handleModalClicks(e: Event) {
-        // @ts-ignore
         const isDesktopBtn = e.target.closest('#menu-meeting-btn');
-        // @ts-ignore
         const isMobileBtn = e.target.closest('#mobile-meeting-btn');
         
         if (isDesktopBtn || isMobileBtn) {
             formComment.set('Здравствуйте! Хочу записаться на встречу в офисе для консультации.');
             isModalOpen.set(true);
             
-            // Если открыто мобильное меню — закрываем его
             const menu = document.getElementById('mobile-menu');
             if (menu && !menu.classList.contains('hidden')) {
                 menu.classList.add('hidden');
                 document.body.classList.remove('overflow-hidden');
             }
         }
+    };
+
+    function initHeader() {
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        // Теперь удаление сработает идеально
+        btn?.removeEventListener('click', toggleMenu);
+        btn?.addEventListener('click', toggleMenu);
+
+        const mobileLinks = menu?.querySelectorAll('a');
+        mobileLinks?.forEach(link => {
+            // Клонировать узел не будем, просто чистим обработчики через именованную функцию или забиваем (для 'a' это не критично)
+            link.addEventListener('click', () => {
+                menu?.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }, { once: true }); // срабатывает 1 раз, предотвращает утечки
+        });
+
+        document.removeEventListener('click', handleModalClicks);
+        document.addEventListener('click', handleModalClicks);
     }
 
+    // astro:page-load сам сработает при первой загрузке. Ручной вызов initHeader() удален.
     document.addEventListener('astro:page-load', initHeader);
-    // Инициализация при первой загрузке
-    initHeader();
 </script>
