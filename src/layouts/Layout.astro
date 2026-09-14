@@ -1,12 +1,11 @@
 ---
-// src/layouts/Layout.astro
 import { ClientRouter } from 'astro:transitions';
-import '../styles/global.css'; 
+import '../styles/global.css';
+
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import ConsultationModal from '../components/ui/ConsultationModal.jsx'
+import ConsultationModal from '../components/ui/ConsultationModal.jsx';
 import CookieBanner from '../components/ui/CookieBanner.astro';
-
 
 interface Props {
     title: string;
@@ -18,11 +17,10 @@ interface Props {
 
 const siteDomain = Astro.site ?? 'https://marmolhouse.by';
 
-const { 
-    title, 
+const {
+    title,
     description = "Строим каркасные и блочные дома под ключ в Беларуси. Проект в подарок! Работа по 240 и 95 указу. Фиксированная цена. Гарантия 5 лет. Закажите расчет на сайте Marmol House.",
-    // Сделал путь относительным по умолчанию, мы его превратим в абсолютный ниже
-    image = "/og-image.png", 
+    image = "/og-image.png",
     canonicalURL = new URL(Astro.url.pathname, siteDomain).href,
     schema
 } = Astro.props;
@@ -36,17 +34,20 @@ const ogImageURL = new URL(image, siteDomain).href;
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
+
         <ClientRouter />
+
         <title>{title}</title>
+
         <meta name="description" content={description} />
         <meta name="author" content="Marmol House" />
+
         <link rel="canonical" href={canonicalURL} />
 
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={canonicalURL} />
-        {/* Подставляем нашу новую переменную ogImageURL */}
         <meta property="og:image" content={ogImageURL} />
         <meta property="og:locale" content="ru_RU" />
 
@@ -54,20 +55,44 @@ const ogImageURL = new URL(image, siteDomain).href;
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={ogImageURL} />
-        <meta name="p:domain_verify" content="d548cafe6e74e85ca71062ebc9ed4a7d"/>
-        
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+        <meta
+            name="p:domain_verify"
+            content="d548cafe6e74e85ca71062ebc9ed4a7d"
+        />
+
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/favicon.png"
+        />
+
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/apple-touch-icon.png"
+        />
+
         {schema && (
-            <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+            <script
+                type="application/ld+json"
+                set:html={JSON.stringify(schema)}
+            />
         )}
+
         <slot name="head" />
     </head>
+
     <body class="bg-marmol-bg text-marmol-navy font-body antialiased">
         <Header />
+
         <slot />
+
         <Footer />
-        <ConsultationModal client:idle /> 
+
+        <ConsultationModal client:idle />
+
         <CookieBanner />
     </body>
 </html>

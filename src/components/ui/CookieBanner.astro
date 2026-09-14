@@ -2,29 +2,42 @@
 // src/components/ui/CookieBanner.astro
 ---
 
-<div 
-    id="cookie-banner" 
+<div
+    id="cookie-banner"
     class="fixed bottom-4 left-4 right-4 md:left-auto md:right-8 md:w-[480px] bg-marmol-navy text-white p-6 rounded-2xl shadow-2xl z-[100] hidden translate-y-10 opacity-0 transition-all duration-500 border border-white/10"
 >
     <div class="flex flex-col gap-4">
         <div>
-            <h4 class="text-sm font-bold uppercase tracking-widest text-marmol-gold mb-2">Использование Cookie</h4>
+            <h4 class="text-sm font-bold uppercase tracking-widest text-marmol-gold mb-2">
+                Использование cookie
+            </h4>
+
             <p class="text-xs text-gray-300 leading-relaxed">
-                Мы используем файлы cookie для анализа трафика и улучшения работы сайта. 
-                Оставаясь с нами, вы даете согласие на их сбор. Вы можете отказаться, но некоторые функции сайта могут работать хуже. 
-                Подробнее в <a href="/privacy" class="text-white underline hover:text-marmol-gold transition-colors">Политике конфиденциальности</a>.
+                Мы используем необходимые технологии для работы сайта и,
+                с вашего согласия, аналитические инструменты для анализа
+                посещаемости и улучшения сайта.
+                Подробнее в
+                <a
+                    href="/privacy"
+                    class="text-white underline hover:text-marmol-gold transition-colors"
+                >
+                    Политике конфиденциальности
+                </a>.
             </p>
         </div>
-        
+
         <div class="flex items-center gap-3 mt-2">
-            <button 
-                id="btn-accept-cookies" 
+            <button
+                id="btn-accept-cookies"
+                type="button"
                 class="flex-1 bg-marmol-gold text-marmol-navy font-bold uppercase tracking-widest text-[10px] md:text-xs py-3 rounded-lg hover:bg-white transition-colors"
             >
-                Принять все
+                Принять аналитику
             </button>
-            <button 
-                id="btn-decline-cookies" 
+
+            <button
+                id="btn-decline-cookies"
+                type="button"
                 class="flex-1 bg-transparent border border-gray-500 text-gray-300 font-bold uppercase tracking-widest text-[10px] md:text-xs py-3 rounded-lg hover:border-white hover:text-white transition-colors"
             >
                 Отказаться
@@ -34,109 +47,128 @@
 </div>
 
 <script is:inline>
-    // 1. ИНИЦИАЛИЗАЦИЯ GOOGLE CONSENT MODE (Выполняется сразу!)
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    
-    // По умолчанию запрещаем куки до согласия
-    gtag('consent', 'default', {
-        'ad_storage': 'denied',
-        'analytics_storage': 'denied',
-        'ad_user_data': 'denied',
-        'ad_personalization': 'denied'
-    });
-    
-    const GA_ID = 'G-KNB082B9WE';
-    const gaScript = document.createElement('script');
-    gaScript.async = true;
-    gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
-    document.head.appendChild(gaScript);
-    
-    gtag('js', new Date());
-    // Отправляем базовый хит при первой (жесткой) загрузке страницы
-    gtag('config', GA_ID);
-    
-    // Флаг-предохранитель от двойного учета просмотров
-    let isInitialLoad = true;
-
-    document.addEventListener('astro:page-load', () => {
-        const banner = document.getElementById('cookie-banner');
-        const btnAccept = document.getElementById('btn-accept-cookies');
-        const btnDecline = document.getElementById('btn-decline-cookies');
+    (() => {
         const STORAGE_KEY = 'marmol_cookie_consent';
+        const GA_ID = 'G-KNB082B9WE';
         const YM_ID = 104396711;
 
-        const loadYandexMetrika = () => {
-            if (window.ym) return; // Защита от двойной загрузки
-            (function(m,e,t,r,i,k,a){
-                m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-                m[i].l=1*new Date();
-                for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-                k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-            })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
-
-            ym(YM_ID, 'init', {
-                clickmap: true, trackLinks: true, accurateTrackBounce: true, webvisor: true
-            });
-        };
-
-        const grantConsent = () => {
-            // Обновляем статус в Google Analytics (теперь можно использовать куки)
-            gtag('consent', 'update', {
-                'ad_storage': 'granted',
-                'analytics_storage': 'granted',
-                'ad_user_data': 'granted',
-                'ad_personalization': 'granted'
-            });
-            // Загружаем Яндекс.Метрику
-            loadYandexMetrika();
-        };
-
-        const consent = localStorage.getItem(STORAGE_KEY);
-
-        if (consent === 'accepted') {
-            grantConsent();
+        // 1. ИНИЦИАЛИЗАЦИЯ CONSENT MODE (Срабатывает 1 раз, ДО согласия)
+        if (!window.__marmolGABaseInitialized) {
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
             
-            // --- ЛОГИКА ОТПРАВКИ ХИТОВ (Только для SPA-переходов) ---
-            if (!isInitialLoad) {
-                // Пинаем Метрику
-                if (window.ym) {
-                    ym(YM_ID, 'hit', window.location.href);
-                }
-                // Пинаем Google Analytics
-                if (typeof gtag === 'function') {
-                    gtag('config', GA_ID, {
-                        page_path: window.location.pathname + window.location.search,
-                        page_title: document.title
-                    });
-                }
-            }
+            // Ставим запрет по умолчанию
+            window.gtag('consent', 'default', {
+                analytics_storage: 'denied',
+                ad_storage: 'denied',
+                ad_user_data: 'denied',
+                ad_personalization: 'denied'
+            });
+
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+            document.head.appendChild(script);
+
+            window.gtag('js', new Date());
+            window.gtag('config', GA_ID, { send_page_view: false }); // Отключаем авто-хиты
             
-        } else if (consent === null && banner) {
-            banner.classList.remove('hidden');
-            setTimeout(() => {
-                banner.classList.remove('translate-y-10', 'opacity-0');
-            }, 100);
+            window.__marmolGABaseInitialized = true;
         }
 
-        // После отработки первого события снимаем флаг
-        isInitialLoad = false;
+        const getConsent = () => localStorage.getItem(STORAGE_KEY);
+        const setConsent = (value) => localStorage.setItem(STORAGE_KEY, value);
 
-        const closeBanner = () => {
-            if (!banner) return;
-            banner.classList.add('translate-y-10', 'opacity-0');
-            setTimeout(() => banner.classList.add('hidden'), 500); 
+        // 2. ФУНКЦИИ АКТИВАЦИИ АНАЛИТИКИ
+        const grantGoogleConsent = () => {
+            window.gtag('consent', 'update', {
+                analytics_storage: 'granted',
+                ad_storage: 'granted',
+                ad_user_data: 'granted',
+                ad_personalization: 'granted'
+            });
         };
 
-        btnAccept?.addEventListener('click', () => {
-            localStorage.setItem(STORAGE_KEY, 'accepted');
-            grantConsent();
-            closeBanner();
-        });
+        const loadYandexMetrika = () => {
+            if (window.__marmolYMInitialized) return;
+            (function (m, e, t, r, i, k, a) {
+                m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments); };
+                m[i].l = 1 * new Date();
+                k = e.createElement(t); a = e.getElementsByTagName(t)[0];
+                k.async = 1; k.src = r; a.parentNode.insertBefore(k, a);
+            })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
 
-        btnDecline?.addEventListener('click', () => {
-            localStorage.setItem(STORAGE_KEY, 'declined');
-            closeBanner();
-        });
-    });
+            window.ym(YM_ID, 'init', {
+                clickmap: true, trackLinks: true, accurateTrackBounce: true, webvisor: true
+            });
+            window.__marmolYMInitialized = true;
+        };
+
+        // 3. ФУНКЦИИ ОТПРАВКИ ПРОСМОТРОВ СТРАНИЦ
+        const trackPageViews = () => {
+            // GA4 ловит просмотр всегда (даже если denied, он отправит cookieless ping)
+            if (typeof window.gtag === 'function') {
+                setTimeout(() => {
+                    window.gtag('event', 'page_view', {
+                        page_title: document.title,
+                        page_location: window.location.href,
+                        page_path: window.location.pathname
+                    });
+                }, 50); // Микро-пауза для Astro
+            }
+
+            // Метрика ловит хит только если есть согласие
+            if (getConsent() === 'accepted' && typeof window.ym === 'function') {
+                window.ym(YM_ID, 'hit', window.location.href);
+            }
+        };
+
+        // 4. ЖИЗНЕННЫЙ ЦИКЛ ASTRO (Срабатывает при каждом переходе)
+        // Мы НЕ блокируем этот блок флагами, иначе кнопки умрут при переходах
+        const initBannerAndTracking = () => {
+            const banner = document.getElementById('cookie-banner');
+            const btnAccept = document.getElementById('btn-accept-cookies');
+            const btnDecline = document.getElementById('btn-decline-cookies');
+            const consent = getConsent();
+
+            // Если согласие уже есть — обновляем статус Google и грузим Яндекс
+            if (consent === 'accepted') {
+                grantGoogleConsent();
+                loadYandexMetrika();
+            } else if (consent === null && banner) {
+                // Если выбора нет — показываем баннер
+                banner.classList.remove('hidden');
+                window.setTimeout(() => banner.classList.remove('translate-y-10', 'opacity-0'), 100);
+            }
+
+            // Отправляем просмотр текущей страницы (GA4 отправит анонимно или полно, в зависимости от статуса)
+            trackPageViews();
+
+            const closeBanner = () => {
+                if (!banner) return;
+                banner.classList.add('translate-y-10', 'opacity-0');
+                window.setTimeout(() => banner.classList.add('hidden'), 500);
+            };
+
+            // Переназначаем слушатели кнопок аккуратно
+            if (btnAccept) {
+                btnAccept.onclick = () => {
+                    setConsent('accepted');
+                    grantGoogleConsent();
+                    loadYandexMetrika();
+                    closeBanner();
+                };
+            }
+
+            if (btnDecline) {
+                btnDecline.onclick = () => {
+                    setConsent('declined');
+                    closeBanner();
+                };
+            }
+        };
+
+        // Запуск при навигации
+        document.addEventListener('astro:page-load', initBannerAndTracking);
+    })();
 </script>
