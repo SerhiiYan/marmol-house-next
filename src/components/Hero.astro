@@ -10,7 +10,6 @@ const featuredCases = allPortfolio
   .slice(0, 3);
 ---
 
-{/* ИСПОЛЬЗУЕМ min-h-[100dvh] ДЛЯ ИДЕАЛЬНОЙ РАБОТЫ НА МОБИЛКАХ */}
 <section class="relative w-full min-h-[100dvh] overflow-hidden bg-marmol-navy flex flex-col">
   
   <img 
@@ -32,7 +31,6 @@ const featuredCases = allPortfolio
   </div>
   <div class="absolute inset-0 z-[2] bg-gradient-to-t from-[#0F172A] via-[#0F172A]/50 to-[#0F172A]/30"></div>
 
-  {/* ГЛАВНЫЙ КОНТЕЙНЕР: ДОБАВЛЕН pt-32 (ОТСТУП ОТ ШАПКИ) И ИЗМЕНЕНЫ БОКОВЫЕ ОТСТУПЫ (px-6 для мобилок) */}
   <div class="relative z-10 w-full max-w-[1920px] mx-auto px-6 md:px-24 flex flex-col justify-end flex-grow pt-32 pb-12 md:pb-24">
     
     <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-end w-full">
@@ -130,7 +128,6 @@ const featuredCases = allPortfolio
             isModalOpen.set(true);
         };
 
-        // Защита от дублей
         btn?.removeEventListener('click', openModal);
         btn?.addEventListener('click', openModal);
 
@@ -152,7 +149,5 @@ const featuredCases = allPortfolio
             }, 5000); 
         }
     }
-
-    // Теперь скрипт героя будет надежно работать при переходах по SPA роутеру
     document.addEventListener('astro:page-load', initHero);
 </script>
