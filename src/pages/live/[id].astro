@@ -24,16 +24,26 @@ const projectPhotos = rawDiaryData
 
 const pageTitle = `${data.title} - Ход строительства | Marmol House`;
 const pageDescription = `Технический паспорт и журнал производства работ по объекту ${data.title} (${data.location}). Этап: ${data.globalProgress}% готовности.`;
-
-// Находим текущий активный этап
 const activeStageIndex = data.stages.findIndex(s => s.status === 'active');
 
-// НОВОЕ: Генерируем даты для SEO (берем из первого и последнего лога, если они есть)
+// Генерируем даты для SEO (безопасный метод с программной сортировкой дат)
 const allLogs = data.stages.flatMap(stage => stage.logs || []);
-const datePublished = allLogs.length > 0 ? allLogs[allLogs.length - 1].date : new Date().toISOString().split('T')[0];
-const dateModified = allLogs.length > 0 ? allLogs[0].date : new Date().toISOString().split('T')[0];
 
-// НОВОЕ: Формируем жесткую SEO-схему
+// Конвертируем все даты логов в timestamp и сортируем по возрастанию (от старых к новым)
+const sortedLogDates = allLogs
+    .map(log => new Date(log.date).getTime())
+    .filter(time => !isNaN(time)) // Защита от криво введенных дат
+    .sort((a, b) => a - b);
+
+// Самая ранняя дата — старт проекта (публикация). Самая свежая — последнее обновление.
+const datePublished = sortedLogDates.length > 0 
+    ? new Date(sortedLogDates[0]).toISOString().split('T')[0] 
+    : new Date().toISOString().split('T')[0];
+
+const dateModified = sortedLogDates.length > 0 
+    ? new Date(sortedLogDates[sortedLogDates.length - 1]).toISOString().split('T')[0] 
+    : new Date().toISOString().split('T')[0];
+
 const schema = [
     {
         "@context": "https://schema.org",
@@ -173,7 +183,7 @@ const schema = [
                                 {stage.status !== 'pending' && stage.logs.length > 0 && (
                                     <div class="p-6 md:p-8 bg-gray-50/50 rounded-b-2xl">
                                         <div class="relative border-l-2 border-gray-200 ml-3 pl-6 space-y-6">
-                                            {stage.logs.map((log) => (
+                                            {stage.logs.slice().reverse().map((log) => (
                                                 <div class="relative">
                                                     <div class="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full border-2 border-white bg-gray-300"></div>
                                                     

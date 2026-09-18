@@ -95,7 +95,7 @@ const schema = [
             <div class="mb-10 max-w-3xl animate-fade-in">
                 <h1 class="text-4xl md:text-5xl font-sans font-bold text-marmol-navy mb-6">
                     <span class="block text-lg text-marmol-gold font-normal mb-2 tracking-normal uppercase">Live-режим</span>
-                    Карта строек
+                    Наши объекты на карте
                 </h1>
                 <p class="text-gray-500 text-lg leading-relaxed font-light">
                     Следите за архитектурными проектами в процессе их реализации. Мы показываем реальную географию наших работ и этапы возведения.
@@ -117,13 +117,8 @@ const schema = [
                     </span>
                 </h2>
                 
-                {/* 
-                  ЗДЕСЬ МАГИЯ: Используем client:load, чтобы кнопка работала в браузере.
-                  type="active" отрисует большие карточки.
-                  initialCount={5} покажет 5 штук и кнопку для остальных.
-                */}
                 <ExpandableProjectList 
-                    client:load 
+                    client:visible 
                     projects={inProgressProjects} 
                     type="active" 
                     initialCount={5} 
