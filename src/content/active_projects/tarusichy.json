@@ -3,11 +3,11 @@
   "location": "д. Тарусичи",
   "status": "active",
   "coordinates": [53.652274, 23.741274],
-  "globalProgress": 75,
+  "globalProgress": 90,
   "tech": "block",
-  "heroImage": "/diary/tarusichy/roof-framing-facade.webp",
+  "heroImage": "/diary/tarusichy/finishing_exterior.webp",
   "startDate": "2026-06-28",
-  "estimatedCompletion": "2026-09-30",
+  "estimatedCompletion": "2026-10-30",
 
   "stages": [
   {
@@ -61,12 +61,20 @@
   {
     "id": "finishing_exterior",
     "name": "Кровля и финишная отделка фасада",
-    "status": "active",
-    "progress": 55,
+    "status": "completed",
+    "progress": 100,
     "logs": [
       {
         "date": "2026-09-16",
         "message": "Монтаж металлического кровельного покрытия (кликфальц) и облицовка фасада по обрешетке."
+      },
+      {
+        "date": "2026-09-28",
+        "message": "Завершен монтаж кликфальца на кровле и задней части дома, смонтирована водосточная система с отводом по опорному столбу террасы."
+      },
+      {
+        "date": "2026-10-06",
+        "message": "Подшивка потолка террасы сосновой доской с обработкой защитным маслом в 2 слоя, вертикальная обшивка стен фасада террасы."
       }
     ]
   },
