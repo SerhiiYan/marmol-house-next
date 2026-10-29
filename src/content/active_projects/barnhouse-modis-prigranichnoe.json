@@ -1,9 +1,9 @@
 {
   "title": "Modis",
   "location": "СТ Приграничное",
-  "status": "active",
+  "status": "completed",
   "coordinates": [53.592183, 23.698319],
-  "globalProgress": 95,
+  "globalProgress": 100,
   "tech": "block",
   "heroImage": "/diary/st-prigranichnoe/main.webp",
   "startDate": "2026-04-26",

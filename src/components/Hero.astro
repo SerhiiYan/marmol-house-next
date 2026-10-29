@@ -7,7 +7,7 @@ const videoUrl = "/hero-video.mp4";
 const allPortfolio = await getCollection('portfolio');
 const featuredCases = allPortfolio
   .filter(project => project.data.isHero === true)
-  .slice(0, 3);
+  .slice(0, 5);
 ---
 
 <section class="relative w-full min-h-[100dvh] overflow-hidden bg-marmol-navy flex flex-col">
