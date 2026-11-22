@@ -27,7 +27,7 @@ export const globalPricing = {
     economy: {
       title: "Эконом",
       subTitle: "Каркасная технология",
-      basePricePerMeter: 1600,
+      basePricePerMeter: 1700,
       features: [
         "Свайно-ростверковый фундамент",
         "Силовой каркас",
@@ -41,7 +41,7 @@ export const globalPricing = {
     premium: {
       title: "Премиум",
       subTitle: "Каркас + Инженерия",
-      basePricePerMeter: 1950,
+      basePricePerMeter: 2050,
       features: [
         "Усиленный фундамент",
         "Утепление 200 мм + Ветрозащита",
@@ -55,7 +55,7 @@ export const globalPricing = {
     premiumPlus: {
       title: "Премиум +",
       subTitle: "Каменный дом под ключ",
-      basePricePerMeter: 2350,
+      basePricePerMeter: 2450,
       isPopular: true,
       features: [
         "Монолитная плита / Лента",
